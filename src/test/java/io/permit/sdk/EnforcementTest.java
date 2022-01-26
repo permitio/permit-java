@@ -12,14 +12,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EnforcementTest {
     @Test void permitCheckSucceeds() {
-        PermitConfig config = new PermitConfig.Builder("PJUKkuwiJkKxbIoC4o4cguWxB_2gX6MyATYKc2OCM").build();
-        Enforcer enforcer = new Enforcer(config);
-
-        Boolean allowed = enforcer.check(
-            User.fromString("55de594980944d48944dc10b9c70483c"),
-            "create",
-            Resource.fromString("document")
+        Permit permit = new Permit(
+            new PermitConfig.Builder("PJUKkuwiJkKxbIoC4o4cguWxB_2gX6MyATYKc2OCM")
+                .withDebugMode(true)
+                .build()
         );
+
+        Boolean allowed = null;
+        try {
+            allowed = permit.check(
+                User.fromString("55de594980944d48944dc10b9c70483c"),
+                "create",
+                Resource.fromString("document")
+            );
+        } catch (IOException e) {
+            fail(e);
+        }
 
         assertTrue(allowed, "permit.check() should be true");
     }

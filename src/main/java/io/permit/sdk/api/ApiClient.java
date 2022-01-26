@@ -6,6 +6,8 @@ import io.permit.sdk.api.models.*;
 import io.permit.sdk.enforcement.User;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -29,6 +31,7 @@ interface IWriteApis {
 }
 
 public class ApiClient implements IReadApis, IWriteApis {
+    final static Logger logger = LoggerFactory.getLogger(ApiClient.class);
     private final OkHttpClient client = new OkHttpClient();
     private final PermitConfig config;
     private final Headers headers;
@@ -43,6 +46,15 @@ public class ApiClient implements IReadApis, IWriteApis {
         this.baseUrl = this.config.getPdpAddress();
     }
 
+    private void logResponse(String requestRepr, Response response, String responseContent) {
+        String log = String.format("Received response: %s : status code %d : %s", requestRepr, response.code(), responseContent);
+        if (!response.isSuccessful() && this.config.isDebugMode()) {
+            this.logger.error(log);
+        } else {
+            this.logger.debug(log);
+        }
+    }
+
     @Override
     public UserModel getUser(String userKey) throws IOException {
         String url = String.format("%s/cloud/users/%s", this.baseUrl, userKey);
@@ -52,12 +64,16 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .get()
                 .build();
 
+        String requestRepr = String.format("permit.api.getUser(%s)", userKey);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
+
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
             if (responseBody == null) {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
+            logResponse(requestRepr, response, responseString);
             Gson gson = new Gson();
             return gson.fromJson(responseString, UserModel.class);
         }
@@ -72,12 +88,16 @@ public class ApiClient implements IReadApis, IWriteApis {
             .get()
             .build();
 
+        String requestRepr = String.format("permit.api.getRole(%s)", roleKey);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
+
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
             if (responseBody == null) {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
+            logResponse(requestRepr, response, responseString);
             Gson gson = new Gson();
             return gson.fromJson(responseString, RoleModel.class);
         }
@@ -92,12 +112,16 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .get()
                 .build();
 
+        String requestRepr = String.format("permit.api.getTenant(%s)", tenantKey);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
+
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
             if (responseBody == null) {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
+            logResponse(requestRepr, response, responseString);
             Gson gson = new Gson();
             return gson.fromJson(responseString, TenantModel.class);
         }
@@ -115,12 +139,16 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .get()
                 .build();
 
+        String requestRepr = String.format("permit.api.getAssignedRoles(user=%s, tenant=%s", userKey, tenantKey);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
+
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
             if (responseBody == null) {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
+            logResponse(requestRepr, response, responseString);
             Gson gson = new Gson();
             return gson.fromJson(responseString, RoleAssignmentList.class);
         }
@@ -146,6 +174,9 @@ public class ApiClient implements IReadApis, IWriteApis {
             .put(body)
             .build();
 
+        String requestRepr = String.format("permit.api.syncUser(%s)", requestBody);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
+
         // send the request
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
@@ -153,6 +184,7 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
+            logResponse(requestRepr, response, responseString);
             return gson.fromJson(responseString, UserModel.class);
         }
     }
@@ -166,6 +198,9 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .headers(this.headers)
                 .delete()
                 .build();
+
+        String requestRepr = String.format("permit.api.deleteUser(%s)", userKey);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
 
         // send the request
         try (Response response = client.newCall(request).execute()) {
@@ -194,6 +229,9 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .put(body)
                 .build();
 
+        String requestRepr = String.format("permit.api.createTenant(%s)", requestBody);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
+
         // send the request
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
@@ -201,6 +239,7 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
+            logResponse(requestRepr, response, responseString);
             return gson.fromJson(responseString, TenantModel.class);
         }
     }
@@ -225,6 +264,9 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .patch(body)
                 .build();
 
+        String requestRepr = String.format("permit.api.updateTenant(%s)", requestBody);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
+
         // send the request
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
@@ -232,6 +274,7 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
+            logResponse(requestRepr, response, responseString);
             return gson.fromJson(responseString, TenantModel.class);
         }
     }
@@ -245,6 +288,9 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .headers(this.headers)
                 .delete()
                 .build();
+
+        String requestRepr = String.format("permit.api.deleteTenant(%s)", tenantKey);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
 
         // send the request
         try (Response response = client.newCall(request).execute()) {
@@ -272,6 +318,9 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .post(body)
                 .build();
 
+        String requestRepr = String.format("permit.api.assignRole(%s)", requestBody);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
+
         // send the request
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
@@ -279,6 +328,7 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
+            logResponse(requestRepr, response, responseString);
             return gson.fromJson(responseString, RoleAssignmentModel.class);
         }
     }
@@ -298,6 +348,9 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .headers(this.headers)
                 .delete()
                 .build();
+
+        String requestRepr = String.format("permit.api.unassignRole(%s,%s,%s)", userKey, roleKey, tenantKey);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
 
         // send the request
         try (Response response = client.newCall(request).execute()) {
@@ -320,6 +373,9 @@ public class ApiClient implements IReadApis, IWriteApis {
                 .put(body)
                 .build();
 
+        String requestRepr = String.format("permit.api.syncResources(%s)", requestBody);
+        this.logger.debug(String.format("Sending request: %s", requestRepr));
+
         // send the request
         try (Response response = client.newCall(request).execute()) {
             ResponseBody responseBody = response.body();
@@ -327,6 +383,7 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
+            logResponse(requestRepr, response, responseString);
             return gson.fromJson(responseString, ResourceList.class);
         }
     }

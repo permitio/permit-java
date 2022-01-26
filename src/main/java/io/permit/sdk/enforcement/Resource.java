@@ -23,6 +23,10 @@ public class Resource {
         return new Resource(new Resource.Builder(resourceString));
     }
 
+    public String toString() {
+        return (this.id == null) ? String.format("%s:*", this.type) : String.format("%s:%s", this.type, this.id);
+    }
+
     public Resource normalize(PermitConfig config) {
         // if tenant is empty, we migth auto-set the default tenant according to config
         String safeTenant = (this.tenant == null && config.shouldUseDefaultTenantIfEmpty())

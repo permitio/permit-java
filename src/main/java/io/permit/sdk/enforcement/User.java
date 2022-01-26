@@ -24,6 +24,10 @@ public class User {
         return this.key;
     }
 
+    public String toString() {
+        return this.key;
+    }
+
     public static User fromString(String userKey) {
         return new User(new User.Builder(userKey));
     }

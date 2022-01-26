@@ -12,7 +12,7 @@ plugins {
     id 'maven-publish'
 }
 
-version = "0.0.2"
+version = "0.0.3"
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -24,6 +24,10 @@ java {
 }
 
 dependencies {
+    implementation 'ch.qos.logback:logback-classic:1.2.10'
+    implementation 'ch.qos.logback:logback-core:1.2.10'
+    implementation 'org.slf4j:slf4j-api:1.7.33'
+
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
 
