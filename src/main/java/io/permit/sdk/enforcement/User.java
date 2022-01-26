@@ -20,6 +20,10 @@ public class User {
         this.attributes = builder.attributes;
     }
 
+    public String getKey() {
+        return this.key;
+    }
+
     public static User fromString(String userKey) {
         return new User(new User.Builder(userKey));
     }

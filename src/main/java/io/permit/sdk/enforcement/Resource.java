@@ -32,8 +32,8 @@ public class Resource {
         // copy tenant from resource.tenant to resource.context.tenant (until we change RBAC policy)
         HashMap<String, String> safeContext = new HashMap<>();
         safeContext.putAll(this.context);
-        if (this.tenant != null && !this.context.containsKey("tenant")) {
-            safeContext.put("tenant", this.tenant);
+        if (safeTenant != null && !this.context.containsKey("tenant")) {
+            safeContext.put("tenant", safeTenant);
         }
 
         Resource normalizedResource = new Resource.Builder(this.type)
@@ -51,7 +51,7 @@ public class Resource {
         private String id = null;
         private String tenant = null;
         private HashMap<String, String> attributes = null;
-        private HashMap<String, String> context = null;
+        private HashMap<String, String> context = new HashMap<>();
 
         private final String resourceDelimiter = ":";
 
