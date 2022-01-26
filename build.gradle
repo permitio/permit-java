@@ -12,7 +12,7 @@ plugins {
     id 'maven-publish'
 }
 
-version = "0.0.4"
+version = "0.0.1"
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -44,7 +44,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = "https://maven.pkg.github.com/asafc/permit-java-private"
+            url = "https://maven.pkg.github.com/permitio/permit-java"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
