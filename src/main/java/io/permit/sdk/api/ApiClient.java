@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 interface IReadApis {
     UserModel getUser(String userKey) throws IOException, PermitApiException;
@@ -31,6 +32,8 @@ interface IWriteApis {
 }
 
 public class ApiClient implements IReadApis, IWriteApis {
+    final static int HTTP_404_NOT_FOUND = 404;
+
     final static Logger logger = LoggerFactory.getLogger(ApiClient.class);
     private final OkHttpClient client = new OkHttpClient();
     private final PermitConfig config;
@@ -46,14 +49,14 @@ public class ApiClient implements IReadApis, IWriteApis {
         this.baseUrl = this.config.getPdpAddress();
     }
 
-    private void throwIfErrorResponseCode(String requestRepr, Response response, String responseContent) throws PermitApiException {
+    private void throwIfErrorResponseCode(String requestRepr, Response response, String responseContent, List<Integer> expectedErrorCodes) throws PermitApiException {
         String log = String.format("Received response: %s : status code %d : %s", requestRepr, response.code(), responseContent);
         if (!response.isSuccessful() && this.config.isDebugMode()) {
             this.logger.error(log);
         } else {
             this.logger.debug(log);
         }
-        if (!response.isSuccessful()) {
+        if (!response.isSuccessful() && !expectedErrorCodes.contains(response.code())) {
             throw new PermitApiException(
                 String.format(
                         "unexpected status code: %d for request: %s",
@@ -62,6 +65,10 @@ public class ApiClient implements IReadApis, IWriteApis {
                 )
             );
         }
+    }
+
+    private void throwIfErrorResponseCode(String requestRepr, Response response, String responseContent) throws PermitApiException {
+        throwIfErrorResponseCode(requestRepr, response, responseContent, List.of());
     }
 
     @Override
@@ -82,7 +89,10 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString, List.of(HTTP_404_NOT_FOUND));
+            if (response.code() == HTTP_404_NOT_FOUND) {
+                return null;
+            }
             Gson gson = new Gson();
             return gson.fromJson(responseString, UserModel.class);
         }
@@ -106,7 +116,10 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString, List.of(HTTP_404_NOT_FOUND));
+            if (response.code() == HTTP_404_NOT_FOUND) {
+                return null;
+            }
             Gson gson = new Gson();
             return gson.fromJson(responseString, RoleModel.class);
         }
@@ -130,7 +143,10 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString, List.of(HTTP_404_NOT_FOUND));
+            if (response.code() == HTTP_404_NOT_FOUND) {
+                return null;
+            }
             Gson gson = new Gson();
             return gson.fromJson(responseString, TenantModel.class);
         }
@@ -213,6 +229,7 @@ public class ApiClient implements IReadApis, IWriteApis {
 
         // send the request
         try (Response response = client.newCall(request).execute()) {
+            logger.debug(String.format("Received response: %s : status code %d", requestRepr, response.code()));
             return response.isSuccessful(); // return 204 on success, error codes otherwise
         }
     }
@@ -303,6 +320,7 @@ public class ApiClient implements IReadApis, IWriteApis {
 
         // send the request
         try (Response response = client.newCall(request).execute()) {
+            logger.debug(String.format("Received response: %s : status code %d", requestRepr, response.code()));
             return response.isSuccessful(); // return 204 on success, error codes otherwise
         }
     }

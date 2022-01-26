@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import io.permit.sdk.api.PermitApiException;
 import io.permit.sdk.api.models.UserModel;
+import io.permit.sdk.enforcement.AssignedRole;
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
 import okhttp3.HttpUrl;
@@ -14,9 +15,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Sanity tests for basic usage of the SDK.
@@ -30,6 +31,13 @@ class PermitIntegrationTests {
     private final static int connectionTimeout = 3; // 3 seconds to give up on sidecar
     private final static int loggerSeparatorLength = 80;
     private boolean skipTests = false;
+
+    private final static String roleKey = "captain";
+    private final static String tenantKey = "tortuga";
+    private final static String userKey = "test|13d4dd3ff127";
+    private final static String userEmail = "jack@pirates.com";
+    private final static String userFirstName = "Jack";
+    private final static String userLastName = "Sparrow";
 
     public PermitIntegrationTests() {
         String token = System.getenv("DEV_MODE_CLIENT_TOKEN");
@@ -93,18 +101,48 @@ class PermitIntegrationTests {
         assertTrue(allowed, "permit.check() should be true");
     }
 
-    @Test void testPermitClientApi() {
+    @Test void testPermitApiUserLifecycle() {
         if (skipTests) {
             return;
         }
         logTestIsStarting("checkGetUser");
+
+        // objects to setup;
+        User testUser = new User.Builder(userKey)
+            .withEmail(userEmail)
+            .withFirstName(userFirstName)
+            .withLastName(userLastName)
+            .build();
+
+        // init the client
         Permit permit = new Permit(this.config);
         Gson gson = new Gson();
 
+        // create user lifecycle
         try {
-            UserModel user = permit.api.getUser("55de594980944d48944dc10b9c70483c");
-            System.out.println(user.id);
-            System.out.println(gson.toJson(user));
+            // check if the test user exists - expect null
+            UserModel user = permit.api.getUser(testUser.getKey());
+            assertNull(user);
+            // returned user after syncUser
+            user = permit.api.syncUser(testUser);
+            assertNotNull(user);
+            assertEquals(user.customId, userKey);
+            assertEquals(user.email, userEmail);
+            assertEquals(user.firstName, userFirstName);
+            assertEquals(user.lastName, userLastName);
+            // getUser now returns the synced user
+            user = permit.api.getUser(testUser.getKey());
+            assertNotNull(user);
+            assertEquals(user.customId, userKey);
+            assertEquals(user.email, userEmail);
+            assertEquals(user.firstName, userFirstName);
+            assertEquals(user.lastName, userLastName);
+            // delete the user
+            boolean deleted = permit.api.deleteUser(testUser.getKey());
+            assertTrue(deleted);
+            // user will be null again
+            user = permit.api.getUser(testUser.getKey());
+            assertNull(user);
         } catch (IOException | PermitApiException e) {
             fail("got error: " + e);
         }
