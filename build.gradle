@@ -53,6 +53,14 @@ dependencies {
 publishing {
     repositories {
         maven {
+            name = "OSSRH"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
+            }
+        }
+        maven {
             name = "GitHubPackages"
             url = "https://maven.pkg.github.com/permitio/permit-java"
             credentials {
@@ -92,6 +100,13 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    def GPG_SIGNING_KEY = findProperty("signingKey") ?: System.getenv("GPG_SIGNING_KEY")
+    def GPG_SIGNING_PASSPHRASE = findProperty("signingPassword") ?: System.getenv("GPG_SIGNING_PASSPHRASE")
+    useInMemoryPgpKeys(GPG_SIGNING_KEY, GPG_SIGNING_PASSPHRASE)
+    sign publishing.publications.maven
 }
 
 tasks.named('test') {
