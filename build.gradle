@@ -9,6 +9,7 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
+    id 'maven-publish'
 }
 
 version = "0.0.1"
@@ -28,6 +29,50 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:30.1.1-jre'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/asafc/permit-java-private"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+
+
+    publications {
+        maven(MavenPublication) {
+            groupId = 'io.permit'
+            artifactId = 'sdk'
+
+            from components.java
+
+            pom {
+                description = 'Java SDK for Permit.io: fullstack permissions for cloud native applications'
+                url = 'https://permit.io'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'asafc'
+                        name = 'Asaf Cohen'
+                        email = 'asaf@permit.io'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/permitio/permit-java'
+                }
+            }
+        }
+    }
 }
 
 tasks.named('test') {
