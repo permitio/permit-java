@@ -25,6 +25,7 @@ interface IWriteApis {
     Boolean deleteTenant(String tenantKey) throws IOException;
     RoleAssignmentModel assignRole(String userKey, String roleKey, String tenantKey) throws IOException;
     Boolean unassignRole(String userKey, String roleKey, String tenantKey) throws IOException;
+    ResourceList syncResources(SyncedResources spec) throws IOException;
 }
 
 public class ApiClient implements IReadApis, IWriteApis {
@@ -39,7 +40,7 @@ public class ApiClient implements IReadApis, IWriteApis {
             .add("Content-Type", "application/json")
             .add("Authorization", String.format("Bearer %s", this.config.getToken()))
             .build();
-        this.baseUrl = String.format("%s/", this.config.getPdpAddress());
+        this.baseUrl = this.config.getPdpAddress();
     }
 
     @Override
@@ -47,6 +48,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         String url = String.format("%s/cloud/users/%s", this.baseUrl, userKey);
         Request request = new Request.Builder()
                 .url(url)
+                .headers(this.headers)
                 .get()
                 .build();
 
@@ -66,6 +68,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         String url = String.format("%s/cloud/roles/%s", this.baseUrl, roleKey);
         Request request = new Request.Builder()
             .url(url)
+            .headers(this.headers)
             .get()
             .build();
 
@@ -85,6 +88,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         String url = String.format("%s/cloud/tenants/%s", this.baseUrl, tenantKey);
         Request request = new Request.Builder()
                 .url(url)
+                .headers(this.headers)
                 .get()
                 .build();
 
@@ -107,6 +111,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         }
         Request request = new Request.Builder()
                 .url(url)
+                .headers(this.headers)
                 .get()
                 .build();
 
@@ -137,6 +142,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         String url = String.format("%s/cloud/users", this.baseUrl);
         Request request = new Request.Builder()
             .url(url)
+            .headers(this.headers)
             .put(body)
             .build();
 
@@ -157,6 +163,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         String url = String.format("%s/cloud/users/%s", this.baseUrl, userKey);
         Request request = new Request.Builder()
                 .url(url)
+                .headers(this.headers)
                 .delete()
                 .build();
 
@@ -183,6 +190,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         String url = String.format("%s/cloud/tenants", this.baseUrl);
         Request request = new Request.Builder()
                 .url(url)
+                .headers(this.headers)
                 .put(body)
                 .build();
 
@@ -213,6 +221,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         String url = String.format("%s/cloud/tenants/%s", this.baseUrl, tenant.key);
         Request request = new Request.Builder()
                 .url(url)
+                .headers(this.headers)
                 .patch(body)
                 .build();
 
@@ -233,6 +242,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         String url = String.format("%s/cloud/tenants/%s", this.baseUrl, tenantKey);
         Request request = new Request.Builder()
                 .url(url)
+                .headers(this.headers)
                 .delete()
                 .build();
 
@@ -258,6 +268,7 @@ public class ApiClient implements IReadApis, IWriteApis {
         String url = String.format("%s/cloud/role_assignments", this.baseUrl);
         Request request = new Request.Builder()
                 .url(url)
+                .headers(this.headers)
                 .post(body)
                 .build();
 
@@ -284,12 +295,39 @@ public class ApiClient implements IReadApis, IWriteApis {
             );
         Request request = new Request.Builder()
                 .url(url)
+                .headers(this.headers)
                 .delete()
                 .build();
 
         // send the request
         try (Response response = client.newCall(request).execute()) {
             return response.isSuccessful(); // return 204 on success, error codes otherwise
+        }
+    }
+
+    @Override
+    public ResourceList syncResources(SyncedResources spec) throws IOException {
+        // request body
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(spec);
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+
+        // create the request
+        String url = String.format("%s/cloud/resources", this.baseUrl);
+        Request request = new Request.Builder()
+                .url(url)
+                .headers(this.headers)
+                .put(body)
+                .build();
+
+        // send the request
+        try (Response response = client.newCall(request).execute()) {
+            ResponseBody responseBody = response.body();
+            if (responseBody == null) {
+                throw new IOException("got empty response");
+            }
+            String responseString = responseBody.string();
+            return gson.fromJson(responseString, ResourceList.class);
         }
     }
 }
