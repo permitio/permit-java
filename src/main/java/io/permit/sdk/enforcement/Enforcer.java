@@ -39,6 +39,7 @@ class OpaResult {
 
 public class Enforcer {
     public final ContextStore contextStore = new ContextStore();
+    private final OkHttpClient client = new OkHttpClient();
     private final PermitConfig config;
 
     public Enforcer(PermitConfig config) {
@@ -55,8 +56,6 @@ public class Enforcer {
             normalizedResource,
             queryContext
         );
-
-        OkHttpClient client = new OkHttpClient();
 
         // request body
         Gson gson = new Gson();
