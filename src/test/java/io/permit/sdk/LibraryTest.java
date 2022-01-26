@@ -4,11 +4,20 @@
 package io.permit.sdk;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 class PermitClientTest {
     @Test void someLibraryMethodReturnsTrue() {
         PermitClient classUnderTest = new PermitClient();
-        assertTrue(classUnderTest.isTrue(), "someLibraryMethod should return 'true'");
+        classUnderTest.serializeJson();
+        try {
+            classUnderTest.invokePost();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

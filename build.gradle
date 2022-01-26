@@ -27,8 +27,13 @@ dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
 
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    // These dependencies are used internally, and not exposed to consumers on their own compile classpath.
+    // google standard java library
     implementation 'com.google.guava:guava:30.1.1-jre'
+    // json serialization and deserialization
+    implementation 'com.google.code.gson:gson:2.8.9'
+    // http client
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 }
 
 publishing {
