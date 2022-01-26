@@ -12,22 +12,22 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 interface IReadApis {
-    UserModel getUser(String userKey) throws IOException;
-    RoleModel getRole(String roleKey) throws IOException;
-    TenantModel getTenant(String tenantKey) throws IOException;
-    RoleAssignmentList getAssignedRoles(String userKey, String tenantKey) throws IOException;
-    RoleAssignmentList getAssignedRolesInAllTenants(String userKey) throws IOException;
+    UserModel getUser(String userKey) throws IOException, PermitApiException;
+    RoleModel getRole(String roleKey) throws IOException, PermitApiException;
+    TenantModel getTenant(String tenantKey) throws IOException, PermitApiException;
+    RoleAssignmentList getAssignedRoles(String userKey, String tenantKey) throws IOException, PermitApiException;
+    RoleAssignmentList getAssignedRolesInAllTenants(String userKey) throws IOException, PermitApiException;
 }
 
 interface IWriteApis {
-    UserModel syncUser(User user) throws IOException;
+    UserModel syncUser(User user) throws IOException, PermitApiException;
     Boolean deleteUser(String userKey) throws IOException;
-    TenantModel createTenant(TenantInput tenant) throws IOException;
-    TenantModel updateTenant(TenantInput tenant) throws IOException;
+    TenantModel createTenant(TenantInput tenant) throws IOException, PermitApiException;
+    TenantModel updateTenant(TenantInput tenant) throws IOException, PermitApiException;
     Boolean deleteTenant(String tenantKey) throws IOException;
-    RoleAssignmentModel assignRole(String userKey, String roleKey, String tenantKey) throws IOException;
-    Boolean unassignRole(String userKey, String roleKey, String tenantKey) throws IOException;
-    ResourceList syncResources(SyncedResources spec) throws IOException;
+    RoleAssignmentModel assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiException;
+    Boolean unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiException;
+    ResourceList syncResources(SyncedResources spec) throws IOException, PermitApiException;
 }
 
 public class ApiClient implements IReadApis, IWriteApis {
@@ -46,17 +46,26 @@ public class ApiClient implements IReadApis, IWriteApis {
         this.baseUrl = this.config.getPdpAddress();
     }
 
-    private void logResponse(String requestRepr, Response response, String responseContent) {
+    private void throwIfErrorResponseCode(String requestRepr, Response response, String responseContent) throws PermitApiException {
         String log = String.format("Received response: %s : status code %d : %s", requestRepr, response.code(), responseContent);
         if (!response.isSuccessful() && this.config.isDebugMode()) {
             this.logger.error(log);
         } else {
             this.logger.debug(log);
         }
+        if (!response.isSuccessful()) {
+            throw new PermitApiException(
+                String.format(
+                        "unexpected status code: %d for request: %s",
+                        response.code(),
+                        requestRepr
+                )
+            );
+        }
     }
 
     @Override
-    public UserModel getUser(String userKey) throws IOException {
+    public UserModel getUser(String userKey) throws IOException, PermitApiException {
         String url = String.format("%s/cloud/users/%s", this.baseUrl, userKey);
         Request request = new Request.Builder()
                 .url(url)
@@ -73,14 +82,14 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            logResponse(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString);
             Gson gson = new Gson();
             return gson.fromJson(responseString, UserModel.class);
         }
     }
 
     @Override
-    public RoleModel getRole(String roleKey) throws IOException {
+    public RoleModel getRole(String roleKey) throws IOException, PermitApiException {
         String url = String.format("%s/cloud/roles/%s", this.baseUrl, roleKey);
         Request request = new Request.Builder()
             .url(url)
@@ -97,14 +106,14 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            logResponse(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString);
             Gson gson = new Gson();
             return gson.fromJson(responseString, RoleModel.class);
         }
     }
 
     @Override
-    public TenantModel getTenant(String tenantKey) throws IOException {
+    public TenantModel getTenant(String tenantKey) throws IOException, PermitApiException {
         String url = String.format("%s/cloud/tenants/%s", this.baseUrl, tenantKey);
         Request request = new Request.Builder()
                 .url(url)
@@ -121,14 +130,14 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            logResponse(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString);
             Gson gson = new Gson();
             return gson.fromJson(responseString, TenantModel.class);
         }
     }
 
     @Override
-    public RoleAssignmentList getAssignedRoles(@NotNull String userKey, String tenantKey) throws IOException {
+    public RoleAssignmentList getAssignedRoles(@NotNull String userKey, String tenantKey) throws IOException, PermitApiException {
         String url = String.format("%s/role_assignments?user=%s", this.baseUrl, userKey);
         if (tenantKey != null) {
             url = url + String.format("&tenant=%s", tenantKey);
@@ -148,19 +157,19 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            logResponse(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString);
             Gson gson = new Gson();
             return gson.fromJson(responseString, RoleAssignmentList.class);
         }
     }
 
     @Override
-    public RoleAssignmentList getAssignedRolesInAllTenants(String userKey) throws IOException {
+    public RoleAssignmentList getAssignedRolesInAllTenants(String userKey) throws IOException, PermitApiException {
         return this.getAssignedRoles(userKey, null);
     }
 
     @Override
-    public UserModel syncUser(User user) throws IOException {
+    public UserModel syncUser(User user) throws IOException, PermitApiException {
         // request body
         Gson gson = new Gson();
         String requestBody = gson.toJson(user);
@@ -184,7 +193,7 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            logResponse(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString);
             return gson.fromJson(responseString, UserModel.class);
         }
     }
@@ -209,7 +218,7 @@ public class ApiClient implements IReadApis, IWriteApis {
     }
 
     @Override
-    public TenantModel createTenant(TenantInput tenant) throws IOException {
+    public TenantModel createTenant(TenantInput tenant) throws IOException, PermitApiException {
         NewTenant newTenant = new NewTenant();
         newTenant.externalId = tenant.key;
         newTenant.name = tenant.name;
@@ -239,13 +248,13 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            logResponse(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString);
             return gson.fromJson(responseString, TenantModel.class);
         }
     }
 
     @Override
-    public TenantModel updateTenant(TenantInput tenant) throws IOException {
+    public TenantModel updateTenant(TenantInput tenant) throws IOException, PermitApiException {
         NewTenant newTenant = new NewTenant();
         newTenant.name = tenant.name;
         if (tenant.description != null) {
@@ -274,7 +283,7 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            logResponse(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString);
             return gson.fromJson(responseString, TenantModel.class);
         }
     }
@@ -299,7 +308,7 @@ public class ApiClient implements IReadApis, IWriteApis {
     }
 
     @Override
-    public RoleAssignmentModel assignRole(String userKey, String roleKey, String tenantKey) throws IOException {
+    public RoleAssignmentModel assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiException {
         RoleAssignmentInput input = new RoleAssignmentInput();
         input.user = userKey;
         input.role = roleKey;
@@ -328,7 +337,7 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            logResponse(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString);
             return gson.fromJson(responseString, RoleAssignmentModel.class);
         }
     }
@@ -359,7 +368,7 @@ public class ApiClient implements IReadApis, IWriteApis {
     }
 
     @Override
-    public ResourceList syncResources(SyncedResources spec) throws IOException {
+    public ResourceList syncResources(SyncedResources spec) throws IOException, PermitApiException {
         // request body
         Gson gson = new Gson();
         String requestBody = gson.toJson(spec);
@@ -383,7 +392,7 @@ public class ApiClient implements IReadApis, IWriteApis {
                 throw new IOException("got empty response");
             }
             String responseString = responseBody.string();
-            logResponse(requestRepr, response, responseString);
+            throwIfErrorResponseCode(requestRepr, response, responseString);
             return gson.fromJson(responseString, ResourceList.class);
         }
     }

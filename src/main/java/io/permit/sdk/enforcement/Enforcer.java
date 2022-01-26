@@ -77,24 +77,26 @@ public class Enforcer implements IEnforcerApi {
 
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                logger.error(String.format(
-                        "Error in permit.check(%s, %s, %s): got unexpected status code %d",
-                        user,
-                        action,
-                        resource,
-                        response.code()
-                ));
-                return false;
+                String errorMessage = String.format(
+                    "Error in permit.check(%s, %s, %s): got unexpected status code %d",
+                    user,
+                    action,
+                    resource,
+                    response.code()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
             }
             ResponseBody responseBody = response.body();
             if (responseBody == null) {
-                logger.error(String.format(
-                        "Error in permit.check(%s, %s, %s): got empty response",
-                        user,
-                        action,
-                        resource
-                ));
-                return false;
+                String errorMessage = String.format(
+                    "Error in permit.check(%s, %s, %s): got empty response",
+                    user,
+                    action,
+                    resource
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
             }
             String responseString = responseBody.string();
             OpaResult result = gson.fromJson(responseString, OpaResult.class);
