@@ -37,7 +37,7 @@ class OpaResult {
     }
 }
 
-public class Enforcer {
+public class Enforcer implements IEnforcerApi {
     public final ContextStore contextStore = new ContextStore();
     private final OkHttpClient client = new OkHttpClient();
     private final PermitConfig config;
@@ -46,7 +46,8 @@ public class Enforcer {
         this.config = config;
     }
 
-    public Boolean check(User user, String action, Resource resource, Context context) {
+    @Override
+    public boolean check(User user, String action, Resource resource, Context context) {
         Resource normalizedResource = resource.normalize(this.config);
         Context queryContext = this.contextStore.getDerivedContext(context);
 
@@ -87,7 +88,8 @@ public class Enforcer {
         }
     }
 
-    public Boolean check(User user, String action, Resource resource) {
+    @Override
+    public boolean check(User user, String action, Resource resource) {
         return this.check(user, action, resource, new Context());
     }
 }
