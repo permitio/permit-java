@@ -46,6 +46,9 @@ public class PermitClient {
         User user2 = new User.Builder("asaf").withEmail("asaf@permit.io").build();
         System.out.println(gson.toJson(user2));
 
+        System.out.println(gson.toJson("treasure:3".split(":")));
+        System.out.println(gson.toJson("treasure".split(":")));
+
 
         Car car2 = new Car();
         car2.doors = 5;
