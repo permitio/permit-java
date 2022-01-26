@@ -2,6 +2,7 @@ package io.permit.sdk;
 
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
+import io.permit.sdk.api.PermitApiException;
 import io.permit.sdk.api.models.UserModel;
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
@@ -31,7 +32,11 @@ class PermitIntegrationTests {
     private boolean skipTests = false;
 
     public PermitIntegrationTests() {
-        this.config = new PermitConfig.Builder("PJUKkuwiJkKxbIoC4o4cguWxB_2gX6MyATYKc2OCM")
+        String token = System.getenv("DEV_MODE_CLIENT_TOKEN");
+        if (token == null) {
+            token = "";
+        }
+        this.config = new PermitConfig.Builder(token)
                 .withDebugMode(true)
                 .build();
 
@@ -68,7 +73,7 @@ class PermitIntegrationTests {
         logger.info(Strings.repeat("-", loggerSeparatorLength));
     }
 
-    @Test void permitCheckSucceeds() {
+    @Test void testPermitClientEnforcer() {
         if (skipTests) {
             return;
         }
@@ -88,7 +93,7 @@ class PermitIntegrationTests {
         assertTrue(allowed, "permit.check() should be true");
     }
 
-    @Test void checkGetUser() {
+    @Test void testPermitClientApi() {
         if (skipTests) {
             return;
         }
@@ -100,8 +105,8 @@ class PermitIntegrationTests {
             UserModel user = permit.api.getUser("55de594980944d48944dc10b9c70483c");
             System.out.println(user.id);
             System.out.println(gson.toJson(user));
-        } catch (IOException e) {
-            fail("got api error: " + e);
+        } catch (IOException | PermitApiException e) {
+            fail("got error: " + e);
         }
     }
 }
