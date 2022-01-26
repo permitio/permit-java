@@ -5,8 +5,10 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import io.permit.sdk.enforcement.User;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -16,6 +18,12 @@ import okhttp3.ResponseBody;
 class Car {
     public String brand = null;
     public int    doors = 0;
+}
+
+class Fleet {
+    public ArrayList<Car> cars = new ArrayList<>();
+    public Car bestCar = null;
+    public int    size = 0;
 }
 
 public class PermitClient {
@@ -32,10 +40,21 @@ public class PermitClient {
         System.out.println(car.doors);
 
         // serialization
+        User user = User.fromString("asaf");
+        System.out.println(gson.toJson(user));
+
+        User user2 = new User.Builder("asaf").withEmail("asaf@permit.io").build();
+        System.out.println(gson.toJson(user2));
+
+
         Car car2 = new Car();
-        car.brand = "Rover";
-        car.doors = 5;
-        String jsonout = gson.toJson(car);
+        car2.doors = 5;
+        Fleet fleet = new Fleet();
+        fleet.cars.add(car);
+        fleet.cars.add(car2);
+        fleet.bestCar = car2;
+        fleet.size = 2;
+        String jsonout = gson.toJson(fleet);
         System.out.println(jsonout);
 
 //        int one = gson.fromJson("1", int.class);
