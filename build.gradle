@@ -79,6 +79,7 @@ publishing {
             from components.java
 
             pom {
+                name = "Permit.io Java SDK"
                 description = 'Java SDK for Permit.io: fullstack permissions for cloud native applications'
                 url = 'https://permit.io'
                 licenses {
