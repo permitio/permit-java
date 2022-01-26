@@ -9,10 +9,15 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
+    // Maven publish plugins helps us to publish our library to maven repos
     id 'maven-publish'
+    // the signing plugin helps us to crypto-sign on our package (PGP key)
+    id 'signing'
+    // the git-version plugin helps us to publish an auto version (taken from git tags)
     id 'com.palantir.git-version' version '0.13.0'
 }
 
+// sets the java package version automatically (looks at the git repo, latest tags, commit hashes, etc)
 version gitVersion()
 
 repositories {
