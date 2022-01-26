@@ -1,4 +1,4 @@
-package io.permit.sdk.api;
+package io.permit.sdk.api.models;
 
 public class RoleAssignmentList {
 }

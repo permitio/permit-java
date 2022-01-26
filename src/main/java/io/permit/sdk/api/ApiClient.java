@@ -1,8 +1,6 @@
 package io.permit.sdk.api;
 
-import io.permit.sdk.api.models.RoleModel;
-import io.permit.sdk.api.models.TenantModel;
-import io.permit.sdk.api.models.UserModel;
+import io.permit.sdk.api.models.*;
 import io.permit.sdk.enforcement.User;
 
 interface IReadApis {
