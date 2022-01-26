@@ -26,9 +26,13 @@ repositories {
 }
 
 java {
+    // sources are required by maven central in order to accept the package
     withSourcesJar()
+    // javadoc jar is required by maven central in order to accept the package
+    withJavadocJar()
 }
 
+// package dependencies
 dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.10'
     implementation 'ch.qos.logback:logback-core:1.2.10'
