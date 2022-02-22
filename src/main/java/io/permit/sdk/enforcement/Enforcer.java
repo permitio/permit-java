@@ -116,7 +116,7 @@ public class Enforcer implements IEnforcerApi {
                     resource
                 );
                 logger.error(errorMessage);
-                throw new IOException(errorMessage);
+                throw new PermitPDPResponseError(errorMessage);
             }
             String responseString = responseBody.string();
             OpaResult result = gson.fromJson(responseString, OpaResult.class);
