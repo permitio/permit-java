@@ -17,6 +17,25 @@ import okhttp3.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+class PermitException extends Exception {
+    public PermitException(String message) {
+        super(message);
+    }
+}
+
+class PermitConnectionError extends PermitException {
+    public PermitConnectionError(String message) {
+        super(message);
+    }
+}
+
+class PermitPDPResponseError extends PermitException {
+    public PermitPDPResponseError(String message) {
+        super(message);
+    }
+}
+
+
 class EnforcerInput {
     public final String user;
     public final String action;
@@ -85,7 +104,8 @@ public class Enforcer implements IEnforcerApi {
                     response.code()
                 );
                 logger.error(errorMessage);
-                throw new IOException(errorMessage);
+                throw new PermitPDPResponseError(String.format("Permit SDK got status: %s, please check your SDK init and make sure the PDP sidecar is configured correctly. \n\
+                Read more about setting up the PDP at https://docs.permit.io/reference/SDKs/java/", url))
             }
             ResponseBody responseBody = response.body();
             if (responseBody == null) {
@@ -110,6 +130,16 @@ public class Enforcer implements IEnforcerApi {
                 ));
             }
             return result.allow;
+        } catch (IOException e) {
+            String errorMessage = string.Format(
+                "Permit SDK got error: {0}, \n" +
+                "and cannot connect to the PDP, please check your configuration and make sure the PDP is running at {1} and accepting requests. \n" +
+                "Read more about setting up the PDP at https://docs.permit.io/reference/SDKs/dotnet/",
+                e.ToString(),
+                url
+            );
+            logger.error(errorMessage);
+            throw new PermitConnectionError(errorMessage);
         }
     }
 
