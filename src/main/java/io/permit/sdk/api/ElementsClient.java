@@ -1,6 +1,8 @@
 package io.permit.sdk.api;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.models.*;
 import okhttp3.*;
@@ -8,20 +10,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 interface IElementsApi {
-    UserLoginRequest loginAs(String userId, String tenantId) throws IOException, PermitApiException;
+    UserLoginResponse loginAs(String userId, String tenantId) throws IOException, PermitApiException;
 }
 
 public class ElementsClient implements IElementsApi {
-    final static int HTTP_404_NOT_FOUND = 404;
-
     final static Logger logger = LoggerFactory.getLogger(ApiClient.class);
     private final OkHttpClient client = new OkHttpClient();
     private final PermitConfig config;
     private final Headers headers;
-    private final String baseUrl;
+    private final String apiUrl;
 
     public ElementsClient(PermitConfig config) {
         this.config = config;
@@ -29,7 +30,7 @@ public class ElementsClient implements IElementsApi {
                 .add("Content-Type", "application/json")
                 .add("Authorization", String.format("Bearer %s", this.config.getToken()))
                 .build();
-        this.baseUrl = this.config.getPdpAddress();
+        this.apiUrl = this.config.getApiUrl();
     }
 
     private void throwIfErrorResponseCode(String requestRepr, Response response, String responseContent, List<Integer> expectedErrorCodes) throws PermitApiException {
@@ -55,18 +56,20 @@ public class ElementsClient implements IElementsApi {
     }
 
     @Override
-    public UserLoginRequest loginAs(String userId, String tenantId) throws IOException, PermitApiException {
+    public UserLoginResponse loginAs(String userId, String tenantId) throws IOException, PermitApiException {
         UserLoginRequest element = new UserLoginRequest();
         element.tenantId = tenantId;
         element.userId = userId;
 
         // request body
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
         String requestBody = gson.toJson(element);
         RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
 
         // create the request
-        String url = String.format("%s/v2/auth/elements_login_as", this.baseUrl);
+        String url = String.format("%s/v2/auth/elements_login_as", this.config.getApiUrl());
         Request request = new Request.Builder()
                 .url(url)
                 .headers(this.headers)
@@ -84,8 +87,15 @@ public class ElementsClient implements IElementsApi {
             }
             String responseString = responseBody.string();
             throwIfErrorResponseCode(requestRepr, response, responseString);
-            return gson.fromJson(responseString, UserLoginRequest.class);
+            UserLoginResponse userLoginResponse = gson.fromJson(responseString, UserLoginResponse.class);
+            userLoginResponse.content = new HashMap<>();
+            userLoginResponse.content.put("url", userLoginResponse.redirectUrl);
+            return userLoginResponse;
         }
+    }
+
+    public String getApiUrl() {
+        return apiUrl;
     }
 }
 
