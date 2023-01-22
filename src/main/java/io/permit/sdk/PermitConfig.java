@@ -6,6 +6,7 @@ public class PermitConfig {
     // main config vars
     private final String token;
     private final String pdp;
+    private final String apiUrl;
     private final Boolean debugMode;
 
     // logger config
@@ -25,6 +26,7 @@ public class PermitConfig {
     private PermitConfig(Builder builder) {
         this.token = builder.token;
         this.pdp = builder.pdp;
+        this.apiUrl = builder.apiUrl;
         this.debugMode = builder.debugMode;
         this.logLevel = builder.logLevel;
         this.logLabel = builder.logLabel;
@@ -40,6 +42,7 @@ public class PermitConfig {
     public String getToken() {
         return token;
     }
+    public String getApiUrl() { return apiUrl; }
     public String getPdpAddress() {
         return pdp;
     }
@@ -74,7 +77,8 @@ public class PermitConfig {
     public static class Builder {
         // main config vars
         private String token;
-        private String pdp = "http://localhost:7000";
+        private String pdp = "http://localhost:7766";
+        private String apiUrl = "https://api.permit.io";
         private Boolean debugMode = false;
 
         // logger config

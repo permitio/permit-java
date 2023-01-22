@@ -3,8 +3,8 @@ package io.permit.sdk;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import io.permit.sdk.api.PermitApiException;
+import io.permit.sdk.api.models.UserLoginResponse;
 import io.permit.sdk.api.models.UserModel;
-import io.permit.sdk.enforcement.AssignedRole;
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
 import okhttp3.HttpUrl;
@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,9 +32,12 @@ class PermitIntegrationTests {
     private final static int loggerSeparatorLength = 80;
     private boolean skipTests = false;
 
+    static Random rand = new Random();
+    static String suffixedUserKey = "test|" + rand.nextInt();
+
     private final static String roleKey = "captain";
     private final static String tenantKey = "tortuga";
-    private final static String userKey = "test|13d4dd3ff127";
+    private final static String userKey = suffixedUserKey;
     private final static String userEmail = "jack@pirates.com";
     private final static String userFirstName = "Jack";
     private final static String userLastName = "Sparrow";
@@ -90,7 +93,7 @@ class PermitIntegrationTests {
         Boolean allowed = null;
         try {
             allowed = permit.check(
-                User.fromString("55de594980944d48944dc10b9c70483c"),
+                User.fromString(userKey),
                 "create",
                 Resource.fromString("document")
             );
@@ -99,6 +102,25 @@ class PermitIntegrationTests {
         }
 
         assertTrue(allowed, "permit.check() should be true");
+    }
+
+    @Test void testPermitElementsLoginAs() {
+        if (skipTests) {
+            return;
+        }
+        logTestIsStarting("permitCheckSucceeds");
+        Permit permit = new Permit(this.config);
+        UserLoginResponse loginAs = null;
+        try {
+            loginAs = permit.elements.loginAs("raz@permit.io", "fafb66f9c98647ad954f129b9f2b1c84");
+        } catch (IOException e) {
+            fail(e);
+        } catch (PermitApiException e) {
+            e.printStackTrace();
+        }
+
+        assertNotNull(loginAs.redirectUrl);
+        assertNotNull(loginAs.content);
     }
 
     @Test void testPermitApiUserLifecycle() {
