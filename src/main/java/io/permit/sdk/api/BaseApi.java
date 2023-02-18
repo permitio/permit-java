@@ -32,6 +32,13 @@ public abstract class BaseApi {
             .build();
     }
 
+    protected <T> T callApiAndParseJson(Request request, Class<T> modelClass) throws IOException, PermitApiError {
+        try (Response response = client.newCall(request).execute()) {
+            String responseString = processResponseBody(response);
+            return (new Gson()).fromJson(responseString, modelClass);
+        }
+    }
+
     protected void throwIfErrorResponseCode(Response response, String responseContent, List<Integer> validErrorCodes) throws PermitApiError {
         if (!response.isSuccessful() && !validErrorCodes.contains(response.code())) {
             if (config.isDebugMode()) {
@@ -52,14 +59,18 @@ public abstract class BaseApi {
         logger.info(String.format("[Permit SDK] got error:\n%s", json));
     }
 
-    protected String processResponseBody(Response response) throws IOException, PermitApiError {
+    protected String processResponseBody(Response response, boolean throwOnEmptyResponse) throws IOException, PermitApiError {
         ResponseBody responseBody = response.body();
-        if (responseBody == null) {
+        if (responseBody == null && throwOnEmptyResponse) {
             throw new IOException("got empty response");
         }
         String responseString = responseBody.string();
         throwIfErrorResponseCode(response, responseString, new ArrayList<Integer>());
         return responseString;
+    }
+
+    protected String processResponseBody(Response response) throws IOException, PermitApiError {
+        return processResponseBody(response, true);
     }
 
     protected String buildUrl(String relativeUrl) {

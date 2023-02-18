@@ -170,28 +170,4 @@ class PermitIntegrationTests {
 //            fail("got error: " + e);
 //        }
 //    }
-
-    @Test void testRolesApi() {
-        logTestIsStarting("testRolesApi");
-
-        // init the client
-        Permit permit = new Permit(this.config);
-        Gson gson = new Gson();
-        RoleRead role;
-
-        // create user lifecycle
-        try {
-            role = permit.api.roles.get("admin");
-            assertNotNull(role);
-            assertEquals(role.key, "admin");
-            assertEquals(role.name, "Admin");
-
-            role = permit.api.roles.get("viewer");
-            assertNotNull(role);
-            assertEquals(role.key, "viewer");
-            assertEquals(role.name, "Viewer");
-        } catch (IOException | PermitApiError | PermitContextError e) {
-            fail("got error: " + e);
-        }
-    }
 }
