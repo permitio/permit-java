@@ -1,0 +1,24 @@
+{
+  "title": "RemoveRolePermissions",
+  "required": [
+    "permissions"
+  ],
+  "type": "object",
+  "properties": {
+    "permissions": {
+      "title": "Permissions",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`,i.e: the \"permission name\"."
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "permissions": [
+      "document:share"
+    ]
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

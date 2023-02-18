@@ -1,0 +1,102 @@
+{
+  "title": "RoleRead",
+  "required": [
+    "name",
+    "key",
+    "id",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "created_at",
+    "updated_at"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the role"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "optional description string explaining what this role represents, or what permissions are granted to it."
+    },
+    "permissions": {
+      "title": "Permissions",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "list of action keys that define what actions this resource role is permitted to do"
+    },
+    "extends": {
+      "title": "Extends",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list."
+    },
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the role",
+      "format": "uuid"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the role belongs to.",
+      "format": "uuid"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the role belongs to.",
+      "format": "uuid"
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the role belongs to.",
+      "format": "uuid"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the role was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the role was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "key": "editor",
+    "name": "Editor",
+    "description": "the editor role can read and write to documents",
+    "permissions": [
+      "document:write"
+    ],
+    "extends": [
+      "viewer"
+    ],
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

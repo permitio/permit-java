@@ -1,0 +1,44 @@
+{
+  "title": "TenantCreate",
+  "required": [
+    "key",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "pattern": "^[A-Za-z0-9\\-_]+$",
+      "type": "string",
+      "description": "A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified)."
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "A descriptive name for the tenant"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "an optional longer description of the tenant"
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
+      "default": {}
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "key": "stripeinc",
+    "name": "Stripe Inc",
+    "attributes": {
+      "allowed_locations": [
+        "US",
+        "CA"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

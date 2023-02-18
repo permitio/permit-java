@@ -1,0 +1,79 @@
+{
+  "title": "EnvironmentStats",
+  "required": [
+    "key",
+    "id",
+    "organization_id",
+    "project_id",
+    "created_at",
+    "updated_at",
+    "name",
+    "pdp_configs",
+    "stats"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the environment",
+      "format": "uuid"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the environment belongs to.",
+      "format": "uuid"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the environment belongs to.",
+      "format": "uuid"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the environment was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the environment was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the environment"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "an optional longer description of the environment"
+    },
+    "custom_branch_name": {
+      "title": "Custom Branch Name",
+      "type": "string",
+      "description": "when using gitops feature, an optional branch name for the environment"
+    },
+    "pdp_configs": {
+      "title": "Pdp Configs",
+      "type": "array",
+      "items": {
+        "$ref": "PDPConfigRead.json"
+      }
+    },
+    "stats": {
+      "$ref": "Statistics.json"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

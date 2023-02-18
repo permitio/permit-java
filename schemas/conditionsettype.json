@@ -1,0 +1,10 @@
+{
+  "title": "ConditionSetType",
+  "enum": [
+    "userset",
+    "resourceset"
+  ],
+  "type": "string",
+  "description": "An enumeration.",
+  "$schema": "http://json-schema.org/schema#"
+}

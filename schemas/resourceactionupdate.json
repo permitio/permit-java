@@ -1,0 +1,21 @@
+{
+  "title": "ResourceActionUpdate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the action"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this action respresents in your system"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "description": "read a document"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

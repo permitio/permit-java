@@ -1,0 +1,14 @@
+{
+  "title": "AttributeType",
+  "enum": [
+    "bool",
+    "number",
+    "string",
+    "time",
+    "array",
+    "json"
+  ],
+  "type": "string",
+  "description": "supported attribute primitives",
+  "$schema": "http://json-schema.org/schema#"
+}

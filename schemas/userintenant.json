@@ -1,0 +1,34 @@
+{
+  "title": "UserInTenant",
+  "required": [
+    "tenant",
+    "roles",
+    "status"
+  ],
+  "type": "object",
+  "properties": {
+    "tenant": {
+      "title": "Tenant",
+      "type": "string",
+      "description": "The tenant key which the user is associated with"
+    },
+    "roles": {
+      "title": "Roles",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of roles assigned to the user in that tenant"
+    },
+    "status": {
+      "allOf": [
+        {
+          "$ref": "UserStatus.json"
+        }
+      ],
+      "description": "Whether the user has signed in or not"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,7 @@
+{
+  "title": "RolesBlock",
+  "type": "object",
+  "additionalProperties": false,
+  "description": "Resource roles definition block, defines all the roles on the resource.",
+  "$schema": "http://json-schema.org/schema#"
+}

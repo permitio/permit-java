@@ -1,0 +1,43 @@
+{
+  "title": "ResourceInstanceCreate",
+  "required": [
+    "key",
+    "resource"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "pattern": "^[A-Za-z0-9\\-_]+$",
+      "type": "string",
+      "description": "A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it's unique on your end. The resource instance key must be url-friendly."
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string",
+      "description": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps."
+    },
+    "resource": {
+      "title": "Resource",
+      "type": "string",
+      "description": "the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`."
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
+      "default": {}
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "key": "react",
+    "resource": "repository",
+    "tenant": "default",
+    "attributes": {
+      "private": "false",
+      "owner": "facebook"
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

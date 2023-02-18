@@ -1,0 +1,33 @@
+{
+  "title": "RoleAssignmentRemove",
+  "required": [
+    "role",
+    "tenant",
+    "user"
+  ],
+  "type": "object",
+  "properties": {
+    "role": {
+      "title": "Role",
+      "type": "string",
+      "description": "the role that will be unassigned (accepts either the role id or the role key)"
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string",
+      "description": "the tenant the role is associated with (accepts either the tenant id or the tenant key)"
+    },
+    "user": {
+      "title": "User",
+      "type": "string",
+      "description": "the user the role will be unassigned from (accepts either the user id or the user key)"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "user": "jane@coolcompany.com",
+    "role": "editor",
+    "tenant": "google-inc"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,146 @@
+{
+  "title": "ResourceRead",
+  "required": [
+    "key",
+    "id",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "created_at",
+    "updated_at",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the resource",
+      "format": "uuid"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the resource belongs to.",
+      "format": "uuid"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the resource belongs to.",
+      "format": "uuid"
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the resource belongs to.",
+      "format": "uuid"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the resource was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the resource was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the resource"
+    },
+    "urn": {
+      "title": "Urn",
+      "type": "string",
+      "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this resource respresents in your system"
+    },
+    "actions": {
+      "title": "Actions",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "ActionBlockRead.json"
+      },
+      "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        ",
+      "default": {}
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "AttributeBlockRead.json"
+      },
+      "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
+      "default": {}
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z",
+    "key": "repository",
+    "name": "Repository",
+    "urn": "prn:github:scm:repository",
+    "description": "a git repository stored on github",
+    "actions": {
+      "clone": {
+        "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
+      },
+      "read": {
+        "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+      },
+      "push": {
+        "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+      }
+    },
+    "roles": {
+      "contributor": {
+        "permissions": [
+          "read"
+        ],
+        "description": "the contributor role can only read from the repo"
+      },
+      "maintainer": {
+        "permissions": [
+          "push"
+        ],
+        "extends": [
+          "contributor"
+        ]
+      }
+    },
+    "relations": {
+      "parent": "Organization"
+    },
+    "attributes": {
+      "created": {
+        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+        "type": "time",
+        "description": "the time (timestamp) the repository was created"
+      },
+      "private": {
+        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+        "type": "bool",
+        "description": "whether the repo is private (if false, the repo is public)"
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

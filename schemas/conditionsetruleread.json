@@ -1,0 +1,88 @@
+{
+  "title": "ConditionSetRuleRead",
+  "required": [
+    "id",
+    "key",
+    "user_set",
+    "permission",
+    "resource_set",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "created_at",
+    "updated_at"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the condition set rule",
+      "format": "uuid"
+    },
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A unique id by which Permit will identify this condition set rule."
+    },
+    "user_set": {
+      "title": "User Set",
+      "type": "string",
+      "description": "the userset that is currently granted permissions, i.e: all the users matching this rule are granted the permission on the resourceset"
+    },
+    "permission": {
+      "title": "Permission",
+      "type": "string",
+      "description": "a permission that is currently granted to the userset *on* the resourceset."
+    },
+    "resource_set": {
+      "title": "Resource Set",
+      "type": "string",
+      "description": "the resourceset that represents the resources that are currently granted for access, i.e: all the resources matching this rule can be accessed by the userset to perform the granted *permission*"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the condition set rule belongs to.",
+      "format": "uuid"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the condition set rule belongs to.",
+      "format": "uuid"
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the condition set rule belongs to.",
+      "format": "uuid"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the condition set rule was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the condition set rule was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "key": "us_based_employees_can_repository_clone_private_repos",
+    "user_set": "us_based_employees",
+    "permission": "repository:clone",
+    "resource_set": "private_repos",
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:16:22Z"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

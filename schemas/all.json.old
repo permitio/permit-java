@@ -1,0 +1,202 @@
+{
+  "oneOf": [
+    {
+      "$ref": "ActionBlockEditable.json"
+    },
+    {
+      "$ref": "ActionBlockRead.json"
+    },
+    {
+      "$ref": "AddRolePermissions.json"
+    },
+    {
+      "$ref": "AttributeBlockEditable.json"
+    },
+    {
+      "$ref": "AttributeBlockRead.json"
+    },
+    {
+      "$ref": "AttributeType.json"
+    },
+    {
+      "$ref": "ConditionSetCreate.json"
+    },
+    {
+      "$ref": "ConditionSetRead.json"
+    },
+    {
+      "$ref": "ConditionSetRuleCreate.json"
+    },
+    {
+      "$ref": "ConditionSetRuleRead.json"
+    },
+    {
+      "$ref": "ConditionSetRuleRemove.json"
+    },
+    {
+      "$ref": "ConditionSetType.json"
+    },
+    {
+      "$ref": "ConditionSetUpdate.json"
+    },
+    {
+      "$ref": "EnvironmentCreate.json"
+    },
+    {
+      "$ref": "EnvironmentRead.json"
+    },
+    {
+      "$ref": "EnvironmentStats.json"
+    },
+    {
+      "$ref": "EnvironmentUpdate.json"
+    },
+    {
+      "$ref": "HTTPValidationError.json"
+    },
+    {
+      "$ref": "OrganizationCreate.json"
+    },
+    {
+      "$ref": "OrganizationRead.json"
+    },
+    {
+      "$ref": "OrganizationReadWithAPIKey.json"
+    },
+    {
+      "$ref": "OrganizationUpdate.json"
+    },
+    {
+      "$ref": "PDPConfigRead.json"
+    },
+    {
+      "$ref": "PaginatedResult_UserRead_.json"
+    },
+    {
+      "$ref": "ProjectCreate.json"
+    },
+    {
+      "$ref": "ProjectRead.json"
+    },
+    {
+      "$ref": "ProjectUpdate.json"
+    },
+    {
+      "$ref": "RelationsBlock.json"
+    },
+    {
+      "$ref": "RemoveRolePermissions.json"
+    },
+    {
+      "$ref": "ResourceActionCreate.json"
+    },
+    {
+      "$ref": "ResourceActionRead.json"
+    },
+    {
+      "$ref": "ResourceActionUpdate.json"
+    },
+    {
+      "$ref": "ResourceAttributeCreate.json"
+    },
+    {
+      "$ref": "ResourceAttributeRead.json"
+    },
+    {
+      "$ref": "ResourceAttributeUpdate.json"
+    },
+    {
+      "$ref": "ResourceCreate.json"
+    },
+    {
+      "$ref": "ResourceInstanceCreate.json"
+    },
+    {
+      "$ref": "ResourceInstanceRead.json"
+    },
+    {
+      "$ref": "ResourceInstanceUpdate.json"
+    },
+    {
+      "$ref": "ResourceRead.json"
+    },
+    {
+      "$ref": "ResourceReplace.json"
+    },
+    {
+      "$ref": "ResourceRoleCreate.json"
+    },
+    {
+      "$ref": "ResourceRoleRead.json"
+    },
+    {
+      "$ref": "ResourceRoleUpdate.json"
+    },
+    {
+      "$ref": "ResourceUpdate.json"
+    },
+    {
+      "$ref": "RoleAssignmentCreate.json"
+    },
+    {
+      "$ref": "RoleAssignmentRead.json"
+    },
+    {
+      "$ref": "RoleAssignmentRemove.json"
+    },
+    {
+      "$ref": "RoleBlock.json"
+    },
+    {
+      "$ref": "RoleCreate.json"
+    },
+    {
+      "$ref": "RoleRead.json"
+    },
+    {
+      "$ref": "RoleUpdate.json"
+    },
+    {
+      "$ref": "RolesBlock.json"
+    },
+    {
+      "$ref": "Statistics.json"
+    },
+    {
+      "$ref": "TenantCreate.json"
+    },
+    {
+      "$ref": "TenantRead.json"
+    },
+    {
+      "$ref": "TenantUpdate.json"
+    },
+    {
+      "$ref": "UserCreate.json"
+    },
+    {
+      "$ref": "UserInTenant.json"
+    },
+    {
+      "$ref": "UserRead.json"
+    },
+    {
+      "$ref": "UserRole.json"
+    },
+    {
+      "$ref": "UserRoleCreate.json"
+    },
+    {
+      "$ref": "UserRoleRemove.json"
+    },
+    {
+      "$ref": "UserStatus.json"
+    },
+    {
+      "$ref": "UserUpdate.json"
+    },
+    {
+      "$ref": "ValidationError.json"
+    }
+  ]
+}

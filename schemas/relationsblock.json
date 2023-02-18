@@ -1,0 +1,7 @@
+{
+  "title": "RelationsBlock",
+  "type": "object",
+  "additionalProperties": false,
+  "description": "A actions definition block, typically contained within a resource type definition block.\nThe actions represents the ways you can interact with a protected resource.",
+  "$schema": "http://json-schema.org/schema#"
+}

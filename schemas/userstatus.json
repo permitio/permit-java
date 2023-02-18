@@ -1,0 +1,10 @@
+{
+  "title": "UserStatus",
+  "enum": [
+    "active",
+    "pending"
+  ],
+  "type": "string",
+  "description": "An enumeration.",
+  "$schema": "http://json-schema.org/schema#"
+}

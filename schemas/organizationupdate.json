@@ -1,0 +1,19 @@
+{
+  "title": "OrganizationUpdate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "pattern": "^[A-Za-z0-9\\.\\-\\_\\ ]+$",
+      "type": "string",
+      "description": "The name of the organization, usually it's your company's name."
+    },
+    "settings": {
+      "title": "Settings",
+      "type": "object",
+      "description": "the settings for this project"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

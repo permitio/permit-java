@@ -1,0 +1,29 @@
+{
+  "title": "ProjectUpdate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the project"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "a longer description outlining the project objectives"
+    },
+    "settings": {
+      "title": "Settings",
+      "type": "object",
+      "description": "the settings for this project"
+    },
+    "active_policy_repo_id": {
+      "title": "Active Policy Repo Id",
+      "type": "string",
+      "description": "the id of the policy repo to use for this project",
+      "format": "uuid"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}
