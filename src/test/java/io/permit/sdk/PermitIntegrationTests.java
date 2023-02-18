@@ -2,6 +2,7 @@ package io.permit.sdk;
 
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
+import io.permit.sdk.api.PermitApiError;
 import io.permit.sdk.api.PermitApiException;
 import io.permit.sdk.api.models.UserLoginResponse;
 import io.permit.sdk.api.models.UserModel;
@@ -180,10 +181,11 @@ class PermitIntegrationTests {
         // create user lifecycle
         try {
             role = permit.api.roles.get("admin");
+
             assertNotNull(role);
             assertEquals(role.key, "admin");
             assertEquals(role.name, "Admin");
-        } catch (IOException | PermitApiException e) {
+        } catch (IOException | PermitApiError e) {
             fail("got error: " + e);
         }
     }

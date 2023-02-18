@@ -35,7 +35,7 @@ public class ApiClient implements IReadApis, IWriteApis {
     final static int HTTP_404_NOT_FOUND = 404;
 
     final static Logger logger = LoggerFactory.getLogger(ApiClient.class);
-    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client;
     private final PermitConfig config;
     private final Headers headers;
     private final String baseUrl;
@@ -45,12 +45,16 @@ public class ApiClient implements IReadApis, IWriteApis {
 
     public ApiClient(PermitConfig config) {
         this.config = config;
+        this.client = new OkHttpClient.Builder()
+                .addInterceptor(new HttpLoggingInterceptor(logger, config))
+                .build();
+        this.roles = new RolesApi(this.client, this.config);
+
         this.headers = new Headers.Builder()
             .add("Content-Type", "application/json")
             .add("Authorization", String.format("Bearer %s", this.config.getToken()))
             .build();
         this.baseUrl = this.config.getPdpAddress();
-        this.roles = new RolesApi(this.client, this.config, this.headers);
     }
 
     private void throwIfErrorResponseCode(String requestRepr, Response response, String responseContent, List<Integer> expectedErrorCodes) throws PermitApiException {
