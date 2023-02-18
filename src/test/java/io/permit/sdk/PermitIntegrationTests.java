@@ -7,6 +7,7 @@ import io.permit.sdk.api.models.UserLoginResponse;
 import io.permit.sdk.api.models.UserModel;
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
+import io.permit.sdk.openapi.models.RoleRead;
 import okhttp3.HttpUrl;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -43,41 +44,39 @@ class PermitIntegrationTests {
     private final static String userLastName = "Sparrow";
 
     public PermitIntegrationTests() {
-        String token = System.getenv("DEV_MODE_CLIENT_TOKEN");
-        if (token == null) {
-            token = "";
-        }
+        String token = "permit_key_camCCsNhluGfSJXg2ZzLGlCWjXSYWJul68nCnthIOug8tR9PUfPGHeSYoImU6lWFzML7uJexzAG1GCdm8hyYxH";
         this.config = new PermitConfig.Builder(token)
+                .withApiUrl("http://localhost:8000")
                 .withDebugMode(true)
                 .build();
 
-        HttpUrl pdpUrl = HttpUrl.parse(config.getPdpAddress());
+//        HttpUrl pdpUrl = HttpUrl.parse(config.getPdpAddress());
 
-        try {
-            if (!isAddressReachable(pdpUrl.host(), pdpUrl.port(), connectionTimeout)) {
-                skipTests = true;
-                logger.warn(String.format("PDP at address %s is not reachable, SKIPPING TESTS.", config.getPdpAddress()));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            if (!isAddressReachable(pdpUrl.host(), pdpUrl.port(), connectionTimeout)) {
+//                skipTests = true;
+//                logger.warn(String.format("PDP at address %s is not reachable, SKIPPING TESTS.", config.getPdpAddress()));
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
-    private static boolean isAddressReachable(String address, int port, int timeout) throws IOException {
-        Socket socket = new Socket();
-        try {
-            // Connects this socket to the server with a specified timeout value.
-            socket.connect(new InetSocketAddress(address, port), timeout);
-            // Return true if connection successful
-            return true;
-        } catch (IOException exception) {
-            // Return false if connection fails
-            return false;
-        } finally {
-            socket.close();
-        }
-    }
-
+//    private static boolean isAddressReachable(String address, int port, int timeout) throws IOException {
+//        Socket socket = new Socket();
+//        try {
+//            // Connects this socket to the server with a specified timeout value.
+//            socket.connect(new InetSocketAddress(address, port), timeout);
+//            // Return true if connection successful
+//            return true;
+//        } catch (IOException exception) {
+//            // Return false if connection fails
+//            return false;
+//        } finally {
+//            socket.close();
+//        }
+//    }
+//
     private static void logTestIsStarting(String testName) {
         logger.info(Strings.repeat("-", loggerSeparatorLength));
         logger.info(String.format("Running test: %s", testName));
@@ -165,6 +164,25 @@ class PermitIntegrationTests {
             // user will be null again
             user = permit.api.getUser(testUser.getKey());
             assertNull(user);
+        } catch (IOException | PermitApiException e) {
+            fail("got error: " + e);
+        }
+    }
+
+    @Test void testRolesApi() {
+        logTestIsStarting("testRolesApi");
+
+        // init the client
+        Permit permit = new Permit(this.config);
+        Gson gson = new Gson();
+        RoleRead role;
+
+        // create user lifecycle
+        try {
+            role = permit.api.roles.get("admin");
+            assertNotNull(role);
+            assertEquals(role.key, "admin");
+            assertEquals(role.name, "Admin");
         } catch (IOException | PermitApiException e) {
             fail("got error: " + e);
         }

@@ -40,6 +40,9 @@ public class ApiClient implements IReadApis, IWriteApis {
     private final Headers headers;
     private final String baseUrl;
 
+
+    public final RolesApi roles;
+
     public ApiClient(PermitConfig config) {
         this.config = config;
         this.headers = new Headers.Builder()
@@ -47,6 +50,7 @@ public class ApiClient implements IReadApis, IWriteApis {
             .add("Authorization", String.format("Bearer %s", this.config.getToken()))
             .build();
         this.baseUrl = this.config.getPdpAddress();
+        this.roles = new RolesApi(this.client, this.config, this.headers);
     }
 
     private void throwIfErrorResponseCode(String requestRepr, Response response, String responseContent, List<Integer> expectedErrorCodes) throws PermitApiException {

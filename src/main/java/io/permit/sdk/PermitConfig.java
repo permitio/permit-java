@@ -104,6 +104,11 @@ public class PermitConfig {
             return this;
         }
 
+        public Builder withApiUrl(String apiUrl) {
+            this.apiUrl = apiUrl;
+            return this;
+        }
+
         public Builder withDebugMode(Boolean debugMode) {
             this.debugMode = debugMode;
             return this;
