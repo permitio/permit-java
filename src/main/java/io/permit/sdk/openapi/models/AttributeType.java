@@ -4,8 +4,7 @@ package io.permit.sdk.openapi.models;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -17,11 +16,17 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @Generated("jsonschema2pojo")
 public enum AttributeType {
 
+    @SerializedName("bool")
     BOOL("bool"),
+    @SerializedName("number")
     NUMBER("number"),
+    @SerializedName("string")
     STRING("string"),
+    @SerializedName("time")
     TIME("time"),
+    @SerializedName("array")
     ARRAY("array"),
+    @SerializedName("json")
     JSON("json");
     private final String value;
     private final static Map<String, AttributeType> CONSTANTS = new HashMap<String, AttributeType>();
@@ -41,12 +46,10 @@ public enum AttributeType {
         return this.value;
     }
 
-    @JsonValue
     public String value() {
         return this.value;
     }
 
-    @JsonCreator
     public static AttributeType fromValue(String value) {
         AttributeType constant = CONSTANTS.get(value);
         if (constant == null) {

@@ -4,9 +4,8 @@ package io.permit.sdk.openapi.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -15,12 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "loc",
-    "msg",
-    "type"
-})
 @Generated("jsonschema2pojo")
 public class ValidationError {
 
@@ -31,7 +24,8 @@ public class ValidationError {
      * (Required)
      * 
      */
-    @JsonProperty("loc")
+    @SerializedName("loc")
+    @Expose
     public List<Object> loc = new ArrayList<Object>();
     /**
      * Message
@@ -40,7 +34,8 @@ public class ValidationError {
      * (Required)
      * 
      */
-    @JsonProperty("msg")
+    @SerializedName("msg")
+    @Expose
     public String msg;
     /**
      * Error Type
@@ -49,7 +44,8 @@ public class ValidationError {
      * (Required)
      * 
      */
-    @JsonProperty("type")
+    @SerializedName("type")
+    @Expose
     public String type;
 
     /**

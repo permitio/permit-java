@@ -17,26 +17,22 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the user",
-      "format": "uuid"
+      "description": "Unique id of the user"
     },
     "organization_id": {
       "title": "Organization Id",
       "type": "string",
-      "description": "Unique id of the organization that the user belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the organization that the user belongs to."
     },
     "project_id": {
       "title": "Project Id",
       "type": "string",
-      "description": "Unique id of the project that the user belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the project that the user belongs to."
     },
     "environment_id": {
       "title": "Environment Id",
       "type": "string",
-      "description": "Unique id of the environment that the user belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the environment that the user belongs to."
     },
     "associated_tenants": {
       "title": "Associated Tenants",

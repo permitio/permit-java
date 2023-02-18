@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,11 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "type",
-    "description"
-})
 @Generated("jsonschema2pojo")
 public class AttributeBlockEditable {
 
@@ -27,8 +20,8 @@ public class AttributeBlockEditable {
      * (Required)
      * 
      */
-    @JsonProperty("type")
-    @JsonPropertyDescription("The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.")
+    @SerializedName("type")
+    @Expose
     public Object type;
     /**
      * Description
@@ -36,8 +29,8 @@ public class AttributeBlockEditable {
      * optional description string explaining what data this attribute will store
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("optional description string explaining what data this attribute will store")
+    @SerializedName("description")
+    @Expose
     public String description;
 
     /**

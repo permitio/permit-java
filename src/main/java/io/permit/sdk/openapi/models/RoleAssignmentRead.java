@@ -2,12 +2,9 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -16,20 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "id",
-    "user",
-    "role",
-    "tenant",
-    "user_id",
-    "role_id",
-    "tenant_id",
-    "organization_id",
-    "project_id",
-    "environment_id",
-    "created_at"
-})
 @Generated("jsonschema2pojo")
 public class RoleAssignmentRead {
 
@@ -40,9 +23,9 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the role assignment")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * User
      * <p>
@@ -50,8 +33,8 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("user")
-    @JsonPropertyDescription("the user the role is assigned to")
+    @SerializedName("user")
+    @Expose
     public String user;
     /**
      * Role
@@ -60,8 +43,8 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("role")
-    @JsonPropertyDescription("the role that is assigned")
+    @SerializedName("role")
+    @Expose
     public String role;
     /**
      * Tenant
@@ -70,8 +53,8 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("tenant")
-    @JsonPropertyDescription("the tenant the role is associated with")
+    @SerializedName("tenant")
+    @Expose
     public String tenant;
     /**
      * User Id
@@ -80,9 +63,9 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("user_id")
-    @JsonPropertyDescription("Unique id of the user")
-    public UUID userId;
+    @SerializedName("user_id")
+    @Expose
+    public String userId;
     /**
      * Role Id
      * <p>
@@ -90,9 +73,9 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("role_id")
-    @JsonPropertyDescription("Unique id of the role")
-    public UUID roleId;
+    @SerializedName("role_id")
+    @Expose
+    public String roleId;
     /**
      * Tenant Id
      * <p>
@@ -100,9 +83,9 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("tenant_id")
-    @JsonPropertyDescription("Unique id of the tenant")
-    public UUID tenantId;
+    @SerializedName("tenant_id")
+    @Expose
+    public String tenantId;
     /**
      * Organization Id
      * <p>
@@ -110,9 +93,9 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("organization_id")
-    @JsonPropertyDescription("Unique id of the organization that the role assignment belongs to.")
-    public UUID organizationId;
+    @SerializedName("organization_id")
+    @Expose
+    public String organizationId;
     /**
      * Project Id
      * <p>
@@ -120,9 +103,9 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("project_id")
-    @JsonPropertyDescription("Unique id of the project that the role assignment belongs to.")
-    public UUID projectId;
+    @SerializedName("project_id")
+    @Expose
+    public String projectId;
     /**
      * Environment Id
      * <p>
@@ -130,9 +113,9 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("environment_id")
-    @JsonPropertyDescription("Unique id of the environment that the role assignment belongs to.")
-    public UUID environmentId;
+    @SerializedName("environment_id")
+    @Expose
+    public String environmentId;
     /**
      * Created At
      * <p>
@@ -140,8 +123,8 @@ public class RoleAssignmentRead {
      * (Required)
      * 
      */
-    @JsonProperty("created_at")
-    @JsonPropertyDescription("Date and time when the role assignment was created (ISO_8601 format).")
+    @SerializedName("created_at")
+    @Expose
     public Date createdAt;
 
     /**
@@ -165,7 +148,7 @@ public class RoleAssignmentRead {
      * @param projectId
      * @param tenant
      */
-    public RoleAssignmentRead(UUID id, String user, String role, String tenant, UUID userId, UUID roleId, UUID tenantId, UUID organizationId, UUID projectId, UUID environmentId, Date createdAt) {
+    public RoleAssignmentRead(String id, String user, String role, String tenant, String userId, String roleId, String tenantId, String organizationId, String projectId, String environmentId, Date createdAt) {
         super();
         this.id = id;
         this.user = user;
@@ -180,7 +163,7 @@ public class RoleAssignmentRead {
         this.createdAt = createdAt;
     }
 
-    public RoleAssignmentRead withId(UUID id) {
+    public RoleAssignmentRead withId(String id) {
         this.id = id;
         return this;
     }
@@ -200,32 +183,32 @@ public class RoleAssignmentRead {
         return this;
     }
 
-    public RoleAssignmentRead withUserId(UUID userId) {
+    public RoleAssignmentRead withUserId(String userId) {
         this.userId = userId;
         return this;
     }
 
-    public RoleAssignmentRead withRoleId(UUID roleId) {
+    public RoleAssignmentRead withRoleId(String roleId) {
         this.roleId = roleId;
         return this;
     }
 
-    public RoleAssignmentRead withTenantId(UUID tenantId) {
+    public RoleAssignmentRead withTenantId(String tenantId) {
         this.tenantId = tenantId;
         return this;
     }
 
-    public RoleAssignmentRead withOrganizationId(UUID organizationId) {
+    public RoleAssignmentRead withOrganizationId(String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public RoleAssignmentRead withProjectId(UUID projectId) {
+    public RoleAssignmentRead withProjectId(String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public RoleAssignmentRead withEnvironmentId(UUID environmentId) {
+    public RoleAssignmentRead withEnvironmentId(String environmentId) {
         this.environmentId = environmentId;
         return this;
     }

@@ -2,9 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -13,15 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "roles",
-    "users",
-    "policies",
-    "resources",
-    "tenants",
-    "has_decision_logs"
-})
 @Generated("jsonschema2pojo")
 public class Statistics {
 
@@ -32,7 +22,8 @@ public class Statistics {
      * (Required)
      * 
      */
-    @JsonProperty("roles")
+    @SerializedName("roles")
+    @Expose
     public Integer roles;
     /**
      * Users
@@ -41,7 +32,8 @@ public class Statistics {
      * (Required)
      * 
      */
-    @JsonProperty("users")
+    @SerializedName("users")
+    @Expose
     public Integer users;
     /**
      * Policies
@@ -50,7 +42,8 @@ public class Statistics {
      * (Required)
      * 
      */
-    @JsonProperty("policies")
+    @SerializedName("policies")
+    @Expose
     public Integer policies;
     /**
      * Resources
@@ -59,7 +52,8 @@ public class Statistics {
      * (Required)
      * 
      */
-    @JsonProperty("resources")
+    @SerializedName("resources")
+    @Expose
     public Integer resources;
     /**
      * Tenants
@@ -68,7 +62,8 @@ public class Statistics {
      * (Required)
      * 
      */
-    @JsonProperty("tenants")
+    @SerializedName("tenants")
+    @Expose
     public Integer tenants;
     /**
      * Has Decision Logs
@@ -77,7 +72,8 @@ public class Statistics {
      * (Required)
      * 
      */
-    @JsonProperty("has_decision_logs")
+    @SerializedName("has_decision_logs")
+    @Expose
     public Boolean hasDecisionLogs;
 
     /**

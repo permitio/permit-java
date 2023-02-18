@@ -22,8 +22,7 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the attribute",
-      "format": "uuid"
+      "description": "Unique id of the attribute"
     },
     "key": {
       "title": "Key",

@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,13 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "email",
-    "first_name",
-    "last_name",
-    "attributes"
-})
 @Generated("jsonschema2pojo")
 public class UserUpdate {
 
@@ -30,8 +21,8 @@ public class UserUpdate {
      * The email of the user. If synced, will be unique inside the environment.
      * 
      */
-    @JsonProperty("email")
-    @JsonPropertyDescription("The email of the user. If synced, will be unique inside the environment.")
+    @SerializedName("email")
+    @Expose
     public String email;
     /**
      * First Name
@@ -39,8 +30,8 @@ public class UserUpdate {
      * First name of the user.
      * 
      */
-    @JsonProperty("first_name")
-    @JsonPropertyDescription("First name of the user.")
+    @SerializedName("first_name")
+    @Expose
     public String firstName;
     /**
      * Last Name
@@ -48,8 +39,8 @@ public class UserUpdate {
      * Last name of the user.
      * 
      */
-    @JsonProperty("last_name")
-    @JsonPropertyDescription("Last name of the user.")
+    @SerializedName("last_name")
+    @Expose
     public String lastName;
     /**
      * Attributes
@@ -57,8 +48,8 @@ public class UserUpdate {
      * Arbitrary user attributes that will be used to enforce attribute-based access control policies.
      * 
      */
-    @JsonProperty("attributes")
-    @JsonPropertyDescription("Arbitrary user attributes that will be used to enforce attribute-based access control policies.")
+    @SerializedName("attributes")
+    @Expose
     public Attributes__14 attributes;
 
     public UserUpdate withEmail(String email) {

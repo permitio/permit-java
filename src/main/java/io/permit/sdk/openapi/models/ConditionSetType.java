@@ -4,8 +4,7 @@ package io.permit.sdk.openapi.models;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -17,7 +16,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @Generated("jsonschema2pojo")
 public enum ConditionSetType {
 
+    @SerializedName("userset")
     USERSET("userset"),
+    @SerializedName("resourceset")
     RESOURCESET("resourceset");
     private final String value;
     private final static Map<String, ConditionSetType> CONSTANTS = new HashMap<String, ConditionSetType>();
@@ -37,12 +38,10 @@ public enum ConditionSetType {
         return this.value;
     }
 
-    @JsonValue
     public String value() {
         return this.value;
     }
 
-    @JsonCreator
     public static ConditionSetType fromValue(String value) {
         ConditionSetType constant = CONSTANTS.get(value);
         if (constant == null) {

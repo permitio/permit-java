@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,11 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "description"
-})
 @Generated("jsonschema2pojo")
 public class ActionBlockEditable {
 
@@ -28,8 +21,8 @@ public class ActionBlockEditable {
      * a more descriptive name for the action
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("a more descriptive name for the action")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -37,8 +30,8 @@ public class ActionBlockEditable {
      * optional description string explaining what this action represents in your system
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("optional description string explaining what this action represents in your system")
+    @SerializedName("description")
+    @Expose
     public String description;
 
     public ActionBlockEditable withName(String name) {

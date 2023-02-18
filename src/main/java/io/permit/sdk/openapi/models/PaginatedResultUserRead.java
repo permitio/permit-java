@@ -4,9 +4,8 @@ package io.permit.sdk.openapi.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -15,12 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "data",
-    "total_count",
-    "page_count"
-})
 @Generated("jsonschema2pojo")
 public class PaginatedResultUserRead {
 
@@ -31,7 +24,8 @@ public class PaginatedResultUserRead {
      * (Required)
      * 
      */
-    @JsonProperty("data")
+    @SerializedName("data")
+    @Expose
     public List<UserRead> data = new ArrayList<UserRead>();
     /**
      * Total Count
@@ -40,7 +34,8 @@ public class PaginatedResultUserRead {
      * (Required)
      * 
      */
-    @JsonProperty("total_count")
+    @SerializedName("total_count")
+    @Expose
     public Integer totalCount;
     /**
      * Page Count
@@ -48,7 +43,8 @@ public class PaginatedResultUserRead {
      * 
      * 
      */
-    @JsonProperty("page_count")
+    @SerializedName("page_count")
+    @Expose
     public Integer pageCount = 0;
 
     /**

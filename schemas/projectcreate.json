@@ -36,8 +36,7 @@
     "active_policy_repo_id": {
       "title": "Active Policy Repo Id",
       "type": "string",
-      "description": "the id of the policy repo to use for this project",
-      "format": "uuid"
+      "description": "the id of the policy repo to use for this project"
     }
   },
   "additionalProperties": false,

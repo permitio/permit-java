@@ -17,8 +17,7 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the organization",
-      "format": "uuid"
+      "description": "Unique id of the organization"
     },
     "created_at": {
       "title": "Created At",

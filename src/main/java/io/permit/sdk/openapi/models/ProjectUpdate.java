@@ -1,12 +1,9 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -15,13 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "description",
-    "settings",
-    "active_policy_repo_id"
-})
 @Generated("jsonschema2pojo")
 public class ProjectUpdate {
 
@@ -31,8 +21,8 @@ public class ProjectUpdate {
      * The name of the project
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the project")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -40,8 +30,8 @@ public class ProjectUpdate {
      * a longer description outlining the project objectives
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("a longer description outlining the project objectives")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Settings
@@ -49,8 +39,8 @@ public class ProjectUpdate {
      * the settings for this project
      * 
      */
-    @JsonProperty("settings")
-    @JsonPropertyDescription("the settings for this project")
+    @SerializedName("settings")
+    @Expose
     public Settings__6 settings;
     /**
      * Active Policy Repo Id
@@ -58,9 +48,9 @@ public class ProjectUpdate {
      * the id of the policy repo to use for this project
      * 
      */
-    @JsonProperty("active_policy_repo_id")
-    @JsonPropertyDescription("the id of the policy repo to use for this project")
-    public UUID activePolicyRepoId;
+    @SerializedName("active_policy_repo_id")
+    @Expose
+    public String activePolicyRepoId;
 
     public ProjectUpdate withName(String name) {
         this.name = name;
@@ -77,7 +67,7 @@ public class ProjectUpdate {
         return this;
     }
 
-    public ProjectUpdate withActivePolicyRepoId(UUID activePolicyRepoId) {
+    public ProjectUpdate withActivePolicyRepoId(String activePolicyRepoId) {
         this.activePolicyRepoId = activePolicyRepoId;
         return this;
     }

@@ -2,12 +2,9 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -16,17 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "key",
-    "id",
-    "created_at",
-    "updated_at",
-    "name",
-    "settings",
-    "api_key_id",
-    "api_key_secret"
-})
 @Generated("jsonschema2pojo")
 public class OrganizationReadWithAPIKey {
 
@@ -37,8 +23,8 @@ public class OrganizationReadWithAPIKey {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Id
@@ -47,9 +33,9 @@ public class OrganizationReadWithAPIKey {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the organization")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Created At
      * <p>
@@ -57,8 +43,8 @@ public class OrganizationReadWithAPIKey {
      * (Required)
      * 
      */
-    @JsonProperty("created_at")
-    @JsonPropertyDescription("Date and time when the organization was created (ISO_8601 format).")
+    @SerializedName("created_at")
+    @Expose
     public Date createdAt;
     /**
      * Updated At
@@ -67,8 +53,8 @@ public class OrganizationReadWithAPIKey {
      * (Required)
      * 
      */
-    @JsonProperty("updated_at")
-    @JsonPropertyDescription("Date and time when the organization was last updated/modified (ISO_8601 format).")
+    @SerializedName("updated_at")
+    @Expose
     public Date updatedAt;
     /**
      * Name
@@ -77,8 +63,8 @@ public class OrganizationReadWithAPIKey {
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the organization, usually it's your company's name.")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Settings
@@ -86,8 +72,8 @@ public class OrganizationReadWithAPIKey {
      * the settings for this project
      * 
      */
-    @JsonProperty("settings")
-    @JsonPropertyDescription("the settings for this project")
+    @SerializedName("settings")
+    @Expose
     public Settings__2 settings;
     /**
      * Api Key Id
@@ -95,15 +81,17 @@ public class OrganizationReadWithAPIKey {
      * 
      * 
      */
-    @JsonProperty("api_key_id")
-    public UUID apiKeyId;
+    @SerializedName("api_key_id")
+    @Expose
+    public String apiKeyId;
     /**
      * Api Key Secret
      * <p>
      * 
      * 
      */
-    @JsonProperty("api_key_secret")
+    @SerializedName("api_key_secret")
+    @Expose
     public String apiKeySecret;
 
     /**
@@ -121,7 +109,7 @@ public class OrganizationReadWithAPIKey {
      * @param key
      * @param updatedAt
      */
-    public OrganizationReadWithAPIKey(String key, UUID id, Date createdAt, Date updatedAt, String name) {
+    public OrganizationReadWithAPIKey(String key, String id, Date createdAt, Date updatedAt, String name) {
         super();
         this.key = key;
         this.id = id;
@@ -135,7 +123,7 @@ public class OrganizationReadWithAPIKey {
         return this;
     }
 
-    public OrganizationReadWithAPIKey withId(UUID id) {
+    public OrganizationReadWithAPIKey withId(String id) {
         this.id = id;
         return this;
     }
@@ -160,7 +148,7 @@ public class OrganizationReadWithAPIKey {
         return this;
     }
 
-    public OrganizationReadWithAPIKey withApiKeyId(UUID apiKeyId) {
+    public OrganizationReadWithAPIKey withApiKeyId(String apiKeyId) {
         this.apiKeyId = apiKeyId;
         return this;
     }

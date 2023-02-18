@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,13 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "key",
-    "name",
-    "description",
-    "custom_branch_name"
-})
 @Generated("jsonschema2pojo")
 public class EnvironmentCreate {
 
@@ -31,8 +22,8 @@ public class EnvironmentCreate {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Name
@@ -41,8 +32,8 @@ public class EnvironmentCreate {
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the environment")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -50,8 +41,8 @@ public class EnvironmentCreate {
      * an optional longer description of the environment
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("an optional longer description of the environment")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Custom Branch Name
@@ -59,8 +50,8 @@ public class EnvironmentCreate {
      * when using gitops feature, an optional branch name for the environment
      * 
      */
-    @JsonProperty("custom_branch_name")
-    @JsonPropertyDescription("when using gitops feature, an optional branch name for the environment")
+    @SerializedName("custom_branch_name")
+    @Expose
     public String customBranchName;
 
     /**

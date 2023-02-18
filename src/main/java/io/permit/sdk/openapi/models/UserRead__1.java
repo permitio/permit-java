@@ -3,12 +3,9 @@ package io.permit.sdk.openapi.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -17,20 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "key",
-    "id",
-    "organization_id",
-    "project_id",
-    "environment_id",
-    "associated_tenants",
-    "roles",
-    "email",
-    "first_name",
-    "last_name",
-    "attributes"
-})
 @Generated("jsonschema2pojo")
 public class UserRead__1 {
 
@@ -41,8 +24,8 @@ public class UserRead__1 {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A unique id by which Permit will identify the user for permission checks.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Id
@@ -51,9 +34,9 @@ public class UserRead__1 {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the user")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Organization Id
      * <p>
@@ -61,9 +44,9 @@ public class UserRead__1 {
      * (Required)
      * 
      */
-    @JsonProperty("organization_id")
-    @JsonPropertyDescription("Unique id of the organization that the user belongs to.")
-    public UUID organizationId;
+    @SerializedName("organization_id")
+    @Expose
+    public String organizationId;
     /**
      * Project Id
      * <p>
@@ -71,9 +54,9 @@ public class UserRead__1 {
      * (Required)
      * 
      */
-    @JsonProperty("project_id")
-    @JsonPropertyDescription("Unique id of the project that the user belongs to.")
-    public UUID projectId;
+    @SerializedName("project_id")
+    @Expose
+    public String projectId;
     /**
      * Environment Id
      * <p>
@@ -81,16 +64,17 @@ public class UserRead__1 {
      * (Required)
      * 
      */
-    @JsonProperty("environment_id")
-    @JsonPropertyDescription("Unique id of the environment that the user belongs to.")
-    public UUID environmentId;
+    @SerializedName("environment_id")
+    @Expose
+    public String environmentId;
     /**
      * Associated Tenants
      * <p>
      * 
      * 
      */
-    @JsonProperty("associated_tenants")
+    @SerializedName("associated_tenants")
+    @Expose
     public List<UserInTenant> associatedTenants = new ArrayList<UserInTenant>();
     /**
      * Roles
@@ -98,7 +82,8 @@ public class UserRead__1 {
      * 
      * 
      */
-    @JsonProperty("roles")
+    @SerializedName("roles")
+    @Expose
     public List<UserRole> roles = new ArrayList<UserRole>();
     /**
      * Email
@@ -106,8 +91,8 @@ public class UserRead__1 {
      * The email of the user. If synced, will be unique inside the environment.
      * 
      */
-    @JsonProperty("email")
-    @JsonPropertyDescription("The email of the user. If synced, will be unique inside the environment.")
+    @SerializedName("email")
+    @Expose
     public String email;
     /**
      * First Name
@@ -115,8 +100,8 @@ public class UserRead__1 {
      * First name of the user.
      * 
      */
-    @JsonProperty("first_name")
-    @JsonPropertyDescription("First name of the user.")
+    @SerializedName("first_name")
+    @Expose
     public String firstName;
     /**
      * Last Name
@@ -124,8 +109,8 @@ public class UserRead__1 {
      * Last name of the user.
      * 
      */
-    @JsonProperty("last_name")
-    @JsonPropertyDescription("Last name of the user.")
+    @SerializedName("last_name")
+    @Expose
     public String lastName;
     /**
      * Attributes
@@ -133,8 +118,8 @@ public class UserRead__1 {
      * Arbitrary user attributes that will be used to enforce attribute-based access control policies.
      * 
      */
-    @JsonProperty("attributes")
-    @JsonPropertyDescription("Arbitrary user attributes that will be used to enforce attribute-based access control policies.")
+    @SerializedName("attributes")
+    @Expose
     public Attributes__13 attributes;
 
     /**
@@ -152,7 +137,7 @@ public class UserRead__1 {
      * @param projectId
      * @param key
      */
-    public UserRead__1(String key, UUID id, UUID organizationId, UUID projectId, UUID environmentId) {
+    public UserRead__1(String key, String id, String organizationId, String projectId, String environmentId) {
         super();
         this.key = key;
         this.id = id;
@@ -166,22 +151,22 @@ public class UserRead__1 {
         return this;
     }
 
-    public UserRead__1 withId(UUID id) {
+    public UserRead__1 withId(String id) {
         this.id = id;
         return this;
     }
 
-    public UserRead__1 withOrganizationId(UUID organizationId) {
+    public UserRead__1 withOrganizationId(String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public UserRead__1 withProjectId(UUID projectId) {
+    public UserRead__1 withProjectId(String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public UserRead__1 withEnvironmentId(UUID environmentId) {
+    public UserRead__1 withEnvironmentId(String environmentId) {
         this.environmentId = environmentId;
         return this;
     }

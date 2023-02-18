@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,12 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "description",
-    "custom_branch_name"
-})
 @Generated("jsonschema2pojo")
 public class EnvironmentUpdate {
 
@@ -29,8 +21,8 @@ public class EnvironmentUpdate {
      * The name of the environment
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the environment")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -38,8 +30,8 @@ public class EnvironmentUpdate {
      * an optional longer description of the environment
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("an optional longer description of the environment")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Custom Branch Name
@@ -47,8 +39,8 @@ public class EnvironmentUpdate {
      * when using gitops feature, an optional branch name for the environment
      * 
      */
-    @JsonProperty("custom_branch_name")
-    @JsonPropertyDescription("when using gitops feature, an optional branch name for the environment")
+    @SerializedName("custom_branch_name")
+    @Expose
     public String customBranchName;
 
     public EnvironmentUpdate withName(String name) {

@@ -31,26 +31,22 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the resource instance",
-      "format": "uuid"
+      "description": "Unique id of the resource instance"
     },
     "organization_id": {
       "title": "Organization Id",
       "type": "string",
-      "description": "Unique id of the organization that the resource instance belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the organization that the resource instance belongs to."
     },
     "project_id": {
       "title": "Project Id",
       "type": "string",
-      "description": "Unique id of the project that the resource instance belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the project that the resource instance belongs to."
     },
     "environment_id": {
       "title": "Environment Id",
       "type": "string",
-      "description": "Unique id of the environment that the resource instance belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the environment that the resource instance belongs to."
     },
     "created_at": {
       "title": "Created At",
@@ -67,14 +63,12 @@
     "resource_id": {
       "title": "Resource Id",
       "type": "string",
-      "description": "the id of the resource (type) of this resource instance.",
-      "format": "uuid"
+      "description": "the id of the resource (type) of this resource instance."
     },
     "tenant_id": {
       "title": "Tenant Id",
       "type": "string",
-      "description": "the id of the tenant of this resource instance.",
-      "format": "uuid"
+      "description": "the id of the tenant of this resource instance."
     },
     "attributes": {
       "title": "Attributes",

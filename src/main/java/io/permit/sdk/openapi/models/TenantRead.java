@@ -2,12 +2,9 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -16,20 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "key",
-    "id",
-    "organization_id",
-    "project_id",
-    "environment_id",
-    "created_at",
-    "updated_at",
-    "last_action_at",
-    "name",
-    "description",
-    "attributes"
-})
 @Generated("jsonschema2pojo")
 public class TenantRead {
 
@@ -40,8 +23,8 @@ public class TenantRead {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified).")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Id
@@ -50,9 +33,9 @@ public class TenantRead {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the tenant")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Organization Id
      * <p>
@@ -60,9 +43,9 @@ public class TenantRead {
      * (Required)
      * 
      */
-    @JsonProperty("organization_id")
-    @JsonPropertyDescription("Unique id of the organization that the tenant belongs to.")
-    public UUID organizationId;
+    @SerializedName("organization_id")
+    @Expose
+    public String organizationId;
     /**
      * Project Id
      * <p>
@@ -70,9 +53,9 @@ public class TenantRead {
      * (Required)
      * 
      */
-    @JsonProperty("project_id")
-    @JsonPropertyDescription("Unique id of the project that the tenant belongs to.")
-    public UUID projectId;
+    @SerializedName("project_id")
+    @Expose
+    public String projectId;
     /**
      * Environment Id
      * <p>
@@ -80,9 +63,9 @@ public class TenantRead {
      * (Required)
      * 
      */
-    @JsonProperty("environment_id")
-    @JsonPropertyDescription("Unique id of the environment that the tenant belongs to.")
-    public UUID environmentId;
+    @SerializedName("environment_id")
+    @Expose
+    public String environmentId;
     /**
      * Created At
      * <p>
@@ -90,8 +73,8 @@ public class TenantRead {
      * (Required)
      * 
      */
-    @JsonProperty("created_at")
-    @JsonPropertyDescription("Date and time when the tenant was created (ISO_8601 format).")
+    @SerializedName("created_at")
+    @Expose
     public Date createdAt;
     /**
      * Updated At
@@ -100,8 +83,8 @@ public class TenantRead {
      * (Required)
      * 
      */
-    @JsonProperty("updated_at")
-    @JsonPropertyDescription("Date and time when the tenant was last updated/modified (ISO_8601 format).")
+    @SerializedName("updated_at")
+    @Expose
     public Date updatedAt;
     /**
      * Last Action At
@@ -110,8 +93,8 @@ public class TenantRead {
      * (Required)
      * 
      */
-    @JsonProperty("last_action_at")
-    @JsonPropertyDescription("Date and time when the tenant was last active (ISO_8601 format). In other words, this is the last time a permission check was done on a resource belonging to this tenant.")
+    @SerializedName("last_action_at")
+    @Expose
     public Date lastActionAt;
     /**
      * Name
@@ -120,8 +103,8 @@ public class TenantRead {
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("A descriptive name for the tenant")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -129,8 +112,8 @@ public class TenantRead {
      * an optional longer description of the tenant
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("an optional longer description of the tenant")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Attributes
@@ -138,8 +121,8 @@ public class TenantRead {
      * Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.
      * 
      */
-    @JsonProperty("attributes")
-    @JsonPropertyDescription("Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.")
+    @SerializedName("attributes")
+    @Expose
     public Attributes__10 attributes;
 
     /**
@@ -161,7 +144,7 @@ public class TenantRead {
      * @param key
      * @param updatedAt
      */
-    public TenantRead(String key, UUID id, UUID organizationId, UUID projectId, UUID environmentId, Date createdAt, Date updatedAt, Date lastActionAt, String name) {
+    public TenantRead(String key, String id, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt, Date lastActionAt, String name) {
         super();
         this.key = key;
         this.id = id;
@@ -179,22 +162,22 @@ public class TenantRead {
         return this;
     }
 
-    public TenantRead withId(UUID id) {
+    public TenantRead withId(String id) {
         this.id = id;
         return this;
     }
 
-    public TenantRead withOrganizationId(UUID organizationId) {
+    public TenantRead withOrganizationId(String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public TenantRead withProjectId(UUID projectId) {
+    public TenantRead withProjectId(String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public TenantRead withEnvironmentId(UUID environmentId) {
+    public TenantRead withEnvironmentId(String environmentId) {
         this.environmentId = environmentId;
         return this;
     }

@@ -2,12 +2,9 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -16,20 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "description",
-    "key",
-    "id",
-    "permission_name",
-    "organization_id",
-    "project_id",
-    "environment_id",
-    "resource_id",
-    "created_at",
-    "updated_at"
-})
 @Generated("jsonschema2pojo")
 public class ResourceActionRead {
 
@@ -40,8 +23,8 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the action")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -49,8 +32,8 @@ public class ResourceActionRead {
      * An optional longer description of what this action respresents in your system
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("An optional longer description of what this action respresents in your system")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Key
@@ -59,8 +42,8 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A URL-friendly name of the action (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Id
@@ -69,9 +52,9 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the action")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Permission Name
      * <p>
@@ -79,8 +62,8 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("permission_name")
-    @JsonPropertyDescription("The name of the action, prefixed by the resource the action is acting upon.")
+    @SerializedName("permission_name")
+    @Expose
     public String permissionName;
     /**
      * Organization Id
@@ -89,9 +72,9 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("organization_id")
-    @JsonPropertyDescription("Unique id of the organization that the action belongs to.")
-    public UUID organizationId;
+    @SerializedName("organization_id")
+    @Expose
+    public String organizationId;
     /**
      * Project Id
      * <p>
@@ -99,9 +82,9 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("project_id")
-    @JsonPropertyDescription("Unique id of the project that the action belongs to.")
-    public UUID projectId;
+    @SerializedName("project_id")
+    @Expose
+    public String projectId;
     /**
      * Environment Id
      * <p>
@@ -109,9 +92,9 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("environment_id")
-    @JsonPropertyDescription("Unique id of the environment that the action belongs to.")
-    public UUID environmentId;
+    @SerializedName("environment_id")
+    @Expose
+    public String environmentId;
     /**
      * Resource Id
      * <p>
@@ -119,9 +102,9 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("resource_id")
-    @JsonPropertyDescription("Unique id of the resource that the action belongs to.")
-    public UUID resourceId;
+    @SerializedName("resource_id")
+    @Expose
+    public String resourceId;
     /**
      * Created At
      * <p>
@@ -129,8 +112,8 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("created_at")
-    @JsonPropertyDescription("Date and time when the action was created (ISO_8601 format).")
+    @SerializedName("created_at")
+    @Expose
     public Date createdAt;
     /**
      * Updated At
@@ -139,8 +122,8 @@ public class ResourceActionRead {
      * (Required)
      * 
      */
-    @JsonProperty("updated_at")
-    @JsonPropertyDescription("Date and time when the action was last updated/modified (ISO_8601 format).")
+    @SerializedName("updated_at")
+    @Expose
     public Date updatedAt;
 
     /**
@@ -163,7 +146,7 @@ public class ResourceActionRead {
      * @param permissionName
      * @param updatedAt
      */
-    public ResourceActionRead(String name, String key, UUID id, String permissionName, UUID organizationId, UUID projectId, UUID environmentId, UUID resourceId, Date createdAt, Date updatedAt) {
+    public ResourceActionRead(String name, String key, String id, String permissionName, String organizationId, String projectId, String environmentId, String resourceId, Date createdAt, Date updatedAt) {
         super();
         this.name = name;
         this.key = key;
@@ -192,7 +175,7 @@ public class ResourceActionRead {
         return this;
     }
 
-    public ResourceActionRead withId(UUID id) {
+    public ResourceActionRead withId(String id) {
         this.id = id;
         return this;
     }
@@ -202,22 +185,22 @@ public class ResourceActionRead {
         return this;
     }
 
-    public ResourceActionRead withOrganizationId(UUID organizationId) {
+    public ResourceActionRead withOrganizationId(String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public ResourceActionRead withProjectId(UUID projectId) {
+    public ResourceActionRead withProjectId(String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public ResourceActionRead withEnvironmentId(UUID environmentId) {
+    public ResourceActionRead withEnvironmentId(String environmentId) {
         this.environmentId = environmentId;
         return this;
     }
 
-    public ResourceActionRead withResourceId(UUID resourceId) {
+    public ResourceActionRead withResourceId(String resourceId) {
         this.resourceId = resourceId;
         return this;
     }

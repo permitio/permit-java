@@ -4,10 +4,8 @@ package io.permit.sdk.openapi.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -16,13 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "description",
-    "permissions",
-    "extends"
-})
 @Generated("jsonschema2pojo")
 public class RoleUpdate {
 
@@ -32,8 +23,8 @@ public class RoleUpdate {
      * The name of the role
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the role")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -41,8 +32,8 @@ public class RoleUpdate {
      * optional description string explaining what this role represents, or what permissions are granted to it.
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("optional description string explaining what this role represents, or what permissions are granted to it.")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Permissions
@@ -50,8 +41,8 @@ public class RoleUpdate {
      * list of action keys that define what actions this resource role is permitted to do
      * 
      */
-    @JsonProperty("permissions")
-    @JsonPropertyDescription("list of action keys that define what actions this resource role is permitted to do")
+    @SerializedName("permissions")
+    @Expose
     public List<String> permissions = new ArrayList<String>();
     /**
      * Extends
@@ -59,8 +50,8 @@ public class RoleUpdate {
      * list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.
      * 
      */
-    @JsonProperty("extends")
-    @JsonPropertyDescription("list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.")
+    @SerializedName("extends")
+    @Expose
     public List<String> _extends = new ArrayList<String>();
 
     public RoleUpdate withName(String name) {

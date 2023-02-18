@@ -35,8 +35,7 @@
           "type": "string"
         },
         {
-          "type": "string",
-          "format": "uuid"
+          "type": "string"
         }
       ],
       "description": "For ResourceSets, the id of the base resource."

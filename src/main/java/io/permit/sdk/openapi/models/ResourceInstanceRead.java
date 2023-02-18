@@ -2,12 +2,9 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -16,21 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "key",
-    "tenant",
-    "resource",
-    "id",
-    "organization_id",
-    "project_id",
-    "environment_id",
-    "created_at",
-    "updated_at",
-    "resource_id",
-    "tenant_id",
-    "attributes"
-})
 @Generated("jsonschema2pojo")
 public class ResourceInstanceRead {
 
@@ -41,8 +23,8 @@ public class ResourceInstanceRead {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it's unique on your end. The resource instance key must be url-friendly.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Tenant
@@ -50,8 +32,8 @@ public class ResourceInstanceRead {
      * the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
      * 
      */
-    @JsonProperty("tenant")
-    @JsonPropertyDescription("the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.")
+    @SerializedName("tenant")
+    @Expose
     public String tenant;
     /**
      * Resource
@@ -60,8 +42,8 @@ public class ResourceInstanceRead {
      * (Required)
      * 
      */
-    @JsonProperty("resource")
-    @JsonPropertyDescription("the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.")
+    @SerializedName("resource")
+    @Expose
     public String resource;
     /**
      * Id
@@ -70,9 +52,9 @@ public class ResourceInstanceRead {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the resource instance")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Organization Id
      * <p>
@@ -80,9 +62,9 @@ public class ResourceInstanceRead {
      * (Required)
      * 
      */
-    @JsonProperty("organization_id")
-    @JsonPropertyDescription("Unique id of the organization that the resource instance belongs to.")
-    public UUID organizationId;
+    @SerializedName("organization_id")
+    @Expose
+    public String organizationId;
     /**
      * Project Id
      * <p>
@@ -90,9 +72,9 @@ public class ResourceInstanceRead {
      * (Required)
      * 
      */
-    @JsonProperty("project_id")
-    @JsonPropertyDescription("Unique id of the project that the resource instance belongs to.")
-    public UUID projectId;
+    @SerializedName("project_id")
+    @Expose
+    public String projectId;
     /**
      * Environment Id
      * <p>
@@ -100,9 +82,9 @@ public class ResourceInstanceRead {
      * (Required)
      * 
      */
-    @JsonProperty("environment_id")
-    @JsonPropertyDescription("Unique id of the environment that the resource instance belongs to.")
-    public UUID environmentId;
+    @SerializedName("environment_id")
+    @Expose
+    public String environmentId;
     /**
      * Created At
      * <p>
@@ -110,8 +92,8 @@ public class ResourceInstanceRead {
      * (Required)
      * 
      */
-    @JsonProperty("created_at")
-    @JsonPropertyDescription("Date and time when the resource instance was created (ISO_8601 format).")
+    @SerializedName("created_at")
+    @Expose
     public Date createdAt;
     /**
      * Updated At
@@ -120,8 +102,8 @@ public class ResourceInstanceRead {
      * (Required)
      * 
      */
-    @JsonProperty("updated_at")
-    @JsonPropertyDescription("Date and time when the resource instance was last updated/modified (ISO_8601 format).")
+    @SerializedName("updated_at")
+    @Expose
     public Date updatedAt;
     /**
      * Resource Id
@@ -130,26 +112,26 @@ public class ResourceInstanceRead {
      * (Required)
      * 
      */
-    @JsonProperty("resource_id")
-    @JsonPropertyDescription("the id of the resource (type) of this resource instance.")
-    public UUID resourceId;
+    @SerializedName("resource_id")
+    @Expose
+    public String resourceId;
     /**
      * Tenant Id
      * <p>
      * the id of the tenant of this resource instance.
      * 
      */
-    @JsonProperty("tenant_id")
-    @JsonPropertyDescription("the id of the tenant of this resource instance.")
-    public UUID tenantId;
+    @SerializedName("tenant_id")
+    @Expose
+    public String tenantId;
     /**
      * Attributes
      * <p>
      * Arbitraty resource attributes that will be used to enforce attribute-based access control policies.
      * 
      */
-    @JsonProperty("attributes")
-    @JsonPropertyDescription("Arbitraty resource attributes that will be used to enforce attribute-based access control policies.")
+    @SerializedName("attributes")
+    @Expose
     public Attributes__4 attributes;
 
     /**
@@ -171,7 +153,7 @@ public class ResourceInstanceRead {
      * @param key
      * @param updatedAt
      */
-    public ResourceInstanceRead(String key, String resource, UUID id, UUID organizationId, UUID projectId, UUID environmentId, Date createdAt, Date updatedAt, UUID resourceId) {
+    public ResourceInstanceRead(String key, String resource, String id, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt, String resourceId) {
         super();
         this.key = key;
         this.resource = resource;
@@ -199,22 +181,22 @@ public class ResourceInstanceRead {
         return this;
     }
 
-    public ResourceInstanceRead withId(UUID id) {
+    public ResourceInstanceRead withId(String id) {
         this.id = id;
         return this;
     }
 
-    public ResourceInstanceRead withOrganizationId(UUID organizationId) {
+    public ResourceInstanceRead withOrganizationId(String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public ResourceInstanceRead withProjectId(UUID projectId) {
+    public ResourceInstanceRead withProjectId(String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public ResourceInstanceRead withEnvironmentId(UUID environmentId) {
+    public ResourceInstanceRead withEnvironmentId(String environmentId) {
         this.environmentId = environmentId;
         return this;
     }
@@ -229,12 +211,12 @@ public class ResourceInstanceRead {
         return this;
     }
 
-    public ResourceInstanceRead withResourceId(UUID resourceId) {
+    public ResourceInstanceRead withResourceId(String resourceId) {
         this.resourceId = resourceId;
         return this;
     }
 
-    public ResourceInstanceRead withTenantId(UUID tenantId) {
+    public ResourceInstanceRead withTenantId(String tenantId) {
         this.tenantId = tenantId;
         return this;
     }

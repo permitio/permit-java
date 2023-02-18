@@ -4,12 +4,9 @@ package io.permit.sdk.openapi.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -18,20 +15,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "description",
-    "permissions",
-    "extends",
-    "key",
-    "id",
-    "organization_id",
-    "project_id",
-    "environment_id",
-    "created_at",
-    "updated_at"
-})
 @Generated("jsonschema2pojo")
 public class RoleRead {
 
@@ -42,8 +25,8 @@ public class RoleRead {
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the role")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -51,8 +34,8 @@ public class RoleRead {
      * optional description string explaining what this role represents, or what permissions are granted to it.
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("optional description string explaining what this role represents, or what permissions are granted to it.")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Permissions
@@ -60,8 +43,8 @@ public class RoleRead {
      * list of action keys that define what actions this resource role is permitted to do
      * 
      */
-    @JsonProperty("permissions")
-    @JsonPropertyDescription("list of action keys that define what actions this resource role is permitted to do")
+    @SerializedName("permissions")
+    @Expose
     public List<String> permissions = new ArrayList<String>();
     /**
      * Extends
@@ -69,8 +52,8 @@ public class RoleRead {
      * list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.
      * 
      */
-    @JsonProperty("extends")
-    @JsonPropertyDescription("list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.")
+    @SerializedName("extends")
+    @Expose
     public List<String> _extends = new ArrayList<String>();
     /**
      * Key
@@ -79,8 +62,8 @@ public class RoleRead {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Id
@@ -89,9 +72,9 @@ public class RoleRead {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the role")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Organization Id
      * <p>
@@ -99,9 +82,9 @@ public class RoleRead {
      * (Required)
      * 
      */
-    @JsonProperty("organization_id")
-    @JsonPropertyDescription("Unique id of the organization that the role belongs to.")
-    public UUID organizationId;
+    @SerializedName("organization_id")
+    @Expose
+    public String organizationId;
     /**
      * Project Id
      * <p>
@@ -109,9 +92,9 @@ public class RoleRead {
      * (Required)
      * 
      */
-    @JsonProperty("project_id")
-    @JsonPropertyDescription("Unique id of the project that the role belongs to.")
-    public UUID projectId;
+    @SerializedName("project_id")
+    @Expose
+    public String projectId;
     /**
      * Environment Id
      * <p>
@@ -119,9 +102,9 @@ public class RoleRead {
      * (Required)
      * 
      */
-    @JsonProperty("environment_id")
-    @JsonPropertyDescription("Unique id of the environment that the role belongs to.")
-    public UUID environmentId;
+    @SerializedName("environment_id")
+    @Expose
+    public String environmentId;
     /**
      * Created At
      * <p>
@@ -129,8 +112,8 @@ public class RoleRead {
      * (Required)
      * 
      */
-    @JsonProperty("created_at")
-    @JsonPropertyDescription("Date and time when the role was created (ISO_8601 format).")
+    @SerializedName("created_at")
+    @Expose
     public Date createdAt;
     /**
      * Updated At
@@ -139,8 +122,8 @@ public class RoleRead {
      * (Required)
      * 
      */
-    @JsonProperty("updated_at")
-    @JsonPropertyDescription("Date and time when the role was last updated/modified (ISO_8601 format).")
+    @SerializedName("updated_at")
+    @Expose
     public Date updatedAt;
 
     /**
@@ -161,7 +144,7 @@ public class RoleRead {
      * @param key
      * @param updatedAt
      */
-    public RoleRead(String name, String key, UUID id, UUID organizationId, UUID projectId, UUID environmentId, Date createdAt, Date updatedAt) {
+    public RoleRead(String name, String key, String id, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt) {
         super();
         this.name = name;
         this.key = key;
@@ -198,22 +181,22 @@ public class RoleRead {
         return this;
     }
 
-    public RoleRead withId(UUID id) {
+    public RoleRead withId(String id) {
         this.id = id;
         return this;
     }
 
-    public RoleRead withOrganizationId(UUID organizationId) {
+    public RoleRead withOrganizationId(String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public RoleRead withProjectId(UUID projectId) {
+    public RoleRead withProjectId(String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public RoleRead withEnvironmentId(UUID environmentId) {
+    public RoleRead withEnvironmentId(String environmentId) {
         this.environmentId = environmentId;
         return this;
     }

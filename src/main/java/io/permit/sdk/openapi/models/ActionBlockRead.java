@@ -1,12 +1,9 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -15,13 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "description",
-    "id",
-    "key"
-})
 @Generated("jsonschema2pojo")
 public class ActionBlockRead {
 
@@ -31,8 +21,8 @@ public class ActionBlockRead {
      * a more descriptive name for the action
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("a more descriptive name for the action")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -40,8 +30,8 @@ public class ActionBlockRead {
      * optional description string explaining what this action represents in your system
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("optional description string explaining what this action represents in your system")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Id
@@ -50,17 +40,17 @@ public class ActionBlockRead {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the action")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Key
      * <p>
      * action key
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("action key")
+    @SerializedName("key")
+    @Expose
     public String key;
 
     /**
@@ -74,7 +64,7 @@ public class ActionBlockRead {
      * 
      * @param id
      */
-    public ActionBlockRead(UUID id) {
+    public ActionBlockRead(String id) {
         super();
         this.id = id;
     }
@@ -89,7 +79,7 @@ public class ActionBlockRead {
         return this;
     }
 
-    public ActionBlockRead withId(UUID id) {
+    public ActionBlockRead withId(String id) {
         this.id = id;
         return this;
     }

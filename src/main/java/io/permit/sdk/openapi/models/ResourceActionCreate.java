@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,12 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "key",
-    "name",
-    "description"
-})
 @Generated("jsonschema2pojo")
 public class ResourceActionCreate {
 
@@ -30,8 +22,8 @@ public class ResourceActionCreate {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A URL-friendly name of the action (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Name
@@ -40,8 +32,8 @@ public class ResourceActionCreate {
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the action")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -49,8 +41,8 @@ public class ResourceActionCreate {
      * An optional longer description of what this action respresents in your system
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("An optional longer description of what this action respresents in your system")
+    @SerializedName("description")
+    @Expose
     public String description;
 
     /**

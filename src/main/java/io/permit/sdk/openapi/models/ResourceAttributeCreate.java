@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,12 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "key",
-    "type",
-    "description"
-})
 @Generated("jsonschema2pojo")
 public class ResourceAttributeCreate {
 
@@ -30,16 +22,16 @@ public class ResourceAttributeCreate {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.
      * (Required)
      * 
      */
-    @JsonProperty("type")
-    @JsonPropertyDescription("The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.")
+    @SerializedName("type")
+    @Expose
     public Object type;
     /**
      * Description
@@ -47,8 +39,8 @@ public class ResourceAttributeCreate {
      * An optional longer description of what this attribute respresents in your system
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("An optional longer description of what this attribute respresents in your system")
+    @SerializedName("description")
+    @Expose
     public String description;
 
     /**

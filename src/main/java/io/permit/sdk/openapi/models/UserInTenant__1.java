@@ -4,10 +4,8 @@ package io.permit.sdk.openapi.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -16,12 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "tenant",
-    "roles",
-    "status"
-})
 @Generated("jsonschema2pojo")
 public class UserInTenant__1 {
 
@@ -32,8 +24,8 @@ public class UserInTenant__1 {
      * (Required)
      * 
      */
-    @JsonProperty("tenant")
-    @JsonPropertyDescription("The tenant key which the user is associated with")
+    @SerializedName("tenant")
+    @Expose
     public String tenant;
     /**
      * Roles
@@ -42,16 +34,16 @@ public class UserInTenant__1 {
      * (Required)
      * 
      */
-    @JsonProperty("roles")
-    @JsonPropertyDescription("List of roles assigned to the user in that tenant")
+    @SerializedName("roles")
+    @Expose
     public List<String> roles = new ArrayList<String>();
     /**
      * Whether the user has signed in or not
      * (Required)
      * 
      */
-    @JsonProperty("status")
-    @JsonPropertyDescription("Whether the user has signed in or not")
+    @SerializedName("status")
+    @Expose
     public Object status;
 
     /**

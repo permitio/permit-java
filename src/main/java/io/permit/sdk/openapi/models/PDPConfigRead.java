@@ -1,12 +1,9 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -15,15 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "id",
-    "name",
-    "organization_id",
-    "project_id",
-    "environment_id",
-    "client_secret"
-})
 @Generated("jsonschema2pojo")
 public class PDPConfigRead {
 
@@ -34,15 +22,17 @@ public class PDPConfigRead {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Name
      * <p>
      * 
      * 
      */
-    @JsonProperty("name")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Organization Id
@@ -51,9 +41,9 @@ public class PDPConfigRead {
      * (Required)
      * 
      */
-    @JsonProperty("organization_id")
-    @JsonPropertyDescription("Unique id of the organization that the pdp_config belongs to.")
-    public UUID organizationId;
+    @SerializedName("organization_id")
+    @Expose
+    public String organizationId;
     /**
      * Project Id
      * <p>
@@ -61,9 +51,9 @@ public class PDPConfigRead {
      * (Required)
      * 
      */
-    @JsonProperty("project_id")
-    @JsonPropertyDescription("Unique id of the project that the pdp_config belongs to.")
-    public UUID projectId;
+    @SerializedName("project_id")
+    @Expose
+    public String projectId;
     /**
      * Environment Id
      * <p>
@@ -71,9 +61,9 @@ public class PDPConfigRead {
      * (Required)
      * 
      */
-    @JsonProperty("environment_id")
-    @JsonPropertyDescription("Unique id of the environment that the pdp_config belongs to.")
-    public UUID environmentId;
+    @SerializedName("environment_id")
+    @Expose
+    public String environmentId;
     /**
      * Client Secret
      * <p>
@@ -81,7 +71,8 @@ public class PDPConfigRead {
      * (Required)
      * 
      */
-    @JsonProperty("client_secret")
+    @SerializedName("client_secret")
+    @Expose
     public String clientSecret;
 
     /**
@@ -99,7 +90,7 @@ public class PDPConfigRead {
      * @param id
      * @param projectId
      */
-    public PDPConfigRead(UUID id, UUID organizationId, UUID projectId, UUID environmentId, String clientSecret) {
+    public PDPConfigRead(String id, String organizationId, String projectId, String environmentId, String clientSecret) {
         super();
         this.id = id;
         this.organizationId = organizationId;
@@ -108,7 +99,7 @@ public class PDPConfigRead {
         this.clientSecret = clientSecret;
     }
 
-    public PDPConfigRead withId(UUID id) {
+    public PDPConfigRead withId(String id) {
         this.id = id;
         return this;
     }
@@ -118,17 +109,17 @@ public class PDPConfigRead {
         return this;
     }
 
-    public PDPConfigRead withOrganizationId(UUID organizationId) {
+    public PDPConfigRead withOrganizationId(String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public PDPConfigRead withProjectId(UUID projectId) {
+    public PDPConfigRead withProjectId(String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public PDPConfigRead withEnvironmentId(UUID environmentId) {
+    public PDPConfigRead withEnvironmentId(String environmentId) {
         this.environmentId = environmentId;
         return this;
     }

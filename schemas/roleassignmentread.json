@@ -18,8 +18,7 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the role assignment",
-      "format": "uuid"
+      "description": "Unique id of the role assignment"
     },
     "user": {
       "title": "User",
@@ -39,38 +38,32 @@
     "user_id": {
       "title": "User Id",
       "type": "string",
-      "description": "Unique id of the user",
-      "format": "uuid"
+      "description": "Unique id of the user"
     },
     "role_id": {
       "title": "Role Id",
       "type": "string",
-      "description": "Unique id of the role",
-      "format": "uuid"
+      "description": "Unique id of the role"
     },
     "tenant_id": {
       "title": "Tenant Id",
       "type": "string",
-      "description": "Unique id of the tenant",
-      "format": "uuid"
+      "description": "Unique id of the tenant"
     },
     "organization_id": {
       "title": "Organization Id",
       "type": "string",
-      "description": "Unique id of the organization that the role assignment belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the organization that the role assignment belongs to."
     },
     "project_id": {
       "title": "Project Id",
       "type": "string",
-      "description": "Unique id of the project that the role assignment belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the project that the role assignment belongs to."
     },
     "environment_id": {
       "title": "Environment Id",
       "type": "string",
-      "description": "Unique id of the environment that the role assignment belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the environment that the role assignment belongs to."
     },
     "created_at": {
       "title": "Created At",

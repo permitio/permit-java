@@ -17,8 +17,7 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the organization",
-      "format": "uuid"
+      "description": "Unique id of the organization"
     },
     "created_at": {
       "title": "Created At",
@@ -44,8 +43,7 @@
     },
     "api_key_id": {
       "title": "Api Key Id",
-      "type": "string",
-      "format": "uuid"
+      "type": "string"
     },
     "api_key_secret": {
       "title": "Api Key Secret",

@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,12 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "description",
-    "conditions"
-})
 @Generated("jsonschema2pojo")
 public class ConditionSetUpdate {
 
@@ -29,8 +21,8 @@ public class ConditionSetUpdate {
      * A descriptive name for the set, i.e: 'US based employees' or 'Users behind VPN'
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("A descriptive name for the set, i.e: 'US based employees' or 'Users behind VPN'")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -38,8 +30,8 @@ public class ConditionSetUpdate {
      * an optional longer description of the set
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("an optional longer description of the set")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Conditions
@@ -47,8 +39,8 @@ public class ConditionSetUpdate {
      * a boolean expression that consists of multiple conditions, with and/or logic.
      * 
      */
-    @JsonProperty("conditions")
-    @JsonPropertyDescription("a boolean expression that consists of multiple conditions, with and/or logic.")
+    @SerializedName("conditions")
+    @Expose
     public Conditions__2 conditions;
 
     public ConditionSetUpdate withName(String name) {

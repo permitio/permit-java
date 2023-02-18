@@ -35,14 +35,12 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the attribute",
-      "format": "uuid"
+      "description": "Unique id of the attribute"
     },
     "resource_id": {
       "title": "Resource Id",
       "type": "string",
-      "description": "Unique id of the resource that the attribute belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the resource that the attribute belongs to."
     },
     "resource_key": {
       "title": "Resource Key",
@@ -52,20 +50,17 @@
     "organization_id": {
       "title": "Organization Id",
       "type": "string",
-      "description": "Unique id of the organization that the attribute belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the organization that the attribute belongs to."
     },
     "project_id": {
       "title": "Project Id",
       "type": "string",
-      "description": "Unique id of the project that the attribute belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the project that the attribute belongs to."
     },
     "environment_id": {
       "title": "Environment Id",
       "type": "string",
-      "description": "Unique id of the environment that the attribute belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the environment that the attribute belongs to."
     },
     "created_at": {
       "title": "Created At",

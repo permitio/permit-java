@@ -1,12 +1,9 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -15,13 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "type",
-    "description",
-    "id",
-    "key"
-})
 @Generated("jsonschema2pojo")
 public class AttributeBlockRead {
 
@@ -30,8 +20,8 @@ public class AttributeBlockRead {
      * (Required)
      * 
      */
-    @JsonProperty("type")
-    @JsonPropertyDescription("The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.")
+    @SerializedName("type")
+    @Expose
     public Object type;
     /**
      * Description
@@ -39,8 +29,8 @@ public class AttributeBlockRead {
      * optional description string explaining what data this attribute will store
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("optional description string explaining what data this attribute will store")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Id
@@ -49,17 +39,17 @@ public class AttributeBlockRead {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the attribute")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Key
      * <p>
      * action key
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("action key")
+    @SerializedName("key")
+    @Expose
     public String key;
 
     /**
@@ -74,7 +64,7 @@ public class AttributeBlockRead {
      * @param id
      * @param type
      */
-    public AttributeBlockRead(Object type, UUID id) {
+    public AttributeBlockRead(Object type, String id) {
         super();
         this.type = type;
         this.id = id;
@@ -90,7 +80,7 @@ public class AttributeBlockRead {
         return this;
     }
 
-    public AttributeBlockRead withId(UUID id) {
+    public AttributeBlockRead withId(String id) {
         this.id = id;
         return this;
     }

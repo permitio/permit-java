@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,12 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "key",
-    "name",
-    "settings"
-})
 @Generated("jsonschema2pojo")
 public class OrganizationCreate {
 
@@ -30,8 +22,8 @@ public class OrganizationCreate {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Name
@@ -40,8 +32,8 @@ public class OrganizationCreate {
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the organization, usually it's your company's name.")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Settings
@@ -49,8 +41,8 @@ public class OrganizationCreate {
      * the settings for this project
      * 
      */
-    @JsonProperty("settings")
-    @JsonPropertyDescription("the settings for this project")
+    @SerializedName("settings")
+    @Expose
     public Settings settings;
 
     /**

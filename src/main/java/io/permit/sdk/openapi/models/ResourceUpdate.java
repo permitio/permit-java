@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,14 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "urn",
-    "description",
-    "actions",
-    "attributes"
-})
 @Generated("jsonschema2pojo")
 public class ResourceUpdate {
 
@@ -31,8 +21,8 @@ public class ResourceUpdate {
      * The name of the resource
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the resource")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Urn
@@ -40,8 +30,8 @@ public class ResourceUpdate {
      * The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource
      * 
      */
-    @JsonProperty("urn")
-    @JsonPropertyDescription("The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource")
+    @SerializedName("urn")
+    @Expose
     public String urn;
     /**
      * Description
@@ -49,8 +39,8 @@ public class ResourceUpdate {
      * An optional longer description of what this resource respresents in your system
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("An optional longer description of what this resource respresents in your system")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Actions
@@ -61,8 +51,8 @@ public class ResourceUpdate {
      *         
      * 
      */
-    @JsonProperty("actions")
-    @JsonPropertyDescription("\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        ")
+    @SerializedName("actions")
+    @Expose
     public Actions__4 actions;
     /**
      * Attributes
@@ -70,8 +60,8 @@ public class ResourceUpdate {
      * Attributes that each resource of this type defines, and can be used in your ABAC policies.
      * 
      */
-    @JsonProperty("attributes")
-    @JsonPropertyDescription("Attributes that each resource of this type defines, and can be used in your ABAC policies.")
+    @SerializedName("attributes")
+    @Expose
     public Attributes__8 attributes;
 
     public ResourceUpdate withName(String name) {

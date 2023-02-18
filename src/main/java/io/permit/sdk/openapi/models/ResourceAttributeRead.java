@@ -2,12 +2,9 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -16,20 +13,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "type",
-    "description",
-    "key",
-    "id",
-    "resource_id",
-    "resource_key",
-    "organization_id",
-    "project_id",
-    "environment_id",
-    "created_at",
-    "updated_at"
-})
 @Generated("jsonschema2pojo")
 public class ResourceAttributeRead {
 
@@ -38,8 +21,8 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("type")
-    @JsonPropertyDescription("The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.")
+    @SerializedName("type")
+    @Expose
     public Object type;
     /**
      * Description
@@ -47,8 +30,8 @@ public class ResourceAttributeRead {
      * An optional longer description of what this attribute respresents in your system
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("An optional longer description of what this attribute respresents in your system")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Key
@@ -57,8 +40,8 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Id
@@ -67,9 +50,9 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the attribute")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Resource Id
      * <p>
@@ -77,9 +60,9 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("resource_id")
-    @JsonPropertyDescription("Unique id of the resource that the attribute belongs to.")
-    public UUID resourceId;
+    @SerializedName("resource_id")
+    @Expose
+    public String resourceId;
     /**
      * Resource Key
      * <p>
@@ -87,8 +70,8 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("resource_key")
-    @JsonPropertyDescription("A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource.")
+    @SerializedName("resource_key")
+    @Expose
     public String resourceKey;
     /**
      * Organization Id
@@ -97,9 +80,9 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("organization_id")
-    @JsonPropertyDescription("Unique id of the organization that the attribute belongs to.")
-    public UUID organizationId;
+    @SerializedName("organization_id")
+    @Expose
+    public String organizationId;
     /**
      * Project Id
      * <p>
@@ -107,9 +90,9 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("project_id")
-    @JsonPropertyDescription("Unique id of the project that the attribute belongs to.")
-    public UUID projectId;
+    @SerializedName("project_id")
+    @Expose
+    public String projectId;
     /**
      * Environment Id
      * <p>
@@ -117,9 +100,9 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("environment_id")
-    @JsonPropertyDescription("Unique id of the environment that the attribute belongs to.")
-    public UUID environmentId;
+    @SerializedName("environment_id")
+    @Expose
+    public String environmentId;
     /**
      * Created At
      * <p>
@@ -127,8 +110,8 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("created_at")
-    @JsonPropertyDescription("Date and time when the attribute was created (ISO_8601 format).")
+    @SerializedName("created_at")
+    @Expose
     public Date createdAt;
     /**
      * Updated At
@@ -137,8 +120,8 @@ public class ResourceAttributeRead {
      * (Required)
      * 
      */
-    @JsonProperty("updated_at")
-    @JsonPropertyDescription("Date and time when the attribute was last updated/modified (ISO_8601 format).")
+    @SerializedName("updated_at")
+    @Expose
     public Date updatedAt;
 
     /**
@@ -161,7 +144,7 @@ public class ResourceAttributeRead {
      * @param key
      * @param updatedAt
      */
-    public ResourceAttributeRead(Object type, String key, UUID id, UUID resourceId, String resourceKey, UUID organizationId, UUID projectId, UUID environmentId, Date createdAt, Date updatedAt) {
+    public ResourceAttributeRead(Object type, String key, String id, String resourceId, String resourceKey, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt) {
         super();
         this.type = type;
         this.key = key;
@@ -190,12 +173,12 @@ public class ResourceAttributeRead {
         return this;
     }
 
-    public ResourceAttributeRead withId(UUID id) {
+    public ResourceAttributeRead withId(String id) {
         this.id = id;
         return this;
     }
 
-    public ResourceAttributeRead withResourceId(UUID resourceId) {
+    public ResourceAttributeRead withResourceId(String resourceId) {
         this.resourceId = resourceId;
         return this;
     }
@@ -205,17 +188,17 @@ public class ResourceAttributeRead {
         return this;
     }
 
-    public ResourceAttributeRead withOrganizationId(UUID organizationId) {
+    public ResourceAttributeRead withOrganizationId(String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public ResourceAttributeRead withProjectId(UUID projectId) {
+    public ResourceAttributeRead withProjectId(String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public ResourceAttributeRead withEnvironmentId(UUID environmentId) {
+    public ResourceAttributeRead withEnvironmentId(String environmentId) {
         this.environmentId = environmentId;
         return this;
     }

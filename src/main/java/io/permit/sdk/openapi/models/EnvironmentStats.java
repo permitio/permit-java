@@ -4,12 +4,9 @@ package io.permit.sdk.openapi.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -18,20 +15,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "key",
-    "id",
-    "organization_id",
-    "project_id",
-    "created_at",
-    "updated_at",
-    "name",
-    "description",
-    "custom_branch_name",
-    "pdp_configs",
-    "stats"
-})
 @Generated("jsonschema2pojo")
 public class EnvironmentStats {
 
@@ -42,8 +25,8 @@ public class EnvironmentStats {
      * (Required)
      * 
      */
-    @JsonProperty("key")
-    @JsonPropertyDescription("A URL-friendly name of the environment (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the environment.")
+    @SerializedName("key")
+    @Expose
     public String key;
     /**
      * Id
@@ -52,9 +35,9 @@ public class EnvironmentStats {
      * (Required)
      * 
      */
-    @JsonProperty("id")
-    @JsonPropertyDescription("Unique id of the environment")
-    public UUID id;
+    @SerializedName("id")
+    @Expose
+    public String id;
     /**
      * Organization Id
      * <p>
@@ -62,9 +45,9 @@ public class EnvironmentStats {
      * (Required)
      * 
      */
-    @JsonProperty("organization_id")
-    @JsonPropertyDescription("Unique id of the organization that the environment belongs to.")
-    public UUID organizationId;
+    @SerializedName("organization_id")
+    @Expose
+    public String organizationId;
     /**
      * Project Id
      * <p>
@@ -72,9 +55,9 @@ public class EnvironmentStats {
      * (Required)
      * 
      */
-    @JsonProperty("project_id")
-    @JsonPropertyDescription("Unique id of the project that the environment belongs to.")
-    public UUID projectId;
+    @SerializedName("project_id")
+    @Expose
+    public String projectId;
     /**
      * Created At
      * <p>
@@ -82,8 +65,8 @@ public class EnvironmentStats {
      * (Required)
      * 
      */
-    @JsonProperty("created_at")
-    @JsonPropertyDescription("Date and time when the environment was created (ISO_8601 format).")
+    @SerializedName("created_at")
+    @Expose
     public Date createdAt;
     /**
      * Updated At
@@ -92,8 +75,8 @@ public class EnvironmentStats {
      * (Required)
      * 
      */
-    @JsonProperty("updated_at")
-    @JsonPropertyDescription("Date and time when the environment was last updated/modified (ISO_8601 format).")
+    @SerializedName("updated_at")
+    @Expose
     public Date updatedAt;
     /**
      * Name
@@ -102,8 +85,8 @@ public class EnvironmentStats {
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the environment")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Description
@@ -111,8 +94,8 @@ public class EnvironmentStats {
      * an optional longer description of the environment
      * 
      */
-    @JsonProperty("description")
-    @JsonPropertyDescription("an optional longer description of the environment")
+    @SerializedName("description")
+    @Expose
     public String description;
     /**
      * Custom Branch Name
@@ -120,8 +103,8 @@ public class EnvironmentStats {
      * when using gitops feature, an optional branch name for the environment
      * 
      */
-    @JsonProperty("custom_branch_name")
-    @JsonPropertyDescription("when using gitops feature, an optional branch name for the environment")
+    @SerializedName("custom_branch_name")
+    @Expose
     public String customBranchName;
     /**
      * Pdp Configs
@@ -130,7 +113,8 @@ public class EnvironmentStats {
      * (Required)
      * 
      */
-    @JsonProperty("pdp_configs")
+    @SerializedName("pdp_configs")
+    @Expose
     public List<PDPConfigRead> pdpConfigs = new ArrayList<PDPConfigRead>();
     /**
      * Statistics
@@ -139,7 +123,8 @@ public class EnvironmentStats {
      * (Required)
      * 
      */
-    @JsonProperty("stats")
+    @SerializedName("stats")
+    @Expose
     public Statistics stats;
 
     /**
@@ -161,7 +146,7 @@ public class EnvironmentStats {
      * @param key
      * @param updatedAt
      */
-    public EnvironmentStats(String key, UUID id, UUID organizationId, UUID projectId, Date createdAt, Date updatedAt, String name, List<PDPConfigRead> pdpConfigs, Statistics stats) {
+    public EnvironmentStats(String key, String id, String organizationId, String projectId, Date createdAt, Date updatedAt, String name, List<PDPConfigRead> pdpConfigs, Statistics stats) {
         super();
         this.key = key;
         this.id = id;
@@ -179,17 +164,17 @@ public class EnvironmentStats {
         return this;
     }
 
-    public EnvironmentStats withId(UUID id) {
+    public EnvironmentStats withId(String id) {
         this.id = id;
         return this;
     }
 
-    public EnvironmentStats withOrganizationId(UUID organizationId) {
+    public EnvironmentStats withOrganizationId(String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public EnvironmentStats withProjectId(UUID projectId) {
+    public EnvironmentStats withProjectId(String projectId) {
         this.projectId = projectId;
         return this;
     }

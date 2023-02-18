@@ -18,8 +18,7 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the action",
-      "format": "uuid"
+      "description": "Unique id of the action"
     },
     "key": {
       "title": "Key",

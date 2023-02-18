@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,14 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "user_set",
-    "permission",
-    "resource_set",
-    "is_role",
-    "is_resource"
-})
 @Generated("jsonschema2pojo")
 public class ConditionSetRuleRemove {
 
@@ -32,8 +22,8 @@ public class ConditionSetRuleRemove {
      * (Required)
      * 
      */
-    @JsonProperty("user_set")
-    @JsonPropertyDescription("The userset that will be unassigned these permission, i.e: all the users matching this rule will lose the specified permission")
+    @SerializedName("user_set")
+    @Expose
     public String userSet;
     /**
      * Permission
@@ -42,8 +32,8 @@ public class ConditionSetRuleRemove {
      * (Required)
      * 
      */
-    @JsonProperty("permission")
-    @JsonPropertyDescription("The permission that will be removed from the userset *on* the resourceset. The permission can be either a resource action id, or `{resource_key}:{action_key}`, i.e: the \"permission name\".")
+    @SerializedName("permission")
+    @Expose
     public String permission;
     /**
      * Resource Set
@@ -52,8 +42,8 @@ public class ConditionSetRuleRemove {
      * (Required)
      * 
      */
-    @JsonProperty("resource_set")
-    @JsonPropertyDescription("The resourceset that represents the resources that are no longer granted for access, i.e: all the resources matching this rule can no longer be accessed by the userset, and will be revoked the specified *permission*")
+    @SerializedName("resource_set")
+    @Expose
     public String resourceSet;
     /**
      * Is Role
@@ -61,8 +51,8 @@ public class ConditionSetRuleRemove {
      * if True, will set the condition set rule to the role's autogen user-set.
      * 
      */
-    @JsonProperty("is_role")
-    @JsonPropertyDescription("if True, will set the condition set rule to the role's autogen user-set.")
+    @SerializedName("is_role")
+    @Expose
     public Boolean isRole = false;
     /**
      * Is Resource
@@ -70,8 +60,8 @@ public class ConditionSetRuleRemove {
      * if True, will set the condition set rule to the resource's autogen resource-set.
      * 
      */
-    @JsonProperty("is_resource")
-    @JsonPropertyDescription("if True, will set the condition set rule to the resource's autogen resource-set.")
+    @SerializedName("is_resource")
+    @Expose
     public Boolean isResource = false;
 
     /**

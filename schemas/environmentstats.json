@@ -21,20 +21,17 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the environment",
-      "format": "uuid"
+      "description": "Unique id of the environment"
     },
     "organization_id": {
       "title": "Organization Id",
       "type": "string",
-      "description": "Unique id of the organization that the environment belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the organization that the environment belongs to."
     },
     "project_id": {
       "title": "Project Id",
       "type": "string",
-      "description": "Unique id of the project that the environment belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the project that the environment belongs to."
     },
     "created_at": {
       "title": "Created At",

@@ -4,10 +4,8 @@ package io.permit.sdk.openapi.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -16,10 +14,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "permissions"
-})
 @Generated("jsonschema2pojo")
 public class RemoveRolePermissions {
 
@@ -30,8 +24,8 @@ public class RemoveRolePermissions {
      * (Required)
      * 
      */
-    @JsonProperty("permissions")
-    @JsonPropertyDescription("List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or `{resource_key}:{action_key}`,i.e: the \"permission name\".")
+    @SerializedName("permissions")
+    @Expose
     public List<String> permissions = new ArrayList<String>();
 
     /**

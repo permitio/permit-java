@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,12 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "role",
-    "tenant",
-    "user"
-})
 @Generated("jsonschema2pojo")
 public class RoleAssignmentCreate {
 
@@ -30,8 +22,8 @@ public class RoleAssignmentCreate {
      * (Required)
      * 
      */
-    @JsonProperty("role")
-    @JsonPropertyDescription("the role that will be assigned (accepts either the role id or the role key)")
+    @SerializedName("role")
+    @Expose
     public String role;
     /**
      * Tenant
@@ -40,8 +32,8 @@ public class RoleAssignmentCreate {
      * (Required)
      * 
      */
-    @JsonProperty("tenant")
-    @JsonPropertyDescription("the tenant the role is associated with (accepts either the tenant id or the tenant key)")
+    @SerializedName("tenant")
+    @Expose
     public String tenant;
     /**
      * User
@@ -50,8 +42,8 @@ public class RoleAssignmentCreate {
      * (Required)
      * 
      */
-    @JsonProperty("user")
-    @JsonPropertyDescription("the user the role will be assigned to (accepts either the user id or the user key)")
+    @SerializedName("user")
+    @Expose
     public String user;
 
     /**

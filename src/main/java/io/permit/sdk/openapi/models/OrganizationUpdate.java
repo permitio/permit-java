@@ -2,10 +2,8 @@
 package io.permit.sdk.openapi.models;
 
 import javax.annotation.processing.Generated;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -14,11 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  * 
  * 
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "name",
-    "settings"
-})
 @Generated("jsonschema2pojo")
 public class OrganizationUpdate {
 
@@ -28,8 +21,8 @@ public class OrganizationUpdate {
      * The name of the organization, usually it's your company's name.
      * 
      */
-    @JsonProperty("name")
-    @JsonPropertyDescription("The name of the organization, usually it's your company's name.")
+    @SerializedName("name")
+    @Expose
     public String name;
     /**
      * Settings
@@ -37,8 +30,8 @@ public class OrganizationUpdate {
      * the settings for this project
      * 
      */
-    @JsonProperty("settings")
-    @JsonPropertyDescription("the settings for this project")
+    @SerializedName("settings")
+    @Expose
     public Settings__3 settings;
 
     public OrganizationUpdate withName(String name) {

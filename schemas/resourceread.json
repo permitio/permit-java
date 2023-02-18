@@ -20,26 +20,22 @@
     "id": {
       "title": "Id",
       "type": "string",
-      "description": "Unique id of the resource",
-      "format": "uuid"
+      "description": "Unique id of the resource"
     },
     "organization_id": {
       "title": "Organization Id",
       "type": "string",
-      "description": "Unique id of the organization that the resource belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the organization that the resource belongs to."
     },
     "project_id": {
       "title": "Project Id",
       "type": "string",
-      "description": "Unique id of the project that the resource belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the project that the resource belongs to."
     },
     "environment_id": {
       "title": "Environment Id",
       "type": "string",
-      "description": "Unique id of the environment that the resource belongs to.",
-      "format": "uuid"
+      "description": "Unique id of the environment that the resource belongs to."
     },
     "created_at": {
       "title": "Created At",
