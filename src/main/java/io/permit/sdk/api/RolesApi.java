@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.RoleRead;
 import okhttp3.*;
@@ -12,8 +13,16 @@ public class RolesApi extends BaseApi {
         super(client, config, LoggerFactory.getLogger(RolesApi.class));
     }
 
-    public RoleRead get(String roleKey) throws IOException, PermitApiError {
-        String url = buildUrl(String.format("/v2/schema/default/production/roles/%s", roleKey));
+    public RoleRead get(String roleKey) throws IOException, PermitApiError, PermitContextError {
+        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        String url = buildUrl(
+                String.format(
+                        "/v2/schema/%s/%s/roles/%s",
+                        config.getContext().getProject(),
+                        config.getContext().getEnvironment(),
+                        roleKey
+                )
+        );
         Request request = buildRequest(
             new Request.Builder()
                 .url(url)
