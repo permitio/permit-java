@@ -139,6 +139,8 @@ jsonSchema2Pojo {
 
     // Whether to include only 'required' fields in generated constructors
     constructorsRequiredPropertiesOnly = true
+
+    annotationStyle = 'gson'
 }
 
 publishing {
