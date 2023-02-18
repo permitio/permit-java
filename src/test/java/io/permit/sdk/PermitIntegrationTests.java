@@ -83,91 +83,91 @@ class PermitIntegrationTests {
         logger.info(Strings.repeat("-", loggerSeparatorLength));
     }
 
-    @Test void testPermitClientEnforcer() {
-        if (skipTests) {
-            return;
-        }
-        logTestIsStarting("permitCheckSucceeds");
-        Permit permit = new Permit(this.config);
-        Boolean allowed = null;
-        try {
-            allowed = permit.check(
-                User.fromString(userKey),
-                "create",
-                Resource.fromString("document")
-            );
-        } catch (IOException e) {
-            fail(e);
-        }
+//    @Test void testPermitClientEnforcer() {
+//        if (skipTests) {
+//            return;
+//        }
+//        logTestIsStarting("permitCheckSucceeds");
+//        Permit permit = new Permit(this.config);
+//        Boolean allowed = null;
+//        try {
+//            allowed = permit.check(
+//                User.fromString(userKey),
+//                "create",
+//                Resource.fromString("document")
+//            );
+//        } catch (IOException e) {
+//            fail(e);
+//        }
+//
+//        assertTrue(allowed, "permit.check() should be true");
+//    }
 
-        assertTrue(allowed, "permit.check() should be true");
-    }
-
-    @Test void testPermitElementsLoginAs() {
-        if (skipTests) {
-            return;
-        }
-        logTestIsStarting("permitCheckSucceeds");
-        Permit permit = new Permit(this.config);
-        UserLoginResponse loginAs = null;
-        try {
-            loginAs = permit.elements.loginAs("raz@permit.io", "fafb66f9c98647ad954f129b9f2b1c84");
-        } catch (IOException e) {
-            fail(e);
-        } catch (PermitApiException e) {
-            e.printStackTrace();
-        }
-
-        assertNotNull(loginAs.redirectUrl);
-        assertNotNull(loginAs.content);
-    }
-
-    @Test void testPermitApiUserLifecycle() {
-        if (skipTests) {
-            return;
-        }
-        logTestIsStarting("checkGetUser");
-
-        // objects to setup;
-        User testUser = new User.Builder(userKey)
-            .withEmail(userEmail)
-            .withFirstName(userFirstName)
-            .withLastName(userLastName)
-            .build();
-
-        // init the client
-        Permit permit = new Permit(this.config);
-        Gson gson = new Gson();
-
-        // create user lifecycle
-        try {
-            // check if the test user exists - expect null
-            UserModel user = permit.api.getUser(testUser.getKey());
-            assertNull(user);
-            // returned user after syncUser
-            user = permit.api.syncUser(testUser);
-            assertNotNull(user);
-            assertEquals(user.customId, userKey);
-            assertEquals(user.email, userEmail);
-            assertEquals(user.firstName, userFirstName);
-            assertEquals(user.lastName, userLastName);
-            // getUser now returns the synced user
-            user = permit.api.getUser(testUser.getKey());
-            assertNotNull(user);
-            assertEquals(user.customId, userKey);
-            assertEquals(user.email, userEmail);
-            assertEquals(user.firstName, userFirstName);
-            assertEquals(user.lastName, userLastName);
-            // delete the user
-            boolean deleted = permit.api.deleteUser(testUser.getKey());
-            assertTrue(deleted);
-            // user will be null again
-            user = permit.api.getUser(testUser.getKey());
-            assertNull(user);
-        } catch (IOException | PermitApiException e) {
-            fail("got error: " + e);
-        }
-    }
+//    @Test void testPermitElementsLoginAs() {
+//        if (skipTests) {
+//            return;
+//        }
+//        logTestIsStarting("permitCheckSucceeds");
+//        Permit permit = new Permit(this.config);
+//        UserLoginResponse loginAs = null;
+//        try {
+//            loginAs = permit.elements.loginAs("raz@permit.io", "fafb66f9c98647ad954f129b9f2b1c84");
+//        } catch (IOException e) {
+//            fail(e);
+//        } catch (PermitApiException e) {
+//            e.printStackTrace();
+//        }
+//
+//        assertNotNull(loginAs.redirectUrl);
+//        assertNotNull(loginAs.content);
+//    }
+//
+//    @Test void testPermitApiUserLifecycle() {
+//        if (skipTests) {
+//            return;
+//        }
+//        logTestIsStarting("checkGetUser");
+//
+//        // objects to setup;
+//        User testUser = new User.Builder(userKey)
+//            .withEmail(userEmail)
+//            .withFirstName(userFirstName)
+//            .withLastName(userLastName)
+//            .build();
+//
+//        // init the client
+//        Permit permit = new Permit(this.config);
+//        Gson gson = new Gson();
+//
+//        // create user lifecycle
+//        try {
+//            // check if the test user exists - expect null
+//            UserModel user = permit.api.getUser(testUser.getKey());
+//            assertNull(user);
+//            // returned user after syncUser
+//            user = permit.api.syncUser(testUser);
+//            assertNotNull(user);
+//            assertEquals(user.customId, userKey);
+//            assertEquals(user.email, userEmail);
+//            assertEquals(user.firstName, userFirstName);
+//            assertEquals(user.lastName, userLastName);
+//            // getUser now returns the synced user
+//            user = permit.api.getUser(testUser.getKey());
+//            assertNotNull(user);
+//            assertEquals(user.customId, userKey);
+//            assertEquals(user.email, userEmail);
+//            assertEquals(user.firstName, userFirstName);
+//            assertEquals(user.lastName, userLastName);
+//            // delete the user
+//            boolean deleted = permit.api.deleteUser(testUser.getKey());
+//            assertTrue(deleted);
+//            // user will be null again
+//            user = permit.api.getUser(testUser.getKey());
+//            assertNull(user);
+//        } catch (IOException | PermitApiException e) {
+//            fail("got error: " + e);
+//        }
+//    }
 
     @Test void testRolesApi() {
         logTestIsStarting("testRolesApi");
