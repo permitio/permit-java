@@ -1,7 +1,6 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
@@ -75,7 +74,7 @@ public class UserRead {
      */
     @SerializedName("associated_tenants")
     @Expose
-    public List<UserInTenant> associatedTenants = new ArrayList<UserInTenant>();
+    public List<UserInTenant> associatedTenants;
     /**
      * Roles
      * <p>
@@ -84,7 +83,7 @@ public class UserRead {
      */
     @SerializedName("roles")
     @Expose
-    public List<UserRole> roles = new ArrayList<UserRole>();
+    public List<UserRole> roles;
     /**
      * Email
      * <p>

@@ -1,7 +1,6 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
@@ -36,7 +35,7 @@ public class UserInTenant {
      */
     @SerializedName("roles")
     @Expose
-    public List<String> roles = new ArrayList<String>();
+    public List<String> roles;
     /**
      * Whether the user has signed in or not
      * (Required)

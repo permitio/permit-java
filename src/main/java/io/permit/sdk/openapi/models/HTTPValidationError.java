@@ -1,7 +1,6 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
@@ -25,7 +24,7 @@ public class HTTPValidationError {
      */
     @SerializedName("detail")
     @Expose
-    public List<ValidationError> detail = new ArrayList<ValidationError>();
+    public List<ValidationError> detail;
 
     public HTTPValidationError withDetail(List<ValidationError> detail) {
         this.detail = detail;

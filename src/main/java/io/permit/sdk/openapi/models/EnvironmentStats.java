@@ -1,7 +1,6 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -115,7 +114,7 @@ public class EnvironmentStats {
      */
     @SerializedName("pdp_configs")
     @Expose
-    public List<PDPConfigRead> pdpConfigs = new ArrayList<PDPConfigRead>();
+    public List<PDPConfigRead> pdpConfigs;
     /**
      * Statistics
      * <p>

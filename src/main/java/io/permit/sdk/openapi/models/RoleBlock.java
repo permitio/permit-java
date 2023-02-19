@@ -1,7 +1,6 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
@@ -34,7 +33,7 @@ public class RoleBlock {
      */
     @SerializedName("permissions")
     @Expose
-    public List<String> permissions = new ArrayList<String>();
+    public List<String> permissions;
     /**
      * Extends
      * <p>
@@ -43,7 +42,7 @@ public class RoleBlock {
      */
     @SerializedName("extends")
     @Expose
-    public List<String> _extends = new ArrayList<String>();
+    public List<String> _extends;
 
     public RoleBlock withDescription(String description) {
         this.description = description;

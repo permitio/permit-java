@@ -1,7 +1,6 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
@@ -26,7 +25,7 @@ public class ValidationError__1 {
      */
     @SerializedName("loc")
     @Expose
-    public List<Object> loc = new ArrayList<Object>();
+    public List<Object> loc;
     /**
      * Message
      * <p>

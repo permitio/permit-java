@@ -141,6 +141,9 @@ jsonSchema2Pojo {
     constructorsRequiredPropertiesOnly = true
 
     annotationStyle = 'gson'
+
+    // Whether to initialize Set and List fields as empty collections, or leave them as null.
+    initializeCollections = false
 }
 
 publishing {

@@ -1,7 +1,6 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
@@ -26,7 +25,7 @@ public class PaginatedResultUserRead {
      */
     @SerializedName("data")
     @Expose
-    public List<UserRead> data = new ArrayList<UserRead>();
+    public List<UserRead> data;
     /**
      * Total Count
      * <p>

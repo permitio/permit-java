@@ -1,7 +1,6 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -45,7 +44,7 @@ public class RoleRead {
      */
     @SerializedName("permissions")
     @Expose
-    public List<String> permissions = new ArrayList<String>();
+    public List<String> permissions;
     /**
      * Extends
      * <p>
@@ -54,7 +53,7 @@ public class RoleRead {
      */
     @SerializedName("extends")
     @Expose
-    public List<String> _extends = new ArrayList<String>();
+    public List<String> _extends;
     /**
      * Key
      * <p>
