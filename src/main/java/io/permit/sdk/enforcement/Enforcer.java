@@ -2,6 +2,7 @@ package io.permit.sdk.enforcement;
 
 import com.google.gson.Gson;
 import io.permit.sdk.PermitConfig;
+import io.permit.sdk.api.HttpLoggingInterceptor;
 import io.permit.sdk.util.Context;
 import io.permit.sdk.util.ContextStore;
 
@@ -18,12 +19,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class EnforcerInput {
-    public final String user;
+    public final User user;
     public final String action;
     public final Resource resource;
     public final HashMap<String, String> context;
 
-    EnforcerInput(String user, String action, Resource resource, HashMap<String, String> context) {
+    EnforcerInput(User user, String action, Resource resource, HashMap<String, String> context) {
         this.user = user;
         this.action = action;
         this.resource = resource;
@@ -42,11 +43,14 @@ class OpaResult {
 public class Enforcer implements IEnforcerApi {
     final static Logger logger = LoggerFactory.getLogger(Enforcer.class);
     public final ContextStore contextStore = new ContextStore();
-    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client;
     private final PermitConfig config;
 
     public Enforcer(PermitConfig config) {
         this.config = config;
+        this.client = new OkHttpClient.Builder()
+            .addInterceptor(new HttpLoggingInterceptor(logger, config))
+            .build();
     }
 
     @Override
@@ -55,7 +59,7 @@ public class Enforcer implements IEnforcerApi {
         Context queryContext = this.contextStore.getDerivedContext(context);
 
         EnforcerInput input = new EnforcerInput(
-            user.getKey(),
+            user,
             action,
             normalizedResource,
             queryContext
@@ -79,7 +83,7 @@ public class Enforcer implements IEnforcerApi {
             if (!response.isSuccessful()) {
                 String errorMessage = String.format(
                     "Error in permit.check(%s, %s, %s): got unexpected status code %d",
-                    user,
+                    user.toString(),
                     action,
                     resource,
                     response.code()

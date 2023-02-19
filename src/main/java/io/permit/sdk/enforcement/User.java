@@ -8,7 +8,6 @@ public class User {
     private String firstName = null;
     private String lastName = null;
     private String email = null;
-    private ArrayList<AssignedRole> roles = null;
     private HashMap<String, String> attributes = null;
 
     public User(Builder builder) {
@@ -16,7 +15,6 @@ public class User {
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.email = builder.email;
-        this.roles = builder.roles;
         this.attributes = builder.attributes;
     }
 
@@ -32,12 +30,27 @@ public class User {
         return new User(new User.Builder(userKey));
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public HashMap<String, String> getAttributes() {
+        return attributes;
+    }
+
     public static class Builder {
-        private String key;
+        private final String key;
         private String firstName = null;
         private String lastName = null;
         private String email = null;
-        private ArrayList<AssignedRole> roles = null;
         private HashMap<String, String> attributes = null;
 
         public Builder(String userKey) {
@@ -56,11 +69,6 @@ public class User {
 
         public Builder withEmail(String email) {
             this.email = email;
-            return this;
-        }
-
-        public Builder withRoles(ArrayList<AssignedRole> roles) {
-            this.roles = roles;
             return this;
         }
 
