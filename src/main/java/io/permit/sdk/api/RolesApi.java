@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 public class RolesApi extends BaseApi {
@@ -27,12 +28,18 @@ public class RolesApi extends BaseApi {
         );
     }
 
-    public RoleRead[] list() throws IOException, PermitApiError, PermitContextError {
+    public RoleRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRolesUrl("");
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         Request request = buildRequest(
                 new Request.Builder()
-                        .url(url)
+                        .url(
+                            urlBuilder
+                                .addQueryParameter("page", Integer.toString(page))
+                                .addQueryParameter("per_page", Integer.toString(perPage))
+                                .build()
+                        )
                         .get()
         );
 
@@ -40,6 +47,14 @@ public class RolesApi extends BaseApi {
             String responseString = processResponseBody(response);
             return (new Gson()).fromJson(responseString, RoleRead[].class);
         }
+    }
+
+    public RoleRead[] list(int page) throws IOException, PermitApiError, PermitContextError {
+        return this.list(page, 100);
+    }
+
+    public RoleRead[] list() throws IOException, PermitApiError, PermitContextError {
+        return this.list(1);
     }
 
     public RoleRead get(String roleKey) throws IOException, PermitApiError, PermitContextError {

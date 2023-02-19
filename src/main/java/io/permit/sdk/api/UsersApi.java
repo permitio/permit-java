@@ -9,6 +9,7 @@ import okhttp3.*;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 public class UsersApi extends BaseApi {
@@ -27,12 +28,18 @@ public class UsersApi extends BaseApi {
         );
     }
 
-    public PaginatedResultUserRead list() throws IOException, PermitApiError, PermitContextError {
+    public PaginatedResultUserRead list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getUsersUrl("");
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         Request request = buildRequest(
                 new Request.Builder()
-                        .url(url)
+                        .url(
+                            urlBuilder
+                                .addQueryParameter("page", Integer.toString(page))
+                                .addQueryParameter("per_page", Integer.toString(perPage))
+                                .build()
+                        )
                         .get()
         );
 
@@ -40,6 +47,14 @@ public class UsersApi extends BaseApi {
             String responseString = processResponseBody(response);
             return (new Gson()).fromJson(responseString, PaginatedResultUserRead.class);
         }
+    }
+
+    public PaginatedResultUserRead list(int page) throws IOException, PermitApiError, PermitContextError {
+        return this.list(page, 100);
+    }
+
+    public PaginatedResultUserRead list() throws IOException, PermitApiError, PermitContextError {
+        return this.list(1);
     }
 
     public UserRead get(String userKey) throws IOException, PermitApiError, PermitContextError {
