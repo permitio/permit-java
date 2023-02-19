@@ -6,8 +6,10 @@ import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.PermitContext;
 import io.permit.sdk.openapi.models.APIKeyScopeRead;
+import io.permit.sdk.openapi.models.RoleCreate;
 import io.permit.sdk.openapi.models.RoleRead;
 import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,6 +69,14 @@ public abstract class BaseApi {
         String responseString = responseBody.string();
         throwIfErrorResponseCode(response, responseString, new ArrayList<Integer>());
         return responseString;
+    }
+
+    @NotNull
+    protected static <T> RequestBody getJsonRequestBody(T data) {
+        return RequestBody.create((
+                        new Gson()).toJson(data),
+                MediaType.parse("application/json")
+        );
     }
 
     protected String processResponseBody(Response response) throws IOException, PermitApiError {

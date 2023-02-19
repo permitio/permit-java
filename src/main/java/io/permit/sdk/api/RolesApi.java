@@ -5,6 +5,7 @@ import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.*;
 import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,37 +62,29 @@ public class RolesApi extends BaseApi {
         return this.get(roleId.toString());
     }
 
-    public RoleRead create(RoleCreate role) throws IOException, PermitApiError, PermitContextError {
+    public RoleRead create(RoleCreate roleData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRolesUrl("");
-        // request body
-        RequestBody requestBody = RequestBody.create((
-                new Gson()).toJson(role),
-                MediaType.parse("application/json")
-        );
+        RequestBody jsonBody = getJsonRequestBody(roleData);
 
         Request request = buildRequest(
             new Request.Builder()
                 .url(url)
-                .post(requestBody)
+                .post(jsonBody)
         );
 
         return this.<RoleRead>callApiAndParseJson(request, RoleRead.class);
     }
 
-    public RoleRead update(String roleKey, RoleUpdate role) throws IOException, PermitApiError, PermitContextError {
+    public RoleRead update(String roleKey, RoleUpdate roleData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRolesUrl(String.format("/%s", roleKey));
-        // request body
-        RequestBody requestBody = RequestBody.create(
-                (new Gson()).toJson(role),
-                MediaType.parse("application/json")
-        );
+        RequestBody jsonBody = getJsonRequestBody(roleData);
 
         Request request = buildRequest(
                 new Request.Builder()
                         .url(url)
-                        .patch(requestBody)
+                        .patch(jsonBody)
         );
 
         return this.<RoleRead>callApiAndParseJson(request, RoleRead.class);
@@ -114,16 +107,12 @@ public class RolesApi extends BaseApi {
     public RoleRead assignPermissions(String roleKey, ArrayList<String> permissions) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRolesUrl(String.format("/%s/permissions", roleKey));
-        // request body
-        RequestBody requestBody = RequestBody.create(
-                (new Gson()).toJson(new AddRolePermissions(permissions)),
-                MediaType.parse("application/json")
-        );
+        RequestBody jsonBody = getJsonRequestBody(new AddRolePermissions(permissions));
 
         Request request = buildRequest(
                 new Request.Builder()
                         .url(url)
-                        .post(requestBody)
+                        .post(jsonBody)
         );
 
         return this.<RoleRead>callApiAndParseJson(request, RoleRead.class);
@@ -132,16 +121,12 @@ public class RolesApi extends BaseApi {
     public RoleRead removePermissions(String roleKey, ArrayList<String> permissions) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRolesUrl(String.format("/%s/permissions", roleKey));
-        // request body
-        RequestBody requestBody = RequestBody.create(
-                (new Gson()).toJson(new RemoveRolePermissions(permissions)),
-                MediaType.parse("application/json")
-        );
+        RequestBody jsonBody = getJsonRequestBody(new RemoveRolePermissions(permissions));
 
         Request request = buildRequest(
                 new Request.Builder()
                         .url(url)
-                        .delete(requestBody)
+                        .delete(jsonBody)
         );
 
         return this.<RoleRead>callApiAndParseJson(request, RoleRead.class);
