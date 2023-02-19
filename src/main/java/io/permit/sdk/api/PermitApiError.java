@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
 public class PermitApiError extends Throwable {
     final private int responseCode;
@@ -16,7 +17,7 @@ public class PermitApiError extends Throwable {
 
     public String getRawResponse() { return rawResponse; }
 
-    public Object getErrorObject () {
-        return (new Gson()).fromJson(rawResponse, Object.class);
+    public LinkedTreeMap getErrorObject () {
+        return (new Gson()).fromJson(rawResponse, LinkedTreeMap.class);
     }
 }
