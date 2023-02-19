@@ -12,7 +12,21 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class RolesApi extends BaseApi {
+interface IRolesApi {
+    RoleRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    RoleRead[] list(int page) throws IOException, PermitApiError, PermitContextError;
+    RoleRead[] list() throws IOException, PermitApiError, PermitContextError;
+    RoleRead get(String roleKey) throws IOException, PermitApiError, PermitContextError;
+    RoleRead getByKey(String roleKey) throws IOException, PermitApiError, PermitContextError;
+    RoleRead getById(UUID roleId) throws IOException, PermitApiError, PermitContextError;
+    RoleRead create(RoleCreate roleData) throws IOException, PermitApiError, PermitContextError;
+    RoleRead update(String roleKey, RoleUpdate roleData) throws IOException, PermitApiError, PermitContextError;
+    void delete(String roleKey) throws IOException, PermitApiError, PermitContextError;
+    RoleRead assignPermissions(String roleKey, ArrayList<String> permissions) throws IOException, PermitApiError, PermitContextError;
+    RoleRead removePermissions(String roleKey, ArrayList<String> permissions) throws IOException, PermitApiError, PermitContextError;
+}
+
+public class RolesApi extends BaseApi implements IRolesApi {
     public RolesApi(OkHttpClient client, PermitConfig config) {
         super(client, config, LoggerFactory.getLogger(RolesApi.class));
     }

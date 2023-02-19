@@ -12,7 +12,19 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ResourceAttributesApi extends BaseApi {
+interface IResourceAttributesApi {
+    ResourceAttributeRead[] list(String resourceKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    ResourceAttributeRead[] list(String resourceKey, int page) throws IOException, PermitApiError, PermitContextError;
+    ResourceAttributeRead[] list(String resourceKey) throws IOException, PermitApiError, PermitContextError;
+    ResourceAttributeRead get(String resourceKey, String attributeKey) throws IOException, PermitApiError, PermitContextError;
+    ResourceAttributeRead getByKey(String resourceKey, String attributeKey) throws IOException, PermitApiError, PermitContextError;
+    ResourceAttributeRead getById(UUID resourceId, UUID attributeId) throws IOException, PermitApiError, PermitContextError;
+    ResourceAttributeRead create(String resourceKey, ResourceAttributeCreate attributeData) throws IOException, PermitApiError, PermitContextError;
+    ResourceAttributeRead update(String resourceKey, String attributeKey, ResourceAttributeUpdate attributeData) throws IOException, PermitApiError, PermitContextError;
+    void delete(String resourceKey, String attributeKey) throws IOException, PermitApiError, PermitContextError;
+}
+
+public class ResourceAttributesApi extends BaseApi implements IResourceAttributesApi {
     public ResourceAttributesApi(OkHttpClient client, PermitConfig config) {
         super(client, config, LoggerFactory.getLogger(ResourceAttributesApi.class));
     }

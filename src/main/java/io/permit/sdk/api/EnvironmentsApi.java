@@ -12,7 +12,19 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class EnvironmentsApi extends BaseApi {
+interface IEnvironmentsApi {
+    EnvironmentRead[] list(String projectKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    EnvironmentRead[] list(String projectKey, int page) throws IOException, PermitApiError, PermitContextError;
+    EnvironmentRead[] list(String projectKey) throws IOException, PermitApiError, PermitContextError;
+    EnvironmentRead get(String projectKey, String environmentKey) throws IOException, PermitApiError, PermitContextError;
+    EnvironmentRead getByKey(String projectKey, String environmentKey) throws IOException, PermitApiError, PermitContextError;
+    EnvironmentRead getById(UUID projectId, UUID environmentId) throws IOException, PermitApiError, PermitContextError;
+    EnvironmentRead create(String projectKey, EnvironmentCreate environmentData) throws IOException, PermitApiError, PermitContextError;
+    EnvironmentRead update(String projectKey, String environmentKey, EnvironmentUpdate environmentData) throws IOException, PermitApiError, PermitContextError;
+    void delete(String projectKey, String environmentKey) throws IOException, PermitApiError, PermitContextError;
+}
+
+public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
     public EnvironmentsApi(OkHttpClient client, PermitConfig config) {
         super(client, config, LoggerFactory.getLogger(EnvironmentsApi.class));
     }

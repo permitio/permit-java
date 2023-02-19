@@ -12,7 +12,20 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ResourcesApi extends BaseApi {
+interface IResourcesApi {
+    ResourceRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    ResourceRead[] list(int page) throws IOException, PermitApiError, PermitContextError;
+    ResourceRead[] list() throws IOException, PermitApiError, PermitContextError;
+    ResourceRead get(String resourceKey) throws IOException, PermitApiError, PermitContextError;
+    ResourceRead getByKey(String resourceKey) throws IOException, PermitApiError, PermitContextError;
+    ResourceRead getById(UUID resourceId) throws IOException, PermitApiError, PermitContextError;
+    ResourceRead create(ResourceCreate resourceData) throws IOException, PermitApiError, PermitContextError;
+    ResourceRead replace(String resourceKey, ResourceReplace resourceData) throws IOException, PermitApiError, PermitContextError;
+    ResourceRead update(String resourceKey, ResourceUpdate resourceData) throws IOException, PermitApiError, PermitContextError;
+    void delete(String resourceKey) throws IOException, PermitApiError, PermitContextError;
+}
+
+public class ResourcesApi extends BaseApi implements IResourcesApi {
     public ResourcesApi(OkHttpClient client, PermitConfig config) {
         super(client, config, LoggerFactory.getLogger(ResourcesApi.class));
     }

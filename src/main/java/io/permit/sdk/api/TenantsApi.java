@@ -12,7 +12,22 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class TenantsApi extends BaseApi {
+interface ITenantsApi {
+    TenantRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    TenantRead[] list(int page) throws IOException, PermitApiError, PermitContextError;
+    TenantRead[] list() throws IOException, PermitApiError, PermitContextError;
+    PaginatedResultUserRead listTenantUsers(String tenantKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    PaginatedResultUserRead listTenantUsers(String tenantKey, int page) throws IOException, PermitApiError, PermitContextError;
+    PaginatedResultUserRead listTenantUsers(String tenantKey) throws IOException, PermitApiError, PermitContextError;
+    TenantRead get(String tenantKey) throws IOException, PermitApiError, PermitContextError;
+    TenantRead getByKey(String tenantKey) throws IOException, PermitApiError, PermitContextError;
+    TenantRead getById(UUID tenantId) throws IOException, PermitApiError, PermitContextError;
+    TenantRead create(TenantCreate tenantData) throws IOException, PermitApiError, PermitContextError;
+    TenantRead update(String tenantKey, TenantUpdate tenantData) throws IOException, PermitApiError, PermitContextError;
+    void delete(String tenantKey) throws IOException, PermitApiError, PermitContextError;
+}
+
+public class TenantsApi extends BaseApi implements ITenantsApi {
     public TenantsApi(OkHttpClient client, PermitConfig config) {
         super(client, config, LoggerFactory.getLogger(TenantsApi.class));
     }

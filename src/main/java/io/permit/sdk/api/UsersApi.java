@@ -6,13 +6,33 @@ import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.models.CreateOrUpdateResult;
 import io.permit.sdk.openapi.models.*;
 import okhttp3.*;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class UsersApi extends BaseApi {
+interface IUsersApi {
+    PaginatedResultUserRead list(int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    PaginatedResultUserRead list(int page) throws IOException, PermitApiError, PermitContextError;
+    PaginatedResultUserRead list() throws IOException, PermitApiError, PermitContextError;
+    UserRead get(String userKey) throws IOException, PermitApiError, PermitContextError;
+    UserRead getByKey(String userKey) throws IOException, PermitApiError, PermitContextError;
+    UserRead getById(UUID userId) throws IOException, PermitApiError, PermitContextError;
+    UserRead create(UserCreate userData) throws IOException, PermitApiError, PermitContextError;
+    UserRead update(String userKey, UserUpdate userData) throws IOException, PermitApiError, PermitContextError;
+    CreateOrUpdateResult<UserRead> sync(UserCreate userData) throws IOException, PermitApiError, PermitContextError;
+    void delete(String userKey) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError;
+    void unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, String tenantKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, int page) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey) throws IOException, PermitApiError, PermitContextError;
+}
+
+public class UsersApi extends BaseApi implements IUsersApi {
     public UsersApi(OkHttpClient client, PermitConfig config) {
         super(client, config, LoggerFactory.getLogger(UsersApi.class));
     }
@@ -166,5 +186,48 @@ public class UsersApi extends BaseApi {
         try (Response response = client.newCall(request).execute()) {
             processResponseBody(response, false);
         }
+    }
+
+    public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, String tenantKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
+        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        String url = buildUrl(
+            String.format(
+                "/v2/facts/%s/%s/role_assignments",
+                config.getContext().getProject(),
+                config.getContext().getEnvironment()
+            )
+        );
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
+        if (tenantKey != null) {
+            urlBuilder.addQueryParameter("tenant", tenantKey);
+        }
+        Request request = buildRequest(
+            new Request.Builder()
+                .url(
+                    urlBuilder
+                        .addQueryParameter("user", userKey)
+                        .addQueryParameter("page", Integer.toString(page))
+                        .addQueryParameter("per_page", Integer.toString(perPage))
+                        .build()
+                )
+                .get()
+        );
+
+        try (Response response = client.newCall(request).execute()) {
+            String responseString = processResponseBody(response);
+            return (new Gson()).fromJson(responseString, RoleAssignmentRead[].class);
+        }
+    }
+
+    public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
+        return this.getAssignedRoles(userKey, null, page, perPage);
+    }
+
+    public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, int page) throws IOException, PermitApiError, PermitContextError {
+        return this.getAssignedRoles(userKey, page, 100);
+    }
+
+    public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey) throws IOException, PermitApiError, PermitContextError {
+        return this.getAssignedRoles(userKey, 1);
     }
 }

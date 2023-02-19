@@ -12,7 +12,20 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ProjectsApi extends BaseApi {
+
+interface IProjectsApi {
+    ProjectRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    ProjectRead[] list(int page) throws IOException, PermitApiError, PermitContextError;
+    ProjectRead[] list() throws IOException, PermitApiError, PermitContextError;
+    ProjectRead get(String projectKey) throws IOException, PermitApiError, PermitContextError;
+    ProjectRead getByKey(String projectKey) throws IOException, PermitApiError, PermitContextError;
+    ProjectRead getById(UUID projectId) throws IOException, PermitApiError, PermitContextError;
+    ProjectRead create(ProjectCreate projectData) throws IOException, PermitApiError, PermitContextError;
+    ProjectRead update(String projectKey, ProjectUpdate projectData) throws IOException, PermitApiError, PermitContextError;
+    void delete(String projectKey) throws IOException, PermitApiError, PermitContextError;
+}
+
+public class ProjectsApi extends BaseApi implements IProjectsApi {
     public ProjectsApi(OkHttpClient client, PermitConfig config) {
         super(client, config, LoggerFactory.getLogger(ProjectsApi.class));
     }
