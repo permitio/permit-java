@@ -40,15 +40,31 @@ public class ApiClient implements IReadApis, IWriteApis {
     private final Headers headers;
     private final String baseUrl;
 
-
+    public final ProjectsApi projects;
+    public final EnvironmentsApi environments;
+    public final ResourcesApi resources;
+    public final ResourceActionsApi resourceActions;
+    public final ResourceAttributesApi resourceAttributes;
     public final RolesApi roles;
+    public final TenantsApi tenants;
+    public final UsersApi users;
+    public final ElementsApi elements;
 
     public ApiClient(PermitConfig config) {
         this.config = config;
         this.client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor(logger, config))
                 .build();
+
+        this.projects = new ProjectsApi(this.client, this.config);
+        this.environments = new EnvironmentsApi(this.client, this.config);
+        this.resources = new ResourcesApi(this.client, this.config);
+        this.resourceActions = new ResourceActionsApi(this.client, this.config);
+        this.resourceAttributes = new ResourceAttributesApi(this.client, this.config);
         this.roles = new RolesApi(this.client, this.config);
+        this.tenants = new TenantsApi(this.client, this.config);
+        this.users = new UsersApi(this.client, this.config);
+        this.elements = new ElementsApi(this.client, this.config);
 
         this.headers = new Headers.Builder()
             .add("Content-Type", "application/json")

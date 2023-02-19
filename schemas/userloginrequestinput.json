@@ -1,0 +1,21 @@
+{
+  "title": "UserLoginRequestInput",
+  "required": [
+    "user_id",
+    "tenant_id"
+  ],
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "title": "User Id",
+      "type": "string",
+      "description": "ID or key of the user for whom to generate a token"
+    },
+    "tenant_id": {
+      "title": "Tenant Id",
+      "type": "string",
+      "description": "ID or key of the tenant to which access is requested"
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}
