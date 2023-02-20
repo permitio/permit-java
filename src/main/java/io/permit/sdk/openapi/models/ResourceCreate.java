@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +25,7 @@ public class ResourceCreate {
      */
     @SerializedName("key")
     @Expose
-    public String key;
+    public java.lang.String key;
     /**
      * Name
      * <p>
@@ -34,7 +35,7 @@ public class ResourceCreate {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Urn
      * <p>
@@ -43,7 +44,7 @@ public class ResourceCreate {
      */
     @SerializedName("urn")
     @Expose
-    public String urn;
+    public java.lang.String urn;
     /**
      * Description
      * <p>
@@ -52,7 +53,7 @@ public class ResourceCreate {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Actions
      * <p>
@@ -65,7 +66,7 @@ public class ResourceCreate {
      */
     @SerializedName("actions")
     @Expose
-    public ActionBlockEditable actions;
+    public HashMap<String, ActionBlockEditable> actions;
     /**
      * Attributes
      * <p>
@@ -74,7 +75,7 @@ public class ResourceCreate {
      */
     @SerializedName("attributes")
     @Expose
-    public AttributeBlockEditable attributes;
+    public HashMap<String, AttributeBlockEditable> attributes;
 
     /**
      * No args constructor for use in serialization
@@ -89,39 +90,39 @@ public class ResourceCreate {
      * @param actions
      * @param key
      */
-    public ResourceCreate(String key, String name, ActionBlockEditable actions) {
+    public ResourceCreate(java.lang.String key, java.lang.String name, HashMap<String, ActionBlockEditable> actions) {
         super();
         this.key = key;
         this.name = name;
         this.actions = actions;
     }
 
-    public ResourceCreate withKey(String key) {
+    public ResourceCreate withKey(java.lang.String key) {
         this.key = key;
         return this;
     }
 
-    public ResourceCreate withName(String name) {
+    public ResourceCreate withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public ResourceCreate withUrn(String urn) {
+    public ResourceCreate withUrn(java.lang.String urn) {
         this.urn = urn;
         return this;
     }
 
-    public ResourceCreate withDescription(String description) {
+    public ResourceCreate withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public ResourceCreate withActions(ActionBlockEditable actions) {
+    public ResourceCreate withActions(HashMap<String, ActionBlockEditable> actions) {
         this.actions = actions;
         return this;
     }
 
-    public ResourceCreate withAttributes(AttributeBlockEditable attributes) {
+    public ResourceCreate withAttributes(HashMap<String, AttributeBlockEditable> attributes) {
         this.attributes = attributes;
         return this;
     }

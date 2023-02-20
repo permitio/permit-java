@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +25,7 @@ public class ResourceReplace {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Urn
      * <p>
@@ -33,7 +34,7 @@ public class ResourceReplace {
      */
     @SerializedName("urn")
     @Expose
-    public String urn;
+    public java.lang.String urn;
     /**
      * Description
      * <p>
@@ -42,7 +43,7 @@ public class ResourceReplace {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Actions
      * <p>
@@ -55,7 +56,7 @@ public class ResourceReplace {
      */
     @SerializedName("actions")
     @Expose
-    public ActionBlockEditable actions;
+    public HashMap<String, ActionBlockEditable> actions;
     /**
      * Attributes
      * <p>
@@ -64,7 +65,7 @@ public class ResourceReplace {
      */
     @SerializedName("attributes")
     @Expose
-    public AttributeBlockEditable attributes;
+    public HashMap<String, AttributeBlockEditable> attributes;
 
     /**
      * No args constructor for use in serialization
@@ -78,33 +79,33 @@ public class ResourceReplace {
      * @param name
      * @param actions
      */
-    public ResourceReplace(String name, ActionBlockEditable actions) {
+    public ResourceReplace(java.lang.String name, HashMap<String, ActionBlockEditable> actions) {
         super();
         this.name = name;
         this.actions = actions;
     }
 
-    public ResourceReplace withName(String name) {
+    public ResourceReplace withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public ResourceReplace withUrn(String urn) {
+    public ResourceReplace withUrn(java.lang.String urn) {
         this.urn = urn;
         return this;
     }
 
-    public ResourceReplace withDescription(String description) {
+    public ResourceReplace withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public ResourceReplace withActions(ActionBlockEditable actions) {
+    public ResourceReplace withActions(HashMap<String, ActionBlockEditable> actions) {
         this.actions = actions;
         return this;
     }
 
-    public ResourceReplace withAttributes(AttributeBlockEditable attributes) {
+    public ResourceReplace withAttributes(HashMap<String, AttributeBlockEditable> attributes) {
         this.attributes = attributes;
         return this;
     }

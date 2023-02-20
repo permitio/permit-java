@@ -2,6 +2,7 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -25,7 +26,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("key")
     @Expose
-    public String key;
+    public java.lang.String key;
     /**
      * Id
      * <p>
@@ -35,7 +36,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("id")
     @Expose
-    public String id;
+    public java.lang.String id;
     /**
      * Organization Id
      * <p>
@@ -45,7 +46,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("organization_id")
     @Expose
-    public String organizationId;
+    public java.lang.String organizationId;
     /**
      * Project Id
      * <p>
@@ -55,7 +56,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("project_id")
     @Expose
-    public String projectId;
+    public java.lang.String projectId;
     /**
      * Environment Id
      * <p>
@@ -65,7 +66,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("environment_id")
     @Expose
-    public String environmentId;
+    public java.lang.String environmentId;
     /**
      * Created At
      * <p>
@@ -95,7 +96,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Urn
      * <p>
@@ -104,7 +105,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("urn")
     @Expose
-    public String urn;
+    public java.lang.String urn;
     /**
      * Description
      * <p>
@@ -113,7 +114,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Actions
      * <p>
@@ -125,7 +126,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("actions")
     @Expose
-    public ActionBlockRead actions;
+    public HashMap<String, ActionBlockRead> actions;
     /**
      * Attributes
      * <p>
@@ -134,7 +135,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("attributes")
     @Expose
-    public AttributeBlockRead attributes;
+    public HashMap<String, AttributeBlockRead> attributes;
 
     /**
      * No args constructor for use in serialization
@@ -154,7 +155,7 @@ public class ResourceRead__1 {
      * @param key
      * @param updatedAt
      */
-    public ResourceRead__1(String key, String id, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt, String name) {
+    public ResourceRead__1(java.lang.String key, java.lang.String id, java.lang.String organizationId, java.lang.String projectId, java.lang.String environmentId, Date createdAt, Date updatedAt, java.lang.String name) {
         super();
         this.key = key;
         this.id = id;
@@ -166,27 +167,27 @@ public class ResourceRead__1 {
         this.name = name;
     }
 
-    public ResourceRead__1 withKey(String key) {
+    public ResourceRead__1 withKey(java.lang.String key) {
         this.key = key;
         return this;
     }
 
-    public ResourceRead__1 withId(String id) {
+    public ResourceRead__1 withId(java.lang.String id) {
         this.id = id;
         return this;
     }
 
-    public ResourceRead__1 withOrganizationId(String organizationId) {
+    public ResourceRead__1 withOrganizationId(java.lang.String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public ResourceRead__1 withProjectId(String projectId) {
+    public ResourceRead__1 withProjectId(java.lang.String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public ResourceRead__1 withEnvironmentId(String environmentId) {
+    public ResourceRead__1 withEnvironmentId(java.lang.String environmentId) {
         this.environmentId = environmentId;
         return this;
     }
@@ -201,27 +202,27 @@ public class ResourceRead__1 {
         return this;
     }
 
-    public ResourceRead__1 withName(String name) {
+    public ResourceRead__1 withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public ResourceRead__1 withUrn(String urn) {
+    public ResourceRead__1 withUrn(java.lang.String urn) {
         this.urn = urn;
         return this;
     }
 
-    public ResourceRead__1 withDescription(String description) {
+    public ResourceRead__1 withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public ResourceRead__1 withActions(ActionBlockRead actions) {
+    public ResourceRead__1 withActions(HashMap<String, ActionBlockRead> actions) {
         this.actions = actions;
         return this;
     }
 
-    public ResourceRead__1 withAttributes(AttributeBlockRead attributes) {
+    public ResourceRead__1 withAttributes(HashMap<String, AttributeBlockRead> attributes) {
         this.attributes = attributes;
         return this;
     }

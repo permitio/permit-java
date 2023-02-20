@@ -8,7 +8,7 @@ public class User {
     private String firstName = null;
     private String lastName = null;
     private String email = null;
-    private HashMap<String, String> attributes = null;
+    private HashMap<String, Object> attributes = null;
 
     public User(Builder builder) {
         this.key = builder.key;
@@ -42,7 +42,7 @@ public class User {
         return email;
     }
 
-    public HashMap<String, String> getAttributes() {
+    public HashMap<String, Object> getAttributes() {
         return attributes;
     }
 
@@ -51,7 +51,7 @@ public class User {
         private String firstName = null;
         private String lastName = null;
         private String email = null;
-        private HashMap<String, String> attributes = null;
+        private HashMap<String, Object> attributes = null;
 
         public Builder(String userKey) {
             this.key = userKey;
@@ -72,7 +72,7 @@ public class User {
             return this;
         }
 
-        public Builder withAttributes(HashMap<String, String> attributes) {
+        public Builder withAttributes(HashMap<String, Object> attributes) {
             this.attributes = attributes;
             return this;
         }

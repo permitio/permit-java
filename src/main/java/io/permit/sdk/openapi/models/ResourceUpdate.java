@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -23,7 +24,7 @@ public class ResourceUpdate {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Urn
      * <p>
@@ -32,7 +33,7 @@ public class ResourceUpdate {
      */
     @SerializedName("urn")
     @Expose
-    public String urn;
+    public java.lang.String urn;
     /**
      * Description
      * <p>
@@ -41,7 +42,7 @@ public class ResourceUpdate {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Actions
      * <p>
@@ -53,7 +54,7 @@ public class ResourceUpdate {
      */
     @SerializedName("actions")
     @Expose
-    public ActionBlockEditable actions;
+    public HashMap<String, ActionBlockEditable> actions;
     /**
      * Attributes
      * <p>
@@ -62,29 +63,29 @@ public class ResourceUpdate {
      */
     @SerializedName("attributes")
     @Expose
-    public AttributeBlockEditable attributes;
+    public HashMap<String, AttributeBlockEditable> attributes;
 
-    public ResourceUpdate withName(String name) {
+    public ResourceUpdate withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public ResourceUpdate withUrn(String urn) {
+    public ResourceUpdate withUrn(java.lang.String urn) {
         this.urn = urn;
         return this;
     }
 
-    public ResourceUpdate withDescription(String description) {
+    public ResourceUpdate withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public ResourceUpdate withActions(ActionBlockEditable actions) {
+    public ResourceUpdate withActions(HashMap<String, ActionBlockEditable> actions) {
         this.actions = actions;
         return this;
     }
 
-    public ResourceUpdate withAttributes(AttributeBlockEditable attributes) {
+    public ResourceUpdate withAttributes(HashMap<String, AttributeBlockEditable> attributes) {
         this.attributes = attributes;
         return this;
     }
