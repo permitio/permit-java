@@ -126,8 +126,16 @@ public class UsersApi extends BaseApi implements IUsersApi {
     }
 
     public CreateOrUpdateResult<UserRead> sync(UserCreate userData) throws IOException, PermitApiError, PermitContextError {
+        if (userData.key == null) {
+            throw new PermitApiError(
+                "You cannot pass a null key to permit.api.users.sync()",
+                406, // not acceptable
+                "{}"
+            );
+        }
+
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
-        String url = getUsersUrl("");
+        String url = getUsersUrl(String.format("/%s", userData.key)); // TODO: fix url to PUT /v2/.../users
         RequestBody jsonBody = getJsonRequestBody(userData);
 
         Request request = buildRequest(
@@ -139,7 +147,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
         try (Response response = client.newCall(request).execute()) {
             String responseString = processResponseBody(response);
             UserRead result = (new Gson()).fromJson(responseString, UserRead.class);
-            boolean created = (response.code() == 201);
+            boolean created = (response.code() == 200); // TODO: fix response code to 201
             return new CreateOrUpdateResult<UserRead>(result, created);
         }
     }
