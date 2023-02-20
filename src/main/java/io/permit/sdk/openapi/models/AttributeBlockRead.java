@@ -16,13 +16,15 @@ import com.google.gson.annotations.SerializedName;
 public class AttributeBlockRead {
 
     /**
+     * AttributeType
+     * <p>
      * The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.
      * (Required)
      * 
      */
     @SerializedName("type")
     @Expose
-    public Object type;
+    public io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type;
     /**
      * Description
      * <p>
@@ -64,13 +66,13 @@ public class AttributeBlockRead {
      * @param id
      * @param type
      */
-    public AttributeBlockRead(Object type, String id) {
+    public AttributeBlockRead(io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type, String id) {
         super();
         this.type = type;
         this.id = id;
     }
 
-    public AttributeBlockRead withType(Object type) {
+    public AttributeBlockRead withType(io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type) {
         this.type = type;
         return this;
     }

@@ -7,12 +7,7 @@
   "type": "object",
   "properties": {
     "type": {
-      "allOf": [
-        {
-          "$ref": "AttributeType.json"
-        }
-      ],
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`."
+      "$ref": "AttributeType.json"
     },
     "description": {
       "title": "Description",

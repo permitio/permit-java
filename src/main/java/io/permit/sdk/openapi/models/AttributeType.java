@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * AttributeType
  * <p>
- * supported attribute primitives
+ * The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.
  * 
  */
 @Generated("jsonschema2pojo")

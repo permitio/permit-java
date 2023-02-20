@@ -13,12 +13,7 @@
       "description": "A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute."
     },
     "type": {
-      "allOf": [
-        {
-          "$ref": "AttributeType.json"
-        }
-      ],
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`."
+      "$ref": "AttributeType.json"
     },
     "description": {
       "title": "Description",

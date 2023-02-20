@@ -26,13 +26,15 @@ public class ResourceAttributeCreate {
     @Expose
     public String key;
     /**
+     * AttributeType
+     * <p>
      * The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.
      * (Required)
      * 
      */
     @SerializedName("type")
     @Expose
-    public Object type;
+    public io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type;
     /**
      * Description
      * <p>
@@ -55,7 +57,7 @@ public class ResourceAttributeCreate {
      * @param type
      * @param key
      */
-    public ResourceAttributeCreate(String key, Object type) {
+    public ResourceAttributeCreate(String key, io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type) {
         super();
         this.key = key;
         this.type = type;
@@ -66,7 +68,7 @@ public class ResourceAttributeCreate {
         return this;
     }
 
-    public ResourceAttributeCreate withType(Object type) {
+    public ResourceAttributeCreate withType(io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type) {
         this.type = type;
         return this;
     }
