@@ -25,14 +25,7 @@
     },
     "resource_id": {
       "title": "Resource Id",
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "string"
-        }
-      ],
+      "type": "string",
       "description": "For ResourceSets, the id of the base resource."
     },
     "name": {

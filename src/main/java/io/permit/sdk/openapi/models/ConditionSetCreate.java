@@ -50,7 +50,7 @@ public class ConditionSetCreate {
      */
     @SerializedName("resource_id")
     @Expose
-    public java.lang.Object resourceId;
+    public java.lang.String resourceId;
     /**
      * Name
      * <p>
@@ -113,7 +113,7 @@ public class ConditionSetCreate {
         return this;
     }
 
-    public ConditionSetCreate withResourceId(java.lang.Object resourceId) {
+    public ConditionSetCreate withResourceId(java.lang.String resourceId) {
         this.resourceId = resourceId;
         return this;
     }
