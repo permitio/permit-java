@@ -3,7 +3,7 @@ package io.permit.sdk;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.permit.sdk.api.ApiClient;
-import io.permit.sdk.api.ElementsClient;
+import io.permit.sdk.api.ElementsApi;
 import io.permit.sdk.enforcement.Enforcer;
 import io.permit.sdk.enforcement.IEnforcerApi;
 import io.permit.sdk.enforcement.Resource;
@@ -20,12 +20,12 @@ public class Permit implements IEnforcerApi {
     private final Enforcer enforcer;
     public final PermitConfig config;
     public final ApiClient api;
-    public final ElementsClient elements;
+    public final ElementsApi elements;
 
     public Permit(PermitConfig config) {
         this.config = config;
         this.api = new ApiClient(this.config);
-        this.elements = new ElementsClient(this.config);
+        this.elements = api.elements;
         this.enforcer = new Enforcer(this.config);
 
         if (this.config.isDebugMode()) {

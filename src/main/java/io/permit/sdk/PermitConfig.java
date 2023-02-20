@@ -22,6 +22,7 @@ public class PermitConfig {
     // multi tenancy config
     private final String defaultTenant;
     private final Boolean useDefaultTenantIfEmpty;
+    private PermitContext context;
 
     private PermitConfig(Builder builder) {
         this.token = builder.token;
@@ -36,6 +37,7 @@ public class PermitConfig {
         this.autoMappingReviewMode = builder.autoMappingReviewMode;
         this.defaultTenant = builder.defaultTenant;
         this.useDefaultTenantIfEmpty = builder.useDefaultTenantIfEmpty;
+        this.context = builder.context;
     }
 
     // getters
@@ -74,6 +76,14 @@ public class PermitConfig {
         return useDefaultTenantIfEmpty;
     }
 
+    public PermitContext getContext() {
+        return context;
+    }
+
+    public void setContext(PermitContext context) {
+        this.context = context;
+    }
+
     public static class Builder {
         // main config vars
         private String token;
@@ -95,12 +105,20 @@ public class PermitConfig {
         private String defaultTenant = "default";
         private Boolean useDefaultTenantIfEmpty = true;
 
+        private PermitContext context;
+
         public Builder(String token) {
             this.token = token;
+            this.context = (new PermitContext.Builder()).build();
         }
 
         public Builder withPdpAddress(String pdp) {
             this.pdp = pdp;
+            return this;
+        }
+
+        public Builder withApiUrl(String apiUrl) {
+            this.apiUrl = apiUrl;
             return this;
         }
 
@@ -146,6 +164,11 @@ public class PermitConfig {
 
         public Builder withUseDefaultTenantIfEmpty(Boolean useDefaultTenantIfEmpty) {
             this.useDefaultTenantIfEmpty = useDefaultTenantIfEmpty;
+            return this;
+        }
+
+        public Builder withContext(PermitContext context) {
+            this.context = context;
             return this;
         }
 

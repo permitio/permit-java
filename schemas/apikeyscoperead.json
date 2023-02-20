@@ -1,0 +1,26 @@
+{
+  "title": "APIKeyScopeRead",
+  "required": [
+    "organization_id"
+  ],
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the api_key belongs to."
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the api_key belongs to."
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the api_key belongs to."
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

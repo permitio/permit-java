@@ -6,17 +6,37 @@ import java.util.HashMap;
 
 public class Resource {
     private String type;
-    private String id = null;
+    private String key = null;
     private String tenant = null;
     private HashMap<String, String> attributes = null;
     private HashMap<String, String> context = new HashMap<>();
 
     public Resource(Builder builder) {
         this.type = builder.type;
-        this.id = builder.id;
+        this.key = builder.key;
         this.tenant = builder.tenant;
         this.attributes = builder.attributes;
         this.context = builder.context;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public String getKey() {
+        return this.key;
+    }
+
+    public String getTenant() {
+        return this.tenant;
+    }
+
+    public HashMap<String, String> getAttributes() {
+        return this.attributes;
+    }
+
+    public HashMap<String, String> getContext() {
+        return this.context;
     }
 
     public static Resource fromString(String resourceString) {
@@ -24,7 +44,7 @@ public class Resource {
     }
 
     public String toString() {
-        return (this.id == null) ? String.format("%s:*", this.type) : String.format("%s:%s", this.type, this.id);
+        return (this.key == null) ? String.format("%s:*", this.type) : String.format("%s:%s", this.type, this.key);
     }
 
     public Resource normalize(PermitConfig config) {
@@ -41,7 +61,7 @@ public class Resource {
         }
 
         Resource normalizedResource = new Resource.Builder(this.type)
-                .withId(this.id)
+                .withKey(this.key)
                 .withTenant(safeTenant)
                 .withAttributes(this.attributes)
                 .withContext(safeContext)
@@ -52,7 +72,7 @@ public class Resource {
 
     public static class Builder {
         private String type;
-        private String id = null;
+        private String key = null;
         private String tenant = null;
         private HashMap<String, String> attributes = null;
         private HashMap<String, String> context = new HashMap<>();
@@ -71,12 +91,12 @@ public class Resource {
             }
             this.type = parts[0];
             if (parts.length > 1) {
-                this.id = parts[1];
+                this.key = parts[1];
             }
         }
 
-        public Builder withId(String id) {
-            this.id = id;
+        public Builder withKey(String key) {
+            this.key = key;
             return this;
         }
 

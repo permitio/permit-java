@@ -1,0 +1,35 @@
+{
+  "title": "EmbeddedLoginRequestOutput",
+  "required": [
+    "redirect_url"
+  ],
+  "type": "object",
+  "properties": {
+    "error": {
+      "title": "Error",
+      "type": "string",
+      "description": "If the login request failed, this field will contain the error message"
+    },
+    "error_code": {
+      "title": "Error Code",
+      "type": "integer",
+      "description": "If the login request failed, this field will contain the error code"
+    },
+    "token": {
+      "title": "Token",
+      "type": "string",
+      "description": "The auth token that lets your users login into permit elements"
+    },
+    "extra": {
+      "title": "Extra",
+      "type": "string",
+      "description": "Extra data that you can pass to the login request"
+    },
+    "redirect_url": {
+      "title": "Redirect Url",
+      "type": "string",
+      "description": "The full URL to which the user should be redirected in order to complete the login process"
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

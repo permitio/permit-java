@@ -1,0 +1,23 @@
+{
+  "title": "EnvironmentUpdate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the environment"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "an optional longer description of the environment"
+    },
+    "custom_branch_name": {
+      "title": "Custom Branch Name",
+      "type": "string",
+      "description": "when using gitops feature, an optional branch name for the environment"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,22 @@
+{
+  "title": "UserRole",
+  "required": [
+    "role",
+    "tenant"
+  ],
+  "type": "object",
+  "properties": {
+    "role": {
+      "title": "Role",
+      "type": "string",
+      "description": "the role that is assigned"
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string",
+      "description": "the tenant the role is associated with"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,19 @@
+{
+  "title": "AttributeBlockEditable",
+  "required": [
+    "type"
+  ],
+  "type": "object",
+  "properties": {
+    "type": {
+      "existingJavaType": "io.permit.sdk.openapi.models.AttributeType"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "optional description string explaining what data this attribute will store"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

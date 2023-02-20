@@ -1,0 +1,26 @@
+{
+  "title": "UserRoleCreate",
+  "required": [
+    "role",
+    "tenant"
+  ],
+  "type": "object",
+  "properties": {
+    "role": {
+      "title": "Role",
+      "type": "string",
+      "description": "the role that will be assigned (accepts either the role id or the role key)"
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string",
+      "description": "the tenant the role is associated with (accepts either the tenant id or the tenant key)"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "role": "admin",
+    "tenant": "stripe-inc"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

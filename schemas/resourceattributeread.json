@@ -1,0 +1,88 @@
+{
+  "title": "ResourceAttributeRead",
+  "required": [
+    "type",
+    "key",
+    "id",
+    "resource_id",
+    "resource_key",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "created_at",
+    "updated_at"
+  ],
+  "type": "object",
+  "properties": {
+    "type": {
+      "existingJavaType": "io.permit.sdk.openapi.models.AttributeType"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this attribute respresents in your system"
+    },
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the attribute"
+    },
+    "resource_id": {
+      "title": "Resource Id",
+      "type": "string",
+      "description": "Unique id of the resource that the attribute belongs to."
+    },
+    "resource_key": {
+      "title": "Resource Key",
+      "type": "string",
+      "description": "A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource."
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the attribute belongs to."
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the attribute belongs to."
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the attribute belongs to."
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the attribute was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the attribute was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "key": "private",
+    "type": "bool",
+    "description": "whether or not the github repository is private",
+    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+    "resource_key": "repository",
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

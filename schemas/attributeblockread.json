@@ -1,0 +1,30 @@
+{
+  "title": "AttributeBlockRead",
+  "required": [
+    "type",
+    "id"
+  ],
+  "type": "object",
+  "properties": {
+    "type": {
+      "existingJavaType": "io.permit.sdk.openapi.models.AttributeType"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "optional description string explaining what data this attribute will store"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the attribute"
+    },
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "action key"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

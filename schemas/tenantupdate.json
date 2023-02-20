@@ -1,0 +1,25 @@
+{
+  "title": "TenantUpdate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "A descriptive name for the tenant"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "an optional longer description of the tenant"
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}
