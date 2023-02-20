@@ -15,7 +15,7 @@
   "type": "object",
   "properties": {
     "type": {
-      "$ref": "AttributeType.json"
+      "existingJavaType": "io.permit.sdk.openapi.models.AttributeType"
     },
     "description": {
       "title": "Description",

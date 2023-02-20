@@ -21,12 +21,7 @@
       "description": "List of roles assigned to the user in that tenant"
     },
     "status": {
-      "allOf": [
-        {
-          "$ref": "UserStatus.json"
-        }
-      ],
-      "description": "Whether the user has signed in or not"
+      "$ref": "UserStatus.json"
     }
   },
   "additionalProperties": false,

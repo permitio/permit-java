@@ -26,7 +26,8 @@
       "title": "Attributes",
       "type": "object",
       "description": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
-      "default": {}
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
     }
   },
   "additionalProperties": false,

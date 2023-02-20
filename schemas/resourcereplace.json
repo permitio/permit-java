@@ -23,18 +23,12 @@
     },
     "actions": {
       "title": "Actions",
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "ActionBlockEditable.json"
-      },
+      "existingJavaType": "io.permit.sdk.openapi.models.ActionBlockEditable",
       "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
     },
     "attributes": {
       "title": "Attributes",
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "AttributeBlockEditable.json"
-      },
+      "existingJavaType": "io.permit.sdk.openapi.models.AttributeBlockEditable",
       "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies."
     }
   },

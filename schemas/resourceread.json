@@ -66,21 +66,13 @@
     },
     "actions": {
       "title": "Actions",
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "ActionBlockRead.json"
-      },
-      "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        ",
-      "default": {}
+      "existingJavaType": "io.permit.sdk.openapi.models.ActionBlockRead",
+      "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
     },
     "attributes": {
       "title": "Attributes",
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "AttributeBlockRead.json"
-      },
-      "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-      "default": {}
+      "existingJavaType": "io.permit.sdk.openapi.models.AttributeBlockRead",
+      "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies."
     }
   },
   "additionalProperties": false,

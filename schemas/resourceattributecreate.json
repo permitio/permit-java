@@ -13,7 +13,7 @@
       "description": "A URL-friendly name of the attribute (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the attribute."
     },
     "type": {
-      "$ref": "AttributeType.json"
+      "existingJavaType": "io.permit.sdk.openapi.models.AttributeType"
     },
     "description": {
       "title": "Description",
