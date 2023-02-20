@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.models.CreateOrUpdateResult;
+import io.permit.sdk.enforcement.User;
 import io.permit.sdk.openapi.models.*;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,7 @@ interface IUsersApi {
     UserRead create(UserCreate userData) throws IOException, PermitApiError, PermitContextError;
     UserRead update(String userKey, UserUpdate userData) throws IOException, PermitApiError, PermitContextError;
     CreateOrUpdateResult<UserRead> sync(UserCreate userData) throws IOException, PermitApiError, PermitContextError;
+    CreateOrUpdateResult<UserRead> sync(User user) throws IOException, PermitApiError, PermitContextError;
     void delete(String userKey) throws IOException, PermitApiError, PermitContextError;
     RoleAssignmentRead assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError;
     void unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError;
@@ -150,6 +152,24 @@ public class UsersApi extends BaseApi implements IUsersApi {
             boolean created = (response.code() == 200); // TODO: fix response code to 201
             return new CreateOrUpdateResult<UserRead>(result, created);
         }
+    }
+
+    public CreateOrUpdateResult<UserRead> sync(User user) throws IOException, PermitApiError, PermitContextError {
+        UserCreate userData = new UserCreate(user.getKey());
+        if (user.getEmail() != null) {
+            userData.withEmail(user.getEmail());
+        }
+        if (user.getFirstName() != null) {
+            userData.withFirstName(user.getFirstName());
+        }
+        if (user.getLastName() != null) {
+            userData.withLastName(user.getLastName());
+        }
+        if (user.getAttributes() != null && user.getAttributes().size() > 0) {
+            userData.withAttributes(user.getAttributes());
+        }
+
+        return this.sync(userData);
     }
 
     public void delete(String userKey) throws IOException, PermitApiError, PermitContextError {
