@@ -12,7 +12,7 @@ public abstract class PermitE2ETestBase {
     protected final static Logger logger = LoggerFactory.getLogger(PermitE2ETestBase.class);
     protected final PermitConfig config;
     protected boolean skipTests = false;
-    private final static int connectionTimeout = 3; // 3 seconds to give up on sidecar / API
+    private final static int connectionTimeout = 10; // 3 seconds to give up on sidecar / API
 
     public PermitE2ETestBase() {
         final String token = System.getenv().getOrDefault("PDP_API_KEY", "");
