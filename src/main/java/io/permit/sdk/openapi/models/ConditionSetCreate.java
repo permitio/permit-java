@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +25,7 @@ public class ConditionSetCreate {
      */
     @SerializedName("key")
     @Expose
-    public String key;
+    public java.lang.String key;
     /**
      * the type of the set: UserSet or ResourceSet
      * 
@@ -49,7 +50,7 @@ public class ConditionSetCreate {
      */
     @SerializedName("resource_id")
     @Expose
-    public Object resourceId;
+    public java.lang.Object resourceId;
     /**
      * Name
      * <p>
@@ -59,7 +60,7 @@ public class ConditionSetCreate {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Description
      * <p>
@@ -68,7 +69,7 @@ public class ConditionSetCreate {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Conditions
      * <p>
@@ -77,7 +78,7 @@ public class ConditionSetCreate {
      */
     @SerializedName("conditions")
     @Expose
-    public Conditions conditions;
+    public HashMap<String, Object> conditions;
 
     /**
      * No args constructor for use in serialization
@@ -91,13 +92,13 @@ public class ConditionSetCreate {
      * @param name
      * @param key
      */
-    public ConditionSetCreate(String key, String name) {
+    public ConditionSetCreate(java.lang.String key, java.lang.String name) {
         super();
         this.key = key;
         this.name = name;
     }
 
-    public ConditionSetCreate withKey(String key) {
+    public ConditionSetCreate withKey(java.lang.String key) {
         this.key = key;
         return this;
     }
@@ -112,22 +113,22 @@ public class ConditionSetCreate {
         return this;
     }
 
-    public ConditionSetCreate withResourceId(Object resourceId) {
+    public ConditionSetCreate withResourceId(java.lang.Object resourceId) {
         this.resourceId = resourceId;
         return this;
     }
 
-    public ConditionSetCreate withName(String name) {
+    public ConditionSetCreate withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public ConditionSetCreate withDescription(String description) {
+    public ConditionSetCreate withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public ConditionSetCreate withConditions(Conditions conditions) {
+    public ConditionSetCreate withConditions(HashMap<String, Object> conditions) {
         this.conditions = conditions;
         return this;
     }

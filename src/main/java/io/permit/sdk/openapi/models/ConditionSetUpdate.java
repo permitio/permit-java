@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -23,7 +24,7 @@ public class ConditionSetUpdate {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Description
      * <p>
@@ -32,7 +33,7 @@ public class ConditionSetUpdate {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Conditions
      * <p>
@@ -41,19 +42,19 @@ public class ConditionSetUpdate {
      */
     @SerializedName("conditions")
     @Expose
-    public Conditions__2 conditions;
+    public HashMap<String, Object> conditions;
 
-    public ConditionSetUpdate withName(String name) {
+    public ConditionSetUpdate withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public ConditionSetUpdate withDescription(String description) {
+    public ConditionSetUpdate withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public ConditionSetUpdate withConditions(Conditions__2 conditions) {
+    public ConditionSetUpdate withConditions(HashMap<String, Object> conditions) {
         this.conditions = conditions;
         return this;
     }

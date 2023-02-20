@@ -2,6 +2,7 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -25,7 +26,7 @@ public class ConditionSetRead {
      */
     @SerializedName("key")
     @Expose
-    public String key;
+    public java.lang.String key;
     /**
      * the type of the set: UserSet or ResourceSet
      * 
@@ -50,7 +51,7 @@ public class ConditionSetRead {
      */
     @SerializedName("resource_id")
     @Expose
-    public String resourceId;
+    public java.lang.String resourceId;
     /**
      * Id
      * <p>
@@ -60,7 +61,7 @@ public class ConditionSetRead {
      */
     @SerializedName("id")
     @Expose
-    public String id;
+    public java.lang.String id;
     /**
      * Organization Id
      * <p>
@@ -70,7 +71,7 @@ public class ConditionSetRead {
      */
     @SerializedName("organization_id")
     @Expose
-    public String organizationId;
+    public java.lang.String organizationId;
     /**
      * Project Id
      * <p>
@@ -80,7 +81,7 @@ public class ConditionSetRead {
      */
     @SerializedName("project_id")
     @Expose
-    public String projectId;
+    public java.lang.String projectId;
     /**
      * Environment Id
      * <p>
@@ -90,7 +91,7 @@ public class ConditionSetRead {
      */
     @SerializedName("environment_id")
     @Expose
-    public String environmentId;
+    public java.lang.String environmentId;
     /**
      * Created At
      * <p>
@@ -129,7 +130,7 @@ public class ConditionSetRead {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Description
      * <p>
@@ -138,7 +139,7 @@ public class ConditionSetRead {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Conditions
      * <p>
@@ -147,7 +148,7 @@ public class ConditionSetRead {
      */
     @SerializedName("conditions")
     @Expose
-    public Conditions__1 conditions;
+    public HashMap<String, Object> conditions;
 
     /**
      * No args constructor for use in serialization
@@ -167,7 +168,7 @@ public class ConditionSetRead {
      * @param key
      * @param updatedAt
      */
-    public ConditionSetRead(String key, String id, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt, String name) {
+    public ConditionSetRead(java.lang.String key, java.lang.String id, java.lang.String organizationId, java.lang.String projectId, java.lang.String environmentId, Date createdAt, Date updatedAt, java.lang.String name) {
         super();
         this.key = key;
         this.id = id;
@@ -179,7 +180,7 @@ public class ConditionSetRead {
         this.name = name;
     }
 
-    public ConditionSetRead withKey(String key) {
+    public ConditionSetRead withKey(java.lang.String key) {
         this.key = key;
         return this;
     }
@@ -194,27 +195,27 @@ public class ConditionSetRead {
         return this;
     }
 
-    public ConditionSetRead withResourceId(String resourceId) {
+    public ConditionSetRead withResourceId(java.lang.String resourceId) {
         this.resourceId = resourceId;
         return this;
     }
 
-    public ConditionSetRead withId(String id) {
+    public ConditionSetRead withId(java.lang.String id) {
         this.id = id;
         return this;
     }
 
-    public ConditionSetRead withOrganizationId(String organizationId) {
+    public ConditionSetRead withOrganizationId(java.lang.String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public ConditionSetRead withProjectId(String projectId) {
+    public ConditionSetRead withProjectId(java.lang.String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public ConditionSetRead withEnvironmentId(String environmentId) {
+    public ConditionSetRead withEnvironmentId(java.lang.String environmentId) {
         this.environmentId = environmentId;
         return this;
     }
@@ -234,17 +235,17 @@ public class ConditionSetRead {
         return this;
     }
 
-    public ConditionSetRead withName(String name) {
+    public ConditionSetRead withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public ConditionSetRead withDescription(String description) {
+    public ConditionSetRead withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public ConditionSetRead withConditions(Conditions__1 conditions) {
+    public ConditionSetRead withConditions(HashMap<String, Object> conditions) {
         this.conditions = conditions;
         return this;
     }

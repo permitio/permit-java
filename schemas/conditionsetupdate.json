@@ -17,7 +17,8 @@
       "title": "Conditions",
       "type": "object",
       "description": "a boolean expression that consists of multiple conditions, with and/or logic.",
-      "default": {}
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
     }
   },
   "additionalProperties": false,
