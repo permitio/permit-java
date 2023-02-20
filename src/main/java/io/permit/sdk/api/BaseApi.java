@@ -146,23 +146,23 @@ public abstract class BaseApi {
 
         // verify context matches requested call level
         if (callLevel == ApiKeyLevel.PROJECT_LEVEL_API_KEY && this.config.getContext().getProject() == null) {
-            throw new PermitContextError("""
-                You're trying to use an SDK method that's specific to a project,
-                but you haven't set the current project in your client's context yet,
-                or you are using an organization level API key.
-                Please set the context to a specific
-                project using `permit.set_context()` method.
-            """);
+            throw new PermitContextError(
+                "You're trying to use an SDK method that's specific to a project," +
+                "but you haven't set the current project in your client's context yet," +
+                "or you are using an organization level API key." +
+                "Please set the context to a specific" +
+                "project using `permit.set_context()` method."
+            );
         }
 
         if (callLevel == ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY && this.config.getContext().getEnvironment() == null) {
-            throw new PermitContextError("""
-                You're trying to use an SDK method that's specific to an environment,
-                but you haven't set the current environment in your client's context yet,
-                or you are using an organization/project level API key.
-                Please set the context to a specific
-                environment using `permit.set_context()` method.
-            """);
+            throw new PermitContextError(
+                "You're trying to use an SDK method that's specific to an environment," +
+                "but you haven't set the current environment in your client's context yet," +
+                "or you are using an organization/project level API key." +
+                "Please set the context to a specific" +
+                "environment using `permit.set_context()` method."
+            );
         }
     }
 }
