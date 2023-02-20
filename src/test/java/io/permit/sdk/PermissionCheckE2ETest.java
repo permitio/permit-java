@@ -127,13 +127,13 @@ public class PermissionCheckE2ETest extends PermitE2ETestBase {
             userAttributes.put("age", Integer.valueOf(50));
             userAttributes.put("fav_color", "red");
 
-            CreateOrUpdateResult<UserRead> result = permit.api.users.sync(
-                (new UserCreate("auth0|elon"))
-                        .withEmail("elonmusk@tesla.com")
-                        .withFirstName("Elon")
-                        .withLastName("Musk")
-                        .withAttributes(userAttributes)
-            );
+            User userInput = (new User.Builder("auth0|elon"))
+                .withEmail("elonmusk@tesla.com")
+                .withFirstName("Elon")
+                .withLastName("Musk")
+                .withAttributes(userAttributes)
+                .build();
+            CreateOrUpdateResult<UserRead> result = permit.api.users.sync(userInput);
             UserRead user = result.getResult();
             assertTrue(result.wasCreated());
             assertEquals(user.key, "auth0|elon");
@@ -162,6 +162,13 @@ public class PermissionCheckE2ETest extends PermitE2ETestBase {
                 User.fromString("auth0|elon"),
                 "read",
                 new Resource.Builder("document").withTenant(tenant.key).build()
+            ));
+
+            logger.info("testing positive permission check with complete user object");
+            assertTrue(permit.check(
+                    userInput,
+                    "read",
+                    new Resource.Builder("document").withTenant(tenant.key).build()
             ));
 
             // negative permission check (will be false because a viewer cannot create a document)
