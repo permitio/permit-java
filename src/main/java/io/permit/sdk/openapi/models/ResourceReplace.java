@@ -55,7 +55,7 @@ public class ResourceReplace {
      */
     @SerializedName("actions")
     @Expose
-    public Actions__3 actions;
+    public ActionBlockEditable actions;
     /**
      * Attributes
      * <p>
@@ -64,7 +64,7 @@ public class ResourceReplace {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__7 attributes;
+    public AttributeBlockEditable attributes;
 
     /**
      * No args constructor for use in serialization
@@ -78,7 +78,7 @@ public class ResourceReplace {
      * @param name
      * @param actions
      */
-    public ResourceReplace(String name, Actions__3 actions) {
+    public ResourceReplace(String name, ActionBlockEditable actions) {
         super();
         this.name = name;
         this.actions = actions;
@@ -99,12 +99,12 @@ public class ResourceReplace {
         return this;
     }
 
-    public ResourceReplace withActions(Actions__3 actions) {
+    public ResourceReplace withActions(ActionBlockEditable actions) {
         this.actions = actions;
         return this;
     }
 
-    public ResourceReplace withAttributes(Attributes__7 attributes) {
+    public ResourceReplace withAttributes(AttributeBlockEditable attributes) {
         this.attributes = attributes;
         return this;
     }

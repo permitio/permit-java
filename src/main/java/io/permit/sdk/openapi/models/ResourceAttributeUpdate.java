@@ -15,15 +15,9 @@ import com.google.gson.annotations.SerializedName;
 @Generated("jsonschema2pojo")
 public class ResourceAttributeUpdate {
 
-    /**
-     * AttributeType
-     * <p>
-     * The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.
-     * 
-     */
     @SerializedName("type")
     @Expose
-    public io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type;
+    public AttributeType type;
     /**
      * Description
      * <p>
@@ -34,7 +28,7 @@ public class ResourceAttributeUpdate {
     @Expose
     public String description;
 
-    public ResourceAttributeUpdate withType(io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type) {
+    public ResourceAttributeUpdate withType(AttributeType type) {
         this.type = type;
         return this;
     }

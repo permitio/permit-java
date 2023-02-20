@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * ConditionSetType
  * <p>
- * An enumeration.
+ * the type of the set: UserSet or ResourceSet
  * 
  */
 @Generated("jsonschema2pojo")

@@ -2,6 +2,7 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -25,7 +26,7 @@ public class TenantRead {
      */
     @SerializedName("key")
     @Expose
-    public String key;
+    public java.lang.String key;
     /**
      * Id
      * <p>
@@ -35,7 +36,7 @@ public class TenantRead {
      */
     @SerializedName("id")
     @Expose
-    public String id;
+    public java.lang.String id;
     /**
      * Organization Id
      * <p>
@@ -45,7 +46,7 @@ public class TenantRead {
      */
     @SerializedName("organization_id")
     @Expose
-    public String organizationId;
+    public java.lang.String organizationId;
     /**
      * Project Id
      * <p>
@@ -55,7 +56,7 @@ public class TenantRead {
      */
     @SerializedName("project_id")
     @Expose
-    public String projectId;
+    public java.lang.String projectId;
     /**
      * Environment Id
      * <p>
@@ -65,7 +66,7 @@ public class TenantRead {
      */
     @SerializedName("environment_id")
     @Expose
-    public String environmentId;
+    public java.lang.String environmentId;
     /**
      * Created At
      * <p>
@@ -105,7 +106,7 @@ public class TenantRead {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Description
      * <p>
@@ -114,7 +115,7 @@ public class TenantRead {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Attributes
      * <p>
@@ -123,7 +124,7 @@ public class TenantRead {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__10 attributes;
+    public HashMap<String, Object> attributes;
 
     /**
      * No args constructor for use in serialization
@@ -144,7 +145,7 @@ public class TenantRead {
      * @param key
      * @param updatedAt
      */
-    public TenantRead(String key, String id, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt, Date lastActionAt, String name) {
+    public TenantRead(java.lang.String key, java.lang.String id, java.lang.String organizationId, java.lang.String projectId, java.lang.String environmentId, Date createdAt, Date updatedAt, Date lastActionAt, java.lang.String name) {
         super();
         this.key = key;
         this.id = id;
@@ -157,27 +158,27 @@ public class TenantRead {
         this.name = name;
     }
 
-    public TenantRead withKey(String key) {
+    public TenantRead withKey(java.lang.String key) {
         this.key = key;
         return this;
     }
 
-    public TenantRead withId(String id) {
+    public TenantRead withId(java.lang.String id) {
         this.id = id;
         return this;
     }
 
-    public TenantRead withOrganizationId(String organizationId) {
+    public TenantRead withOrganizationId(java.lang.String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public TenantRead withProjectId(String projectId) {
+    public TenantRead withProjectId(java.lang.String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public TenantRead withEnvironmentId(String environmentId) {
+    public TenantRead withEnvironmentId(java.lang.String environmentId) {
         this.environmentId = environmentId;
         return this;
     }
@@ -197,17 +198,17 @@ public class TenantRead {
         return this;
     }
 
-    public TenantRead withName(String name) {
+    public TenantRead withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public TenantRead withDescription(String description) {
+    public TenantRead withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public TenantRead withAttributes(Attributes__10 attributes) {
+    public TenantRead withAttributes(HashMap<String, Object> attributes) {
         this.attributes = attributes;
         return this;
     }

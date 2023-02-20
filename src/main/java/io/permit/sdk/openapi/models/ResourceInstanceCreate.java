@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +25,7 @@ public class ResourceInstanceCreate {
      */
     @SerializedName("key")
     @Expose
-    public String key;
+    public java.lang.String key;
     /**
      * Tenant
      * <p>
@@ -33,7 +34,7 @@ public class ResourceInstanceCreate {
      */
     @SerializedName("tenant")
     @Expose
-    public String tenant;
+    public java.lang.String tenant;
     /**
      * Resource
      * <p>
@@ -43,7 +44,7 @@ public class ResourceInstanceCreate {
      */
     @SerializedName("resource")
     @Expose
-    public String resource;
+    public java.lang.String resource;
     /**
      * Attributes
      * <p>
@@ -52,7 +53,7 @@ public class ResourceInstanceCreate {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__3 attributes;
+    public HashMap<String, Object> attributes;
 
     /**
      * No args constructor for use in serialization
@@ -66,28 +67,28 @@ public class ResourceInstanceCreate {
      * @param resource
      * @param key
      */
-    public ResourceInstanceCreate(String key, String resource) {
+    public ResourceInstanceCreate(java.lang.String key, java.lang.String resource) {
         super();
         this.key = key;
         this.resource = resource;
     }
 
-    public ResourceInstanceCreate withKey(String key) {
+    public ResourceInstanceCreate withKey(java.lang.String key) {
         this.key = key;
         return this;
     }
 
-    public ResourceInstanceCreate withTenant(String tenant) {
+    public ResourceInstanceCreate withTenant(java.lang.String tenant) {
         this.tenant = tenant;
         return this;
     }
 
-    public ResourceInstanceCreate withResource(String resource) {
+    public ResourceInstanceCreate withResource(java.lang.String resource) {
         this.resource = resource;
         return this;
     }
 
-    public ResourceInstanceCreate withAttributes(Attributes__3 attributes) {
+    public ResourceInstanceCreate withAttributes(HashMap<String, Object> attributes) {
         this.attributes = attributes;
         return this;
     }

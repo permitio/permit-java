@@ -1,7 +1,9 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -37,13 +39,15 @@ public class UserInTenant {
     @Expose
     public List<String> roles;
     /**
+     * UserStatus
+     * <p>
      * Whether the user has signed in or not
      * (Required)
      * 
      */
     @SerializedName("status")
     @Expose
-    public Object status;
+    public UserInTenant.UserStatus status;
 
     /**
      * No args constructor for use in serialization
@@ -58,7 +62,7 @@ public class UserInTenant {
      * @param tenant
      * @param status
      */
-    public UserInTenant(String tenant, List<String> roles, Object status) {
+    public UserInTenant(String tenant, List<String> roles, UserInTenant.UserStatus status) {
         super();
         this.tenant = tenant;
         this.roles = roles;
@@ -75,9 +79,56 @@ public class UserInTenant {
         return this;
     }
 
-    public UserInTenant withStatus(Object status) {
+    public UserInTenant withStatus(UserInTenant.UserStatus status) {
         this.status = status;
         return this;
+    }
+
+
+    /**
+     * UserStatus
+     * <p>
+     * Whether the user has signed in or not
+     * 
+     */
+    @Generated("jsonschema2pojo")
+    public enum UserStatus {
+
+        @SerializedName("active")
+        ACTIVE("active"),
+        @SerializedName("pending")
+        PENDING("pending");
+        private final String value;
+        private final static Map<String, UserInTenant.UserStatus> CONSTANTS = new HashMap<String, UserInTenant.UserStatus>();
+
+        static {
+            for (UserInTenant.UserStatus c: values()) {
+                CONSTANTS.put(c.value, c);
+            }
+        }
+
+        UserStatus(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        public String value() {
+            return this.value;
+        }
+
+        public static UserInTenant.UserStatus fromValue(String value) {
+            UserInTenant.UserStatus constant = CONSTANTS.get(value);
+            if (constant == null) {
+                throw new IllegalArgumentException(value);
+            } else {
+                return constant;
+            }
+        }
+
     }
 
 }

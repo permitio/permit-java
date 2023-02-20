@@ -125,7 +125,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("actions")
     @Expose
-    public Actions__2 actions;
+    public ActionBlockRead actions;
     /**
      * Attributes
      * <p>
@@ -134,7 +134,7 @@ public class ResourceRead__1 {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__6 attributes;
+    public AttributeBlockRead attributes;
 
     /**
      * No args constructor for use in serialization
@@ -216,12 +216,12 @@ public class ResourceRead__1 {
         return this;
     }
 
-    public ResourceRead__1 withActions(Actions__2 actions) {
+    public ResourceRead__1 withActions(ActionBlockRead actions) {
         this.actions = actions;
         return this;
     }
 
-    public ResourceRead__1 withAttributes(Attributes__6 attributes) {
+    public ResourceRead__1 withAttributes(AttributeBlockRead attributes) {
         this.attributes = attributes;
         return this;
     }

@@ -37,13 +37,15 @@ public class UserInTenant__1 {
     @Expose
     public List<String> roles;
     /**
+     * UserStatus
+     * <p>
      * Whether the user has signed in or not
      * (Required)
      * 
      */
     @SerializedName("status")
     @Expose
-    public Object status;
+    public io.permit.sdk.openapi.models.UserInTenant.UserStatus status;
 
     /**
      * No args constructor for use in serialization
@@ -58,7 +60,7 @@ public class UserInTenant__1 {
      * @param tenant
      * @param status
      */
-    public UserInTenant__1(String tenant, List<String> roles, Object status) {
+    public UserInTenant__1(String tenant, List<String> roles, io.permit.sdk.openapi.models.UserInTenant.UserStatus status) {
         super();
         this.tenant = tenant;
         this.roles = roles;
@@ -75,7 +77,7 @@ public class UserInTenant__1 {
         return this;
     }
 
-    public UserInTenant__1 withStatus(Object status) {
+    public UserInTenant__1 withStatus(io.permit.sdk.openapi.models.UserInTenant.UserStatus status) {
         this.status = status;
         return this;
     }

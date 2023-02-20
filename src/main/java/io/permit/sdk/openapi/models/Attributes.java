@@ -7,7 +7,7 @@ import javax.annotation.processing.Generated;
 /**
  * Attributes
  * <p>
- * Attributes that each resource of this type defines, and can be used in your ABAC policies.
+ * Arbitraty resource attributes that will be used to enforce attribute-based access control policies.
  * 
  */
 @Generated("jsonschema2pojo")

@@ -53,7 +53,7 @@ public class ResourceUpdate {
      */
     @SerializedName("actions")
     @Expose
-    public Actions__4 actions;
+    public ActionBlockEditable actions;
     /**
      * Attributes
      * <p>
@@ -62,7 +62,7 @@ public class ResourceUpdate {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__8 attributes;
+    public AttributeBlockEditable attributes;
 
     public ResourceUpdate withName(String name) {
         this.name = name;
@@ -79,12 +79,12 @@ public class ResourceUpdate {
         return this;
     }
 
-    public ResourceUpdate withActions(Actions__4 actions) {
+    public ResourceUpdate withActions(ActionBlockEditable actions) {
         this.actions = actions;
         return this;
     }
 
-    public ResourceUpdate withAttributes(Attributes__8 attributes) {
+    public ResourceUpdate withAttributes(AttributeBlockEditable attributes) {
         this.attributes = attributes;
         return this;
     }

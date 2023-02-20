@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * UserStatus
  * <p>
- * An enumeration.
+ * Whether the user has signed in or not
  * 
  */
 @Generated("jsonschema2pojo")

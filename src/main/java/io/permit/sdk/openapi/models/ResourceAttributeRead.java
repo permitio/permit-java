@@ -17,15 +17,13 @@ import com.google.gson.annotations.SerializedName;
 public class ResourceAttributeRead {
 
     /**
-     * AttributeType
-     * <p>
-     * The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.
+     * 
      * (Required)
      * 
      */
     @SerializedName("type")
     @Expose
-    public io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type;
+    public AttributeType type;
     /**
      * Description
      * <p>
@@ -146,7 +144,7 @@ public class ResourceAttributeRead {
      * @param key
      * @param updatedAt
      */
-    public ResourceAttributeRead(io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type, String key, String id, String resourceId, String resourceKey, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt) {
+    public ResourceAttributeRead(AttributeType type, String key, String id, String resourceId, String resourceKey, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt) {
         super();
         this.type = type;
         this.key = key;
@@ -160,7 +158,7 @@ public class ResourceAttributeRead {
         this.updatedAt = updatedAt;
     }
 
-    public ResourceAttributeRead withType(io.permit.sdk.openapi.models.AttributeBlockEditable.AttributeType type) {
+    public ResourceAttributeRead withType(AttributeType type) {
         this.type = type;
         return this;
     }

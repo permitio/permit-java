@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +25,7 @@ public class TenantCreate {
      */
     @SerializedName("key")
     @Expose
-    public String key;
+    public java.lang.String key;
     /**
      * Name
      * <p>
@@ -34,7 +35,7 @@ public class TenantCreate {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Description
      * <p>
@@ -43,7 +44,7 @@ public class TenantCreate {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Attributes
      * <p>
@@ -52,7 +53,7 @@ public class TenantCreate {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__9 attributes;
+    public HashMap<String, Object> attributes;
 
     /**
      * No args constructor for use in serialization
@@ -66,28 +67,28 @@ public class TenantCreate {
      * @param name
      * @param key
      */
-    public TenantCreate(String key, String name) {
+    public TenantCreate(java.lang.String key, java.lang.String name) {
         super();
         this.key = key;
         this.name = name;
     }
 
-    public TenantCreate withKey(String key) {
+    public TenantCreate withKey(java.lang.String key) {
         this.key = key;
         return this;
     }
 
-    public TenantCreate withName(String name) {
+    public TenantCreate withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public TenantCreate withDescription(String description) {
+    public TenantCreate withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public TenantCreate withAttributes(Attributes__9 attributes) {
+    public TenantCreate withAttributes(HashMap<String, Object> attributes) {
         this.attributes = attributes;
         return this;
     }

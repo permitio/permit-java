@@ -23,9 +23,9 @@ public class ResourceInstanceUpdate {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__5 attributes;
+    public Attributes attributes;
 
-    public ResourceInstanceUpdate withAttributes(Attributes__5 attributes) {
+    public ResourceInstanceUpdate withAttributes(Attributes attributes) {
         this.attributes = attributes;
         return this;
     }

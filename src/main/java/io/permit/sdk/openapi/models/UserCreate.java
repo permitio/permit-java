@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +25,7 @@ public class UserCreate {
      */
     @SerializedName("key")
     @Expose
-    public String key;
+    public java.lang.String key;
     /**
      * Email
      * <p>
@@ -33,7 +34,7 @@ public class UserCreate {
      */
     @SerializedName("email")
     @Expose
-    public String email;
+    public java.lang.String email;
     /**
      * First Name
      * <p>
@@ -42,7 +43,7 @@ public class UserCreate {
      */
     @SerializedName("first_name")
     @Expose
-    public String firstName;
+    public java.lang.String firstName;
     /**
      * Last Name
      * <p>
@@ -51,7 +52,7 @@ public class UserCreate {
      */
     @SerializedName("last_name")
     @Expose
-    public String lastName;
+    public java.lang.String lastName;
     /**
      * Attributes
      * <p>
@@ -60,7 +61,7 @@ public class UserCreate {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__12 attributes;
+    public HashMap<String, Object> attributes;
 
     /**
      * No args constructor for use in serialization
@@ -73,32 +74,32 @@ public class UserCreate {
      * 
      * @param key
      */
-    public UserCreate(String key) {
+    public UserCreate(java.lang.String key) {
         super();
         this.key = key;
     }
 
-    public UserCreate withKey(String key) {
+    public UserCreate withKey(java.lang.String key) {
         this.key = key;
         return this;
     }
 
-    public UserCreate withEmail(String email) {
+    public UserCreate withEmail(java.lang.String email) {
         this.email = email;
         return this;
     }
 
-    public UserCreate withFirstName(String firstName) {
+    public UserCreate withFirstName(java.lang.String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public UserCreate withLastName(String lastName) {
+    public UserCreate withLastName(java.lang.String lastName) {
         this.lastName = lastName;
         return this;
     }
 
-    public UserCreate withAttributes(Attributes__12 attributes) {
+    public UserCreate withAttributes(HashMap<String, Object> attributes) {
         this.attributes = attributes;
         return this;
     }

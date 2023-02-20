@@ -2,6 +2,7 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -25,7 +26,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("key")
     @Expose
-    public String key;
+    public java.lang.String key;
     /**
      * Tenant
      * <p>
@@ -34,7 +35,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("tenant")
     @Expose
-    public String tenant;
+    public java.lang.String tenant;
     /**
      * Resource
      * <p>
@@ -44,7 +45,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("resource")
     @Expose
-    public String resource;
+    public java.lang.String resource;
     /**
      * Id
      * <p>
@@ -54,7 +55,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("id")
     @Expose
-    public String id;
+    public java.lang.String id;
     /**
      * Organization Id
      * <p>
@@ -64,7 +65,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("organization_id")
     @Expose
-    public String organizationId;
+    public java.lang.String organizationId;
     /**
      * Project Id
      * <p>
@@ -74,7 +75,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("project_id")
     @Expose
-    public String projectId;
+    public java.lang.String projectId;
     /**
      * Environment Id
      * <p>
@@ -84,7 +85,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("environment_id")
     @Expose
-    public String environmentId;
+    public java.lang.String environmentId;
     /**
      * Created At
      * <p>
@@ -114,7 +115,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("resource_id")
     @Expose
-    public String resourceId;
+    public java.lang.String resourceId;
     /**
      * Tenant Id
      * <p>
@@ -123,7 +124,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("tenant_id")
     @Expose
-    public String tenantId;
+    public java.lang.String tenantId;
     /**
      * Attributes
      * <p>
@@ -132,7 +133,7 @@ public class ResourceInstanceRead {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__4 attributes;
+    public HashMap<String, Object> attributes;
 
     /**
      * No args constructor for use in serialization
@@ -153,7 +154,7 @@ public class ResourceInstanceRead {
      * @param key
      * @param updatedAt
      */
-    public ResourceInstanceRead(String key, String resource, String id, String organizationId, String projectId, String environmentId, Date createdAt, Date updatedAt, String resourceId) {
+    public ResourceInstanceRead(java.lang.String key, java.lang.String resource, java.lang.String id, java.lang.String organizationId, java.lang.String projectId, java.lang.String environmentId, Date createdAt, Date updatedAt, java.lang.String resourceId) {
         super();
         this.key = key;
         this.resource = resource;
@@ -166,37 +167,37 @@ public class ResourceInstanceRead {
         this.resourceId = resourceId;
     }
 
-    public ResourceInstanceRead withKey(String key) {
+    public ResourceInstanceRead withKey(java.lang.String key) {
         this.key = key;
         return this;
     }
 
-    public ResourceInstanceRead withTenant(String tenant) {
+    public ResourceInstanceRead withTenant(java.lang.String tenant) {
         this.tenant = tenant;
         return this;
     }
 
-    public ResourceInstanceRead withResource(String resource) {
+    public ResourceInstanceRead withResource(java.lang.String resource) {
         this.resource = resource;
         return this;
     }
 
-    public ResourceInstanceRead withId(String id) {
+    public ResourceInstanceRead withId(java.lang.String id) {
         this.id = id;
         return this;
     }
 
-    public ResourceInstanceRead withOrganizationId(String organizationId) {
+    public ResourceInstanceRead withOrganizationId(java.lang.String organizationId) {
         this.organizationId = organizationId;
         return this;
     }
 
-    public ResourceInstanceRead withProjectId(String projectId) {
+    public ResourceInstanceRead withProjectId(java.lang.String projectId) {
         this.projectId = projectId;
         return this;
     }
 
-    public ResourceInstanceRead withEnvironmentId(String environmentId) {
+    public ResourceInstanceRead withEnvironmentId(java.lang.String environmentId) {
         this.environmentId = environmentId;
         return this;
     }
@@ -211,17 +212,17 @@ public class ResourceInstanceRead {
         return this;
     }
 
-    public ResourceInstanceRead withResourceId(String resourceId) {
+    public ResourceInstanceRead withResourceId(java.lang.String resourceId) {
         this.resourceId = resourceId;
         return this;
     }
 
-    public ResourceInstanceRead withTenantId(String tenantId) {
+    public ResourceInstanceRead withTenantId(java.lang.String tenantId) {
         this.tenantId = tenantId;
         return this;
     }
 
-    public ResourceInstanceRead withAttributes(Attributes__4 attributes) {
+    public ResourceInstanceRead withAttributes(HashMap<String, Object> attributes) {
         this.attributes = attributes;
         return this;
     }

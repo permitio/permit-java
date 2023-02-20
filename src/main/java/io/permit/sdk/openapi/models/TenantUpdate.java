@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.processing.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -23,7 +24,7 @@ public class TenantUpdate {
      */
     @SerializedName("name")
     @Expose
-    public String name;
+    public java.lang.String name;
     /**
      * Description
      * <p>
@@ -32,7 +33,7 @@ public class TenantUpdate {
      */
     @SerializedName("description")
     @Expose
-    public String description;
+    public java.lang.String description;
     /**
      * Attributes
      * <p>
@@ -41,19 +42,19 @@ public class TenantUpdate {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__11 attributes;
+    public HashMap<String, Object> attributes;
 
-    public TenantUpdate withName(String name) {
+    public TenantUpdate withName(java.lang.String name) {
         this.name = name;
         return this;
     }
 
-    public TenantUpdate withDescription(String description) {
+    public TenantUpdate withDescription(java.lang.String description) {
         this.description = description;
         return this;
     }
 
-    public TenantUpdate withAttributes(Attributes__11 attributes) {
+    public TenantUpdate withAttributes(HashMap<String, Object> attributes) {
         this.attributes = attributes;
         return this;
     }

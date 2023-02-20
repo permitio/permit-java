@@ -65,7 +65,7 @@ public class ResourceCreate {
      */
     @SerializedName("actions")
     @Expose
-    public Actions__1 actions;
+    public ActionBlockEditable actions;
     /**
      * Attributes
      * <p>
@@ -74,7 +74,7 @@ public class ResourceCreate {
      */
     @SerializedName("attributes")
     @Expose
-    public Attributes__2 attributes;
+    public AttributeBlockEditable attributes;
 
     /**
      * No args constructor for use in serialization
@@ -89,7 +89,7 @@ public class ResourceCreate {
      * @param actions
      * @param key
      */
-    public ResourceCreate(String key, String name, Actions__1 actions) {
+    public ResourceCreate(String key, String name, ActionBlockEditable actions) {
         super();
         this.key = key;
         this.name = name;
@@ -116,12 +116,12 @@ public class ResourceCreate {
         return this;
     }
 
-    public ResourceCreate withActions(Actions__1 actions) {
+    public ResourceCreate withActions(ActionBlockEditable actions) {
         this.actions = actions;
         return this;
     }
 
-    public ResourceCreate withAttributes(Attributes__2 attributes) {
+    public ResourceCreate withAttributes(AttributeBlockEditable attributes) {
         this.attributes = attributes;
         return this;
     }
