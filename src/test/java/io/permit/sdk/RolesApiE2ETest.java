@@ -13,13 +13,18 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class E2ERoleTests extends PermitE2ETest {
+/**
+ * this e2e test should run against a clean permit environment.
+ * if the environment contains any objects the test will fail.
+ * eventually we want to create an environment programmatically
+ * and then extract the api key and start the test.
+ */
+public class RolesApiE2ETest extends PermitE2ETestBase {
     @Test
     void testRolesApi() {
         // init the client
         Permit permit = new Permit(this.config);
         Gson gson = new Gson();
-        RoleRead role;
 
         // roles lifecycle
         try {
@@ -53,7 +58,7 @@ public class E2ERoleTests extends PermitE2ETest {
             assertEquals(roles[1].name, "Viewer");
 
             // get
-            role = permit.api.roles.get("admin");
+            RoleRead role = permit.api.roles.get("admin");
             assertNotNull(role);
             assertEquals(role.key, "admin");
             assertEquals(role.name, "Admin");

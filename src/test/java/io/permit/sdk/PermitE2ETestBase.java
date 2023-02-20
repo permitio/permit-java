@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-public abstract class PermitE2ETest {
-    protected final static Logger logger = LoggerFactory.getLogger(PermitIntegrationTests.class);
+public abstract class PermitE2ETestBase {
+    protected final static Logger logger = LoggerFactory.getLogger(PermitE2ETestBase.class);
     protected final PermitConfig config;
     protected boolean skipTests = false;
     private final static int connectionTimeout = 3; // 3 seconds to give up on sidecar / API
 
-    public PermitE2ETest() {
+    public PermitE2ETestBase() {
         final String token = System.getenv().getOrDefault("PDP_API_KEY", "");
         final String pdpAddress = System.getenv().getOrDefault("PDP_URL", "http://localhost:7766");
         final String pdpControlPlane = System.getenv().getOrDefault("PDP_CONTROL_PLANE", "http://localhost:8000");
