@@ -22,9 +22,9 @@ class EnforcerInput {
     public final User user;
     public final String action;
     public final Resource resource;
-    public final HashMap<String, String> context;
+    public final HashMap<String, Object> context;
 
-    EnforcerInput(User user, String action, Resource resource, HashMap<String, String> context) {
+    EnforcerInput(User user, String action, Resource resource, HashMap<String, Object> context) {
         this.user = user;
         this.action = action;
         this.resource = resource;

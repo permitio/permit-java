@@ -8,7 +8,7 @@ public class ActionModel {
     public String title = null;
     public String description = null;
     public String path = null;
-    public HashMap<String, String> attributes = null;
+    public HashMap<String, Object> attributes = null;
     public String permissionName = null;
     public Boolean isBuiltIn = null;
 }
