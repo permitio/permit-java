@@ -27,7 +27,7 @@ plugins {
 // be published
 group = 'io.permit'
 // sets the java package version automatically (looks at the git repo, latest tags, commit hashes, etc)
-version gitVersion()
+version '1.1.0'
 
 repositories {
     // Use Maven Central for resolving dependencies.

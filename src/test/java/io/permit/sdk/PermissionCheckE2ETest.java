@@ -42,8 +42,9 @@ public class PermissionCheckE2ETest extends PermitE2ETestBase {
             actions.put("update", new ActionBlockEditable());
             actions.put("delete", new ActionBlockEditable());
 
+
             // resource attributes
-            HashMap<String, AttributeBlockEditable> attributes = new HashMap<>();
+            HashMap<String, Object> attributes = new HashMap<String,Object>();
             attributes.put(
                 "private",
                 new AttributeBlockEditable().withType(AttributeType.BOOL).withDescription("whether the document is private")
@@ -55,7 +56,6 @@ public class PermissionCheckE2ETest extends PermitE2ETestBase {
             )
                 .withUrn("prn:gdrive:document")
                 .withDescription("google drive document")
-                .withAttributes(attributes)
             );
             ResourceRead document = permit.api.resources.create(resourceInput);
 
@@ -158,10 +158,12 @@ public class PermissionCheckE2ETest extends PermitE2ETestBase {
 
             // positive permission check (will be true because elon is a viewer, and a viewer can read a document)
             logger.info("testing positive permission check");
+            HashMap<String,Object> resourceAttrs = new HashMap<String,Object>();
+            resourceAttrs.put("sdfa", new ArrayList<String>(Arrays.asList("sdf","sdf")));
             assertTrue(permit.check(
                 User.fromString("auth0|elon"),
                 "read",
-                new Resource.Builder("document").withTenant(tenant.key).build()
+                new Resource.Builder("document").withTenant(tenant.key).withAttributes(resourceAttrs).build()
             ));
 
             logger.info("testing positive permission check with complete user object");
