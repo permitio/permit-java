@@ -8,8 +8,8 @@ public class Resource {
     private String type;
     private String key = null;
     private String tenant = null;
-    private HashMap<String, String> attributes = null;
-    private HashMap<String, String> context = new HashMap<>();
+    private HashMap<String, Object> attributes = null;
+    private HashMap<String, Object> context = new HashMap<>();
 
     public Resource(Builder builder) {
         this.type = builder.type;
@@ -31,11 +31,11 @@ public class Resource {
         return this.tenant;
     }
 
-    public HashMap<String, String> getAttributes() {
+    public HashMap<String, Object> getAttributes() {
         return this.attributes;
     }
 
-    public HashMap<String, String> getContext() {
+    public HashMap<String, Object> getContext() {
         return this.context;
     }
 
@@ -54,7 +54,7 @@ public class Resource {
                 : this.tenant;
 
         // copy tenant from resource.tenant to resource.context.tenant (until we change RBAC policy)
-        HashMap<String, String> safeContext = new HashMap<>();
+        HashMap<String, Object> safeContext = new HashMap<>();
         safeContext.putAll(this.context);
         if (safeTenant != null && !this.context.containsKey("tenant")) {
             safeContext.put("tenant", safeTenant);
@@ -74,8 +74,8 @@ public class Resource {
         private String type;
         private String key = null;
         private String tenant = null;
-        private HashMap<String, String> attributes = null;
-        private HashMap<String, String> context = new HashMap<>();
+        private HashMap<String, Object> attributes = null;
+        private HashMap<String, Object> context = new HashMap<>();
 
         private final String resourceDelimiter = ":";
 
@@ -105,12 +105,12 @@ public class Resource {
             return this;
         }
 
-        public Builder withAttributes(HashMap<String, String> attributes) {
+        public Builder withAttributes(HashMap<String, Object> attributes) {
             this.attributes = attributes;
             return this;
         }
 
-        public Builder withContext(HashMap<String, String> context) {
+        public Builder withContext(HashMap<String, Object> context) {
             this.context = context;
             return this;
         }

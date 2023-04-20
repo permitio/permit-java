@@ -8,6 +8,6 @@ public class TenantModel {
     public String externalId = null;
     public String name = null;
     public String description = null;
-    public HashMap<String, String> settings = null;
+    public HashMap<String, Object> settings = null;
     public String organizationId = null;
 }

@@ -6,7 +6,7 @@ public class ActionSpec {
     public String title = null;
     public String description = null;
     public String path = null;
-    public HashMap<String, String> attributes = null;
+    public HashMap<String, Object> attributes = null;
 }
 
 //export interface ResourceType {

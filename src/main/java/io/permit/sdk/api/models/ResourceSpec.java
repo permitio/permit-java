@@ -5,17 +5,17 @@ import java.util.HashMap;
 public class ResourceSpec {
     private String type;
     private String description;
-    private HashMap<String, String> attributes;
+    private HashMap<String, Object> attributes;
     private HashMap<String, ActionSpec> actions = new HashMap<>();
 
-    public ResourceSpec(String type, String description, HashMap<String, String> attributes, HashMap<String, ActionSpec> actions) {
+    public ResourceSpec(String type, String description, HashMap<String, Object> attributes, HashMap<String, ActionSpec> actions) {
         this.type = type;
         this.description = description;
         this.attributes = attributes;
         this.actions = actions;
     }
 
-    public ResourceSpec(String type, String description, HashMap<String, String> attributes) {
+    public ResourceSpec(String type, String description, HashMap<String, Object> attributes) {
         this(type, description, attributes, new HashMap<>());
     }
 

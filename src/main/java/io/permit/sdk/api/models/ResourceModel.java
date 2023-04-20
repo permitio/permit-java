@@ -9,7 +9,7 @@ public class ResourceModel {
     public String name = null;
     public String path = null;
     public String description = null;
-    public HashMap<String, String> attributes = null;
+    public HashMap<String, Object> attributes = null;
     public Boolean isBuiltIn = null;
     public ArrayList<ActionModel> actions = null;
 }
