@@ -2,7 +2,7 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.HashMap;
-import javax.annotation.processing.Generated;
+import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
