@@ -37,9 +37,10 @@ public class ApiClient implements IDeprecatedApis {
     public final ResourceActionGroupsApi resourceActionGroups;
     public final ResourceAttributesApi resourceAttributes;
     public final RolesApi roles;
-    public final RoleAssignmentsApi roleAssignments;
+    public final ConditionSetsApi conditionSets;
     public final TenantsApi tenants;
     public final UsersApi users;
+    public final RoleAssignmentsApi roleAssignments;
     public final ElementsApi elements;
 
     public ApiClient(PermitConfig config) {
@@ -55,9 +56,10 @@ public class ApiClient implements IDeprecatedApis {
         this.resourceActionGroups = new ResourceActionGroupsApi(this.client, this.config);
         this.resourceAttributes = new ResourceAttributesApi(this.client, this.config);
         this.roles = new RolesApi(this.client, this.config);
-        this.roleAssignments = new RoleAssignmentsApi(this.client, this.config);
+        this.conditionSets = new ConditionSetsApi(this.client, this.config);
         this.tenants = new TenantsApi(this.client, this.config);
         this.users = new UsersApi(this.client, this.config);
+        this.roleAssignments = new RoleAssignmentsApi(this.client, this.config);
         this.elements = new ElementsApi(this.client, this.config);
     }
 
