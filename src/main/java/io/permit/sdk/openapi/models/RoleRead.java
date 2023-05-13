@@ -2,6 +2,7 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
@@ -45,6 +46,15 @@ public class RoleRead {
     @SerializedName("permissions")
     @Expose
     public List<String> permissions;
+    /**
+     * Attributes
+     * <p>
+     * optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+     * 
+     */
+    @SerializedName("attributes")
+    @Expose
+    public HashMap<String, Object> attributes;
     /**
      * Extends
      * <p>
@@ -167,6 +177,11 @@ public class RoleRead {
 
     public RoleRead withPermissions(List<String> permissions) {
         this.permissions = permissions;
+        return this;
+    }
+
+    public RoleRead withAttributes(HashMap<String, Object> attributes) {
+        this.attributes = attributes;
         return this;
     }
 
