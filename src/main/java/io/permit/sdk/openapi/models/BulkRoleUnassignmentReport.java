@@ -13,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
  * 
  */
 @Generated("jsonschema2pojo")
-public class BulkRoleUnAssignmentReport {
+public class BulkRoleUnassignmentReport {
 
     /**
      * Assignments Removed
@@ -25,7 +25,7 @@ public class BulkRoleUnAssignmentReport {
     @Expose
     public Integer assignmentsRemoved = 0;
 
-    public BulkRoleUnAssignmentReport withAssignmentsRemoved(Integer assignmentsRemoved) {
+    public BulkRoleUnassignmentReport withAssignmentsRemoved(Integer assignmentsRemoved) {
         this.assignmentsRemoved = assignmentsRemoved;
         return this;
     }
