@@ -21,6 +21,7 @@ interface IEnvironmentsApi {
     EnvironmentRead getById(UUID projectId, UUID environmentId) throws IOException, PermitApiError, PermitContextError;
     EnvironmentRead create(String projectKey, EnvironmentCreate environmentData) throws IOException, PermitApiError, PermitContextError;
     EnvironmentRead update(String projectKey, String environmentKey, EnvironmentUpdate environmentData) throws IOException, PermitApiError, PermitContextError;
+    EnvironmentRead copy(String projectKey, String environmentKey, EnvironmentCopy copyParams) throws IOException, PermitApiError, PermitContextError;
     void delete(String projectKey, String environmentKey) throws IOException, PermitApiError, PermitContextError;
 }
 
@@ -111,6 +112,20 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
                 new Request.Builder()
                         .url(url)
                         .patch(jsonBody)
+        );
+
+        return this.<EnvironmentRead>callApiAndParseJson(request, EnvironmentRead.class);
+    }
+
+    public EnvironmentRead copy(String projectKey, String environmentKey, EnvironmentCopy copyParams) throws IOException, PermitApiError, PermitContextError {
+        ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        String url = getEnvironmentsUrl(projectKey, String.format("/%s/copy", environmentKey));
+        RequestBody jsonBody = getJsonRequestBody(copyParams);
+
+        Request request = buildRequest(
+            new Request.Builder()
+                .url(url)
+                .post(jsonBody)
         );
 
         return this.<EnvironmentRead>callApiAndParseJson(request, EnvironmentRead.class);
