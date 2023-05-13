@@ -20,6 +20,7 @@ import java.io.IOException;
  * 
  * Example usage:
  *
+ * ```java
  * PermitConfig config = new PermitConfig.Builder("[YOUR_API_KEY]")
  *     // in production, you might need to change this url to fit your deployment
  *     .withPdpAddress("http://localhost:7766")
@@ -41,6 +42,7 @@ import java.io.IOException;
  * } else {
  *     System.out.println("User is not authorized to read a document.");
  * }
+ * ```
  */
 public class Permit implements IEnforcerApi {
     final static Logger logger = LoggerFactory.getLogger(Permit.class);
