@@ -34,6 +34,7 @@ public class ApiClient implements IDeprecatedApis {
     public final EnvironmentsApi environments;
     public final ResourcesApi resources;
     public final ResourceActionsApi resourceActions;
+    public final ResourceActionGroupsApi resourceActionGroups;
     public final ResourceAttributesApi resourceAttributes;
     public final RolesApi roles;
     public final TenantsApi tenants;
@@ -50,6 +51,7 @@ public class ApiClient implements IDeprecatedApis {
         this.environments = new EnvironmentsApi(this.client, this.config);
         this.resources = new ResourcesApi(this.client, this.config);
         this.resourceActions = new ResourceActionsApi(this.client, this.config);
+        this.resourceActionGroups = new ResourceActionGroupsApi(this.client, this.config);
         this.resourceAttributes = new ResourceAttributesApi(this.client, this.config);
         this.roles = new RolesApi(this.client, this.config);
         this.tenants = new TenantsApi(this.client, this.config);
