@@ -1,0 +1,44 @@
+{
+  "title": "EnvironmentCopyScope",
+  "type": "object",
+  "properties": {
+    "resources": {
+      "title": "Resources",
+      "existingJavaType": "io.permit.sdk.openapi.models.EnvironmentCopyScopeFilters",
+      "description": "Resources to copy",
+      "default": {
+        "include": [],
+        "exclude": []
+      }
+    },
+    "roles": {
+      "title": "Roles",
+      "existingJavaType": "io.permit.sdk.openapi.models.EnvironmentCopyScopeFilters",
+      "description": "Roles to copy",
+      "default": {
+        "include": [],
+        "exclude": []
+      }
+    },
+    "user_sets": {
+      "title": "User Sets",
+      "existingJavaType": "io.permit.sdk.openapi.models.EnvironmentCopyScopeFilters",
+      "description": "User sets to copy",
+      "default": {
+        "include": [],
+        "exclude": []
+      }
+    },
+    "resource_sets": {
+      "title": "Resource Sets",
+      "existingJavaType": "io.permit.sdk.openapi.models.EnvironmentCopyScopeFilters",
+      "description": "Resource sets to copy",
+      "default": {
+        "include": [],
+        "exclude": []
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}
