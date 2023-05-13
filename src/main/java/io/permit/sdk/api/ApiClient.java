@@ -41,6 +41,7 @@ public class ApiClient implements IDeprecatedApis {
     public final TenantsApi tenants;
     public final UsersApi users;
     public final RoleAssignmentsApi roleAssignments;
+    public final ConditionSetRulesApi conditionSetRules;
     public final ElementsApi elements;
 
     public ApiClient(PermitConfig config) {
@@ -60,6 +61,7 @@ public class ApiClient implements IDeprecatedApis {
         this.tenants = new TenantsApi(this.client, this.config);
         this.users = new UsersApi(this.client, this.config);
         this.roleAssignments = new RoleAssignmentsApi(this.client, this.config);
+        this.conditionSetRules = new ConditionSetRulesApi(this.client, this.config);
         this.elements = new ElementsApi(this.client, this.config);
     }
 
