@@ -1,0 +1,13 @@
+{
+  "title": "BulkRoleAssignmentReport",
+  "type": "object",
+  "properties": {
+    "assignments_created": {
+      "title": "Assignments Created",
+      "type": "integer",
+      "default": 0
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

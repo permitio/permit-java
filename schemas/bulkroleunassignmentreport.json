@@ -1,0 +1,13 @@
+{
+  "title": "BulkRoleUnAssignmentReport",
+  "type": "object",
+  "properties": {
+    "assignments_removed": {
+      "title": "Assignments Removed",
+      "type": "integer",
+      "default": 0
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}
