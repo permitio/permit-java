@@ -79,6 +79,15 @@ public class ConditionSetCreate {
     @SerializedName("conditions")
     @Expose
     public HashMap<String, Object> conditions;
+    /**
+     * Parent Id
+     * <p>
+     * Parent Condition Set
+     * 
+     */
+    @SerializedName("parent_id")
+    @Expose
+    public java.lang.String parentId;
 
     /**
      * No args constructor for use in serialization
@@ -130,6 +139,11 @@ public class ConditionSetCreate {
 
     public ConditionSetCreate withConditions(HashMap<String, Object> conditions) {
         this.conditions = conditions;
+        return this;
+    }
+
+    public ConditionSetCreate withParentId(java.lang.String parentId) {
+        this.parentId = parentId;
         return this;
     }
 

@@ -149,6 +149,15 @@ public class ConditionSetRead {
     @SerializedName("conditions")
     @Expose
     public HashMap<String, Object> conditions;
+    /**
+     * Parent Id
+     * <p>
+     * Parent Condition Set
+     * 
+     */
+    @SerializedName("parent_id")
+    @Expose
+    public java.lang.String parentId;
 
     /**
      * No args constructor for use in serialization
@@ -247,6 +256,11 @@ public class ConditionSetRead {
 
     public ConditionSetRead withConditions(HashMap<String, Object> conditions) {
         this.conditions = conditions;
+        return this;
+    }
+
+    public ConditionSetRead withParentId(java.lang.String parentId) {
+        this.parentId = parentId;
         return this;
     }
 

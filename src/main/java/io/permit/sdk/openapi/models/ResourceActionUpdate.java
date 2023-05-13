@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -33,6 +34,15 @@ public class ResourceActionUpdate {
     @SerializedName("description")
     @Expose
     public String description;
+    /**
+     * Attributes
+     * <p>
+     * optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix
+     * 
+     */
+    @SerializedName("attributes")
+    @Expose
+    public HashMap<String, Object> attributes;
 
     public ResourceActionUpdate withName(String name) {
         this.name = name;
@@ -41,6 +51,11 @@ public class ResourceActionUpdate {
 
     public ResourceActionUpdate withDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public ResourceActionUpdate withAttributes(HashMap<String, Object> attributes) {
+        this.attributes = attributes;
         return this;
     }
 
