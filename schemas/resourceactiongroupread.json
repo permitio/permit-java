@@ -1,0 +1,92 @@
+{
+  "title": "ResourceActionGroupRead",
+  "required": [
+    "name",
+    "key",
+    "id",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "resource_id",
+    "created_at",
+    "updated_at"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the action group"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this action group represents in your system"
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    },
+    "actions": {
+      "title": "Actions",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "key": {
+      "title": "Key",
+      "pattern": "^[A-Za-z0-9\\-_]+$",
+      "type": "string",
+      "description": "A URL-friendly name of the action group (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action group."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the action group",
+      "format": "uuid"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the action group belongs to.",
+      "format": "uuid"
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the action group belongs to.",
+      "format": "uuid"
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the action group belongs to.",
+      "format": "uuid"
+    },
+    "resource_id": {
+      "title": "Resource Id",
+      "type": "string",
+      "description": "Unique id of the resource that the action group belongs to.",
+      "format": "uuid"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the action group was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the action group was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}
