@@ -63,7 +63,7 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @return An array of RoleAssignmentRead objects representing the role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -105,7 +105,7 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @return An array of RoleAssignmentRead objects representing the role assignments.
      * @throws IOException           If an I/Oerror occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, int page) throws IOException, PermitApiError, PermitContextError {
         return this.list(userKey, tenantKey, roleKey, page, 100);
@@ -120,7 +120,7 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @return An array of RoleAssignmentRead objects representing the role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey) throws IOException, PermitApiError, PermitContextError {
         return this.list(userKey, tenantKey, roleKey, 1);
@@ -136,7 +136,7 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @return The RoleAssignmentRead object representing the assigned role.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead assign(RoleAssignmentCreate assignment) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -161,7 +161,7 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @param unassignment The RoleAssignmentRemove object containing the unassignment data.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void unassign(RoleAssignmentRemove unassignment) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -187,7 +187,7 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @return The BulkRoleAssignmentReport object representing the report of bulk role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request     
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public BulkRoleAssignmentReport bulkAssign(List<RoleAssignmentCreate> assignments) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -211,7 +211,7 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @return The BulkRoleUnassignmentReport object representing the report of bulk role unassignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public BulkRoleUnassignmentReport bulkUnassign(List<RoleAssignmentRemove> unassignments) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);

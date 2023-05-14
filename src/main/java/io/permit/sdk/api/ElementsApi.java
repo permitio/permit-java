@@ -31,7 +31,7 @@ public class ElementsApi extends BaseApi implements IElementsApi {
      * @return The embedded login authentication session data.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EmbeddedLoginRequestOutput loginAs(String userKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);

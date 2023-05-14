@@ -63,7 +63,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @return An array of {@link ConditionSetRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -93,7 +93,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @return An array of {@link ConditionSetRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead[] list(int page) throws IOException, PermitApiError, PermitContextError {
         return this.list(page, 100);
@@ -105,7 +105,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @return An array of {@link ConditionSetRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead[] list() throws IOException, PermitApiError, PermitContextError {
         return this.list(1);
@@ -118,7 +118,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @return The {@link ConditionSetRead} object representing the condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead get(String conditionSetKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -139,7 +139,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @return The {@link ConditionSetRead} object representing the condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead getByKey(String conditionSetKey) throws IOException, PermitApiError, PermitContextError {
         return this.get(conditionSetKey);
@@ -152,7 +152,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @return The {@link ConditionSetRead} object representing the condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead getById(UUID conditionSetId) throws IOException, PermitApiError, PermitContextError {
         return this.get(conditionSetId.toString());
@@ -165,7 +165,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @return The {@link ConditionSetRead} object representing the created condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead create(ConditionSetCreate conditionSetData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -189,7 +189,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @return The {@link ConditionSetRead} object representing the updated condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead update(String conditionSetKey, ConditionSetUpdate conditionSetData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -211,7 +211,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @param conditionSetKey The key of the condition set to delete.
      * @throws IOException          If an I/O error occurs while sending the request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If the Permit context is not properly configured.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String conditionSetKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);

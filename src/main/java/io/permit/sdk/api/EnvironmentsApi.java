@@ -66,7 +66,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @return An array of EnvironmentRead objects representing the environments.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead[] list(String projectKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
@@ -97,7 +97,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @return An array of EnvironmentRead objects representing the environments.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead[] list(String projectKey, int page) throws IOException, PermitApiError, PermitContextError {
         return this.list(projectKey, page, 100);
@@ -110,7 +110,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @return An array of EnvironmentRead objects representing the environments.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead[] list(String projectKey) throws IOException, PermitApiError, PermitContextError {
         return this.list(projectKey,1);
@@ -124,7 +124,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @return The EnvironmentRead object representing the environment.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead get(String projectKey, String environmentKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
@@ -147,7 +147,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @return The EnvironmentRead object representing the environment.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead getByKey(String projectKey, String environmentKey) throws IOException, PermitApiError, PermitContextError {
         return this.get(projectKey, environmentKey);
@@ -161,7 +161,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @return The EnvironmentRead object representing the environment.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead getById(UUID projectId, UUID environmentId) throws IOException, PermitApiError, PermitContextError {
         return this.get(projectId.toString(), environmentId.toString());
@@ -175,7 +175,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @return The EnvironmentRead object representing the created environment.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead create(String projectKey, EnvironmentCreate environmentData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
@@ -200,7 +200,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @return The EnvironmentRead object representing the updated environment.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead update(String projectKey, String environmentKey, EnvironmentUpdate environmentData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
@@ -230,7 +230,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @return The EnvironmentRead object representing the copied environment.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead copy(String projectKey, String environmentKey, EnvironmentCopy copyParams) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
@@ -253,7 +253,7 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @param environmentKey   The environment key.
      * @throws IOException            If an I/O error occurs during the HTTP request.
      * @throws PermitApiError         If the Permit API returns a response with an error status code.
-     * @throws PermitContextError     If there is an error in the Permit context.
+     * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String projectKey, String environmentKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);

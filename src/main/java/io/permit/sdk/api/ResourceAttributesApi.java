@@ -71,7 +71,7 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @return An array of {@link ResourceAttributeRead} objects representing the resource attributes.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead[] list(String resourceKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -102,7 +102,7 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @return An array of {@link ResourceAttributeRead} objects representing the resource attributes.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead[] list(String resourceKey, int page) throws IOException, PermitApiError, PermitContextError {
         return this.list(resourceKey, page, 100);
@@ -115,7 +115,7 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @return An array of {@link ResourceAttributeRead} objects representing the resource attributes.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead[] list(String resourceKey) throws IOException, PermitApiError, PermitContextError {
         return this.list(resourceKey,1);
@@ -129,7 +129,7 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @return The {@link ResourceAttributeRead} object representing the resource attribute.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead get(String resourceKey, String attributeKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -152,7 +152,7 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @return The {@link ResourceAttributeRead} object representing the resource attribute.
      * @throws IOException          If an I/O error occurs during the HTTP request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If there is an error in the Permit context.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead getByKey(String resourceKey, String attributeKey) throws IOException, PermitApiError, PermitContextError {
         return this.get(resourceKey, attributeKey);
@@ -166,7 +166,7 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @return The {@link ResourceAttributeRead} object representing the resource attribute.
      * @throws IOException          If an I/O error occurs during the HTTP request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If there is an error in the Permit context.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead getById(UUID resourceId, UUID attributeId) throws IOException, PermitApiError, PermitContextError {
         return this.get(resourceId.toString(), attributeId.toString());
@@ -181,7 +181,7 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @return The {@link ResourceAttributeRead} object representing the created resource attribute.
      * @throws IOException          If an I/O error occurs during the HTTP request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.
-     * @throws PermitContextError   If there is an error in the Permit context.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead create(String resourceKey, ResourceAttributeCreate attributeData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -206,7 +206,7 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @return The {@link ResourceAttributeRead} object representing the updated resource attribute.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead update(String resourceKey, String attributeKey, ResourceAttributeUpdate attributeData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -229,7 +229,7 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @param attributeKey  The key of the attribute to delete.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String resourceKey, String attributeKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);

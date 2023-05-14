@@ -65,7 +65,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @return An array of RoleRead objects representing the roles.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured SDK context {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -95,7 +95,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @return An array of RoleRead objects representing the roles.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead[] list(int page) throws IOException, PermitApiError, PermitContextError {
         return this.list(page, 100);
@@ -107,7 +107,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @return An array of RoleRead objects representing the roles.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead[] list() throws IOException, PermitApiError, PermitContextError {
         return this.list(1);
@@ -120,7 +120,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @return The RoleRead object representing the role.
      * @throws IOException           If an I/O error occurs during     * the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead get(String roleKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -142,7 +142,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @return The RoleRead object representing the role.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead getByKey(String roleKey) throws IOException, PermitApiError, PermitContextError {
         return this.get(roleKey);
@@ -155,7 +155,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @return The RoleRead object representing the role.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead getById(UUID roleId) throws IOException, PermitApiError, PermitContextError {
         return this.get(roleId.toString());
@@ -168,7 +168,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @return The RoleRead object representing the created role.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead create(RoleCreate roleData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -192,7 +192,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @return The RoleRead object representing the updated role.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead update(String roleKey, RoleUpdate roleData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -214,7 +214,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
     * @param roleKey The key of the role to delete.
     * @throws IOException           If an I/O error occurs during the HTTP request.
     * @throws PermitApiError        If the Permit API returns a response with an error status code.
-    * @throws PermitContextError    If there is an error in the Permit context.
+    * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
     */
     public void delete(String roleKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -238,7 +238,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
     * @return The RoleRead object representing the role after the permissions are assigned.
     * @throws IOException           If an I/O error occurs during the HTTP request.
     * @throws PermitApiError        If the Permit API returns a response with an error status code.
-    * @throws PermitContextError    If there is an error in the Permit context.
+    * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
     */
     public RoleRead assignPermissions(String roleKey, ArrayList<String> permissions) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -262,7 +262,7 @@ public class RolesApi extends BaseApi implements IRolesApi {
     * @return The RoleRead object representing the role after the permissions are removed.
     * @throws IOException           If an I/O error occurs during the HTTP request.
     * @throws PermitApiError        If the Permit API returns a response with an error status code.
-    * @throws PermitContextError    If there is an error in the Permit context.
+    * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
     */
     public RoleRead removePermissions(String roleKey, ArrayList<String> permissions) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);

@@ -73,7 +73,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A PaginatedResultUserRead object representing the retrieved paginated result of users.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public PaginatedResultUserRead list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -103,7 +103,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A PaginatedResultUserRead object representing the retrieved paginated result of users.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public PaginatedResultUserRead list(int page) throws IOException, PermitApiError, PermitContextError {
         return this.list(page, 100);
@@ -115,7 +115,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A PaginatedResultUserRead object representing the retrieved paginated result of users.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public PaginatedResultUserRead list() throws IOException, PermitApiError, PermitContextError {
         return this.list(1);
@@ -128,7 +128,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A UserRead object representing the retrieved user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public UserRead get(String userKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -149,7 +149,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A UserRead object representing the retrieved user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public UserRead getByKey(String userKey) throws IOException, PermitApiError, PermitContextError {
         return this.get(userKey);
@@ -162,7 +162,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A UserRead object representing the retrieved user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public UserRead getById(UUID userId) throws IOException, PermitApiError, PermitContextError {
         return this.get(userId.toString());
@@ -175,7 +175,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A UserRead object representing the created user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public UserRead create(UserCreate userData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -199,7 +199,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A UserRead object representing the updated user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public UserRead update(String userKey, UserUpdate userData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -222,7 +222,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A CreateOrUpdateResult object representing the result of the synchronization.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public CreateOrUpdateResult<UserRead> sync(UserCreate userData) throws IOException, PermitApiError, PermitContextError {
         if (userData.key == null) {
@@ -259,7 +259,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A CreateOrUpdateResult object representing the result of the synchronization.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public CreateOrUpdateResult<UserRead> sync(User user) throws IOException, PermitApiError, PermitContextError {
         UserCreate userData = new UserCreate(user.getKey());
@@ -285,7 +285,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param userKey The key of the user to be deleted.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String userKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -310,7 +310,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return A RoleAssignmentRead object representing the assigned role.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -334,7 +334,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param tenantKey The key of the tenant.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -362,7 +362,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return An array of RoleAssignmentRead objects representing the retrieved role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, String tenantKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -406,7 +406,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return An array of RoleAssignmentRead objects representing the retrieved role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         return this.getAssignedRoles(userKey, null, page, perPage);
@@ -420,7 +420,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return An array of RoleAssignmentRead objects representing the retrieved role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, int page) throws IOException, PermitApiError, PermitContextError {
         return this.getAssignedRoles(userKey, page, 100);
@@ -433,7 +433,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return An array of RoleAssignmentRead objects representing the retrieved role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
-     * @throws PermitContextError    If there is an error in the Permit context.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey) throws IOException, PermitApiError, PermitContextError {
         return this.getAssignedRoles(userKey, 1);

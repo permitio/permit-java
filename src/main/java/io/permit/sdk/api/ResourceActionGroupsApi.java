@@ -66,7 +66,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @return An array of {@link ResourceActionGroupRead} objects representing the action groups.
      * @throws IOException If an I/O error occurs during the HTTP request.
      * @throws PermitApiError If the Permit API returns a response with an error status code.
-     * @throws PermitContextError If there is an error in the Permit context.
+     * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead[] list(String resourceKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -97,7 +97,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @return An array of {@link ResourceActionGroupRead} objects representing the action groups.
      * @throws IOException If an I/O error occurs during the HTTP request.
      * @throws PermitApiError If the Permit API returns a response with an error status code.
-     * @throws PermitContextError If there is an error in the Permit context.
+     * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead[] list(String resourceKey, int page) throws IOException, PermitApiError, PermitContextError {
         return this.list(resourceKey, page, 100);
@@ -110,7 +110,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @return An array of {@link ResourceActionGroupRead} objects representing the action groups.
      * @throws IOException If an I/O error occurs during the HTTP request.
      * @throws PermitApiError If the Permit API returns a response with an error status code.
-     * @throws PermitContextError If there is an error in the Permit context.
+     * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead[] list(String resourceKey) throws IOException, PermitApiError, PermitContextError {
         return this.list(resourceKey,1);
@@ -124,7 +124,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @return The {@link ResourceActionGroupRead} object representing the action group.
      * @throws IOException If an I/O error occurs during the HTTP request.
      * @throws PermitApiError If the Permit API returns a response with an error status code.
-     * @throws PermitContextError If there is an error in the Permit context.
+     * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead get(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -147,7 +147,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @return The {@link ResourceActionGroupRead} object representing the action group.
      * @throws IOException If an I/O error occurs during the HTTP request.
      * @throws PermitApiError If the Permit API returns a response with an error status code.
-     * @throws PermitContextError If there is an error in the Permit context.
+     * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead getByKey(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError {
         return this.get(resourceKey, groupKey);
@@ -161,7 +161,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @return The {@link ResourceActionGroupRead} object representing the action group.
      * @throws IOException If an I/O error occurs during the HTTP request.
      * @throws PermitApiError If the Permit API returns a response with an error status code.
-     * @throws PermitContextError If there is an error in the Permit context.
+     * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead getById(UUID resourceId, UUID groupId) throws IOException, PermitApiError, PermitContextError {
         return this.get(resourceId.toString(), groupId.toString());
@@ -175,7 +175,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @return The {@link ResourceActionGroupRead} object representing the created action group.
      * @throws IOException If an I/O error occurs during the HTTP request.
      * @throws PermitApiError If the Permit API returns a response with an error status code.
-     * @throws PermitContextError If there is an error in the Permit context.
+     * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead create(String resourceKey, ResourceActionGroupCreate groupData) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
@@ -198,7 +198,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @param groupKey The group key.
      * @throws IOException If an I/O error occurs during the HTTP request.
      * @throws PermitApiError If the Permit API returns a response with an error status code.
-     * @throws PermitContextError If there is an error in the Permit context.
+     * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
