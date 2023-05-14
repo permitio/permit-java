@@ -212,7 +212,7 @@ public class ApiClient implements IDeprecatedApis {
 
     /**
      * Creates a new tenant. 
-     * @throws PermitApiError if a tenant already exists with the given key.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      *
      * @deprecated replaced with permit.api.tenants.create()
      * @see io.permit.sdk.api.TenantsApi#create(TenantCreate) 

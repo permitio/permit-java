@@ -62,7 +62,7 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @param perPage The number of projects per page.
      * @return An array of ProjectRead objects representing the projects.
      * @throws IOException            If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError         If an error occurs in the Permit API.
+     * @throws PermitApiError         If the Permit API returns a response with an error status code.
      * @throws PermitContextError     If there is an error in the Permit context.
      */
     public ProjectRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -92,7 +92,7 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @param page The page number.
      * @return An array of ProjectRead objects representing the projects.
      * @throws IOException            If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError         If an error occurs in the Permit API.
+     * @throws PermitApiError         If the Permit API returns a response with an error status code.
      * @throws PermitContextError     If there is an error in the Permit context.
      */
     public ProjectRead[] list(int page) throws IOException, PermitApiError, PermitContextError {
@@ -104,7 +104,7 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      *
      * @return An array of ProjectRead objects representing the projects.
      * @throws IOException            If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError         If an error occurs in the Permit API.
+     * @throws PermitApiError         If the Permit API returns a response with an error status code.
      * @throws PermitContextError     If there is an error in the Permit context.
      */
     public ProjectRead[] list() throws IOException, PermitApiError, PermitContextError {
@@ -117,7 +117,7 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @param projectKey The project key.
      * @return The ProjectRead object representing the project.
      * @throws IOException            If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError         If an error occurs in the Permit API.
+     * @throws PermitApiError         If the Permit API returns a response with an error status code.
      * @throws PermitContextError     If there is an error in the Permit context.
      */
     public ProjectRead get(String projectKey) throws IOException, PermitApiError, PermitContextError {
@@ -139,7 +139,7 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @param projectKey The project key.
      * @return The ProjectRead object representing the project.
      * @throws IOException            If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError         If an error occurs in the Permit API.
+     * @throws PermitApiError         If the Permit API returns a response with an error status code.
      * @throws PermitContextError     If there is an error in the Permit context.
      */
     public ProjectRead getByKey(String projectKey) throws IOException, PermitApiError, PermitContextError {
@@ -152,7 +152,7 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @param projectId The project ID.
      * @return The ProjectRead object representing the project.
      * @throws IOException            If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError         If an error occurs in the Permit API.
+     * @throws PermitApiError         If the Permit API returns a response with an error status code.
      * @throws PermitContextError     If there is an error in the Permit context.
      */
     public ProjectRead getById(UUID projectId) throws IOException, PermitApiError, PermitContextError {
@@ -165,7 +165,7 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @param projectData The project data.
      * @return The ProjectRead object representing the created project.
      * @throws IOException            If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError         If an error occurs in the Permit API.
+     * @throws PermitApiError         If the Permit API returns a response with an error status code.
      * @throws PermitContextError     If there is an error in the Permit context.
      */
     public ProjectRead create(ProjectCreate projectData) throws IOException, PermitApiError, PermitContextError {
@@ -189,7 +189,7 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @param projectData   The updated project data.
      * @return The ProjectRead object representing the updated project.
      * @throws IOException            If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError         If an error occurs in the Permit API.
+     * @throws PermitApiError         If the Permit API returns a response with an error status code.
      * @throws PermitContextError     If there is an error in the Permit context.
      */
     public ProjectRead update(String projectKey, ProjectUpdate projectData) throws IOException, PermitApiError, PermitContextError {
@@ -211,7 +211,7 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      *
      * @param projectKey The project key.
      * @throws IOException            If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError         If an error occurs in the Permit API.
+     * @throws PermitApiError         If the Permit API returns a response with an error status code.
      * @throws PermitContextError     If there is an error in the Permit context.
      */
     public void delete(String projectKey) throws IOException, PermitApiError, PermitContextError {

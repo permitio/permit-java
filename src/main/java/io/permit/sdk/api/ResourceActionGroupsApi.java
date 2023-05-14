@@ -65,7 +65,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @param perPage The number of action groups per page.
      * @return An array of {@link ResourceActionGroupRead} objects representing the action groups.
      * @throws IOException If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError If an error occurs in the Permit API.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      * @throws PermitContextError If there is an error in the Permit context.
      */
     public ResourceActionGroupRead[] list(String resourceKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -96,7 +96,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @param page The page number.
      * @return An array of {@link ResourceActionGroupRead} objects representing the action groups.
      * @throws IOException If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError If an error occurs in the Permit API.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      * @throws PermitContextError If there is an error in the Permit context.
      */
     public ResourceActionGroupRead[] list(String resourceKey, int page) throws IOException, PermitApiError, PermitContextError {
@@ -109,7 +109,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @param resourceKey The resource key.
      * @return An array of {@link ResourceActionGroupRead} objects representing the action groups.
      * @throws IOException If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError If an error occurs in the Permit API.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      * @throws PermitContextError If there is an error in the Permit context.
      */
     public ResourceActionGroupRead[] list(String resourceKey) throws IOException, PermitApiError, PermitContextError {
@@ -123,7 +123,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @param groupKey The group key.
      * @return The {@link ResourceActionGroupRead} object representing the action group.
      * @throws IOException If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError If an error occurs in the Permit API.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      * @throws PermitContextError If there is an error in the Permit context.
      */
     public ResourceActionGroupRead get(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError {
@@ -146,7 +146,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @param groupKey The group key.
      * @return The {@link ResourceActionGroupRead} object representing the action group.
      * @throws IOException If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError If an error occurs in the Permit API.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      * @throws PermitContextError If there is an error in the Permit context.
      */
     public ResourceActionGroupRead getByKey(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError {
@@ -160,7 +160,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @param groupId The group ID.
      * @return The {@link ResourceActionGroupRead} object representing the action group.
      * @throws IOException If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError If an error occurs in the Permit API.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      * @throws PermitContextError If there is an error in the Permit context.
      */
     public ResourceActionGroupRead getById(UUID resourceId, UUID groupId) throws IOException, PermitApiError, PermitContextError {
@@ -174,7 +174,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @param groupData The {@link ResourceActionGroupCreate} object containing the data for the new action group.
      * @return The {@link ResourceActionGroupRead} object representing the created action group.
      * @throws IOException If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError If an error occurs in the Permit API.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      * @throws PermitContextError If there is an error in the Permit context.
      */
     public ResourceActionGroupRead create(String resourceKey, ResourceActionGroupCreate groupData) throws IOException, PermitApiError, PermitContextError {
@@ -197,7 +197,7 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @param resourceKey The resource key.
      * @param groupKey The group key.
      * @throws IOException If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError If an error occurs in the Permit API.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      * @throws PermitContextError If there is an error in the Permit context.
      */
     public void delete(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError {

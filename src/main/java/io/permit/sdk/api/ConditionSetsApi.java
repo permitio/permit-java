@@ -62,7 +62,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @param perPage The number of items per page.
      * @return An array of {@link ConditionSetRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -92,7 +92,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @param page The page number.
      * @return An array of {@link ConditionSetRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRead[] list(int page) throws IOException, PermitApiError, PermitContextError {
@@ -104,7 +104,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      *
      * @return An array of {@link ConditionSetRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRead[] list() throws IOException, PermitApiError, PermitContextError {
@@ -117,7 +117,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @param conditionSetKey The key of the condition set.
      * @return The {@link ConditionSetRead} object representing the condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRead get(String conditionSetKey) throws IOException, PermitApiError, PermitContextError {
@@ -138,7 +138,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @param conditionSetKey The key of the condition set.
      * @return The {@link ConditionSetRead} object representing the condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRead getByKey(String conditionSetKey) throws IOException, PermitApiError, PermitContextError {
@@ -151,7 +151,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @param conditionSetId The ID of the condition set.
      * @return The {@link ConditionSetRead} object representing the condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRead getById(UUID conditionSetId) throws IOException, PermitApiError, PermitContextError {
@@ -164,7 +164,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @param conditionSetData The data for creating the condition set.
      * @return The {@link ConditionSetRead} object representing the created condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRead create(ConditionSetCreate conditionSetData) throws IOException, PermitApiError, PermitContextError {
@@ -188,7 +188,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @param conditionSetData The updated data for the condition set.
      * @return The {@link ConditionSetRead} object representing the updated condition set.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRead update(String conditionSetKey, ConditionSetUpdate conditionSetData) throws IOException, PermitApiError, PermitContextError {
@@ -210,7 +210,7 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      *
      * @param conditionSetKey The key of the condition set to delete.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public void delete(String conditionSetKey) throws IOException, PermitApiError, PermitContextError {

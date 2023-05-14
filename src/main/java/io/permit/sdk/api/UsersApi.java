@@ -72,7 +72,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param perPage The number of items per page.
      * @return A PaginatedResultUserRead object representing the retrieved paginated result of users.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public PaginatedResultUserRead list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -102,7 +102,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param page The page number of the result set to retrieve.
      * @return A PaginatedResultUserRead object representing the retrieved paginated result of users.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public PaginatedResultUserRead list(int page) throws IOException, PermitApiError, PermitContextError {
@@ -114,7 +114,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      *
      * @return A PaginatedResultUserRead object representing the retrieved paginated result of users.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public PaginatedResultUserRead list() throws IOException, PermitApiError, PermitContextError {
@@ -127,7 +127,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param userKey The key of theuser.
      * @return A UserRead object representing the retrieved user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public UserRead get(String userKey) throws IOException, PermitApiError, PermitContextError {
@@ -148,7 +148,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param userKey The key of the user.
      * @return A UserRead object representing the retrieved user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public UserRead getByKey(String userKey) throws IOException, PermitApiError, PermitContextError {
@@ -161,7 +161,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param userId The ID of the user.
      * @return A UserRead object representing the retrieved user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public UserRead getById(UUID userId) throws IOException, PermitApiError, PermitContextError {
@@ -174,7 +174,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param userData The UserCreate object representing the user data.
      * @return A UserRead object representing the created user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public UserRead create(UserCreate userData) throws IOException, PermitApiError, PermitContextError {
@@ -198,7 +198,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param userData The UserUpdate object representing the updated user data.
      * @return A UserRead object representing the updated user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public UserRead update(String userKey, UserUpdate userData) throws IOException, PermitApiError, PermitContextError {
@@ -221,7 +221,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param userData The UserCreate object representing the user data to synchronize.
      * @return A CreateOrUpdateResult object representing the result of the synchronization.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public CreateOrUpdateResult<UserRead> sync(UserCreate userData) throws IOException, PermitApiError, PermitContextError {
@@ -258,7 +258,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param user The User object representing the user to synchronize.
      * @return A CreateOrUpdateResult object representing the result of the synchronization.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public CreateOrUpdateResult<UserRead> sync(User user) throws IOException, PermitApiError, PermitContextError {
@@ -284,7 +284,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      *
      * @param userKey The key of the user to be deleted.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public void delete(String userKey) throws IOException, PermitApiError, PermitContextError {
@@ -309,7 +309,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param tenantKey The key of the tenant.
      * @return A RoleAssignmentRead object representing the assigned role.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public RoleAssignmentRead assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {
@@ -333,7 +333,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param roleKey   The key of the role to unassign.
      * @param tenantKey The key of the tenant.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public void unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {
@@ -361,7 +361,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param perPage   The number of items per page.
      * @return An array of RoleAssignmentRead objects representing the retrieved role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, String tenantKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -405,7 +405,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param perPage The number of items per page.
      * @return An array of RoleAssignmentRead objects representing the retrieved role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -419,7 +419,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param page    The page number of the result set to retrieve.
      * @return An array of RoleAssignmentRead objects representing the retrieved role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, int page) throws IOException, PermitApiError, PermitContextError {
@@ -432,7 +432,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @param userKey The key of the user.
      * @return An array of RoleAssignmentRead objects representing the retrieved role assignments.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey) throws IOException, PermitApiError, PermitContextError {

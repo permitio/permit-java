@@ -25,7 +25,7 @@ interface IConditionSetRulesApi {
      * @param perPage        The number of items per page.
      * @return An array of {@link ConditionSetRuleRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     ConditionSetRuleRead[] list(String userSetKey, String permissionKey, String resourceSetKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError;
@@ -39,7 +39,7 @@ interface IConditionSetRulesApi {
      * @param page           The page number.
      * @return An array of {@link ConditionSetRuleRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     ConditionSetRuleRead[] list(String userSetKey, String permissionKey, String resourceSetKey, int page) throws IOException, PermitApiError, PermitContextError;
@@ -52,7 +52,7 @@ interface IConditionSetRulesApi {
      * @param resourceSetKey The resource set key.
      * @return An array of {@link ConditionSetRuleRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     ConditionSetRuleRead[] list(String userSetKey, String permissionKey, String resourceSetKey) throws IOException, PermitApiError, PermitContextError;
@@ -63,7 +63,7 @@ interface IConditionSetRulesApi {
      * @param rule The condition set rule to create.
      * @return The created {@link ConditionSetRuleRead} object.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     ConditionSetRuleRead create(ConditionSetRuleCreate rule) throws IOException, PermitApiError, PermitContextError;
@@ -73,7 +73,7 @@ interface IConditionSetRulesApi {
      *
      * @param rule The condition set rule to delete.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     void delete(ConditionSetRuleRemove rule) throws IOException, PermitApiError, PermitContextError;
@@ -122,7 +122,7 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
      * @param perPage        The number of items per page.
      * @return An array of {@link ConditionSetRuleRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRuleRead[] list(String userSetKey, String permissionKey, String resourceSetKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -165,7 +165,7 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
      * @param page           The page number.
      * @return An array of {@link ConditionSetRuleRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRuleRead[] list(String userSetKey, String permissionKey, String resourceSetKey, int page) throws IOException, PermitApiError, PermitContextError {
@@ -181,7 +181,7 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
      * @param resourceSetKey The resource set key.
      * @return An array of {@link ConditionSetRuleRead} objects.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRuleRead[] list(String userSetKey, String permissionKey, String resourceSetKey) throws IOException, PermitApiError, PermitContextError {
@@ -194,7 +194,7 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
      * @param rule The condition set rule to create.
      * @return The created {@link ConditionSetRuleRead} object.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public ConditionSetRuleRead create(ConditionSetRuleCreate rule) throws IOException, PermitApiError, PermitContextError {
@@ -216,7 +216,7 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
      *
      * @param rule The condition set rule to delete.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public void delete(ConditionSetRuleRemove rule) throws IOException, PermitApiError, PermitContextError {

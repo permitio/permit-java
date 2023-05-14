@@ -30,7 +30,7 @@ public class ElementsApi extends BaseApi implements IElementsApi {
      * @param tenantKey The key of the active tenant for the logged in user.
      * @return The embedded login authentication session data.
      * @throws IOException          If an I/O error occurs while sending the request.
-     * @throws PermitApiError       If an error occurs in the Permit API.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
      * @throws PermitContextError   If the Permit context is not properly configured.
      */
     public EmbeddedLoginRequestOutput loginAs(String userKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {

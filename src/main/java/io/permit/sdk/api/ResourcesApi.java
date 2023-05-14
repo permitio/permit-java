@@ -64,7 +64,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      * @param perPage The number of items per page.
      * @return An array of {@link ResourceRead} objects representing the resources.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public ResourceRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -94,7 +94,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      * @param page The page number.
      * @return An array of {@link ResourceRead} objects representing the resources.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public ResourceRead[] list(int page) throws IOException, PermitApiError, PermitContextError {
@@ -106,7 +106,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      *
      * @return An array of {@link ResourceRead} objects representing the resources.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public ResourceRead[] list() throws IOException, PermitApiError, PermitContextError {
@@ -119,7 +119,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      * @param resourceKey The key of the resource.
      * @return The {@link ResourceRead} object representing the resource.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public ResourceRead get(String resourceKey) throws IOException, PermitApiError, PermitContextError {
@@ -141,7 +141,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      * @param resourceKey The key of the resource.
      * @return The {@link ResourceRead} object representing the resource.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public ResourceRead getByKey(String resourceKey) throws IOException, PermitApiError, PermitContextError {
@@ -154,7 +154,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      * @param resourceId The ID of the resource.
      * @return The {@link ResourceRead} object representing the resource.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public ResourceRead getById(UUID resourceId) throws IOException, PermitApiError, PermitContextError {
@@ -167,7 +167,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      * @param resourceData The {@link ResourceCreate} object containing the data for the new resource.
      * @return The {@link ResourceRead} object representing the created resource.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public ResourceRead create(ResourceCreate resourceData) throws IOException, PermitApiError, PermitContextError {
@@ -191,7 +191,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      * @param resourceData The {@link ResourceReplace} object containing the updated data for the resource.
      * @return The {@link ResourceRead} object representing the replaced resource.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    * If there is an error in the Permit context.
      */
     public ResourceRead replace(String resourceKey, ResourceReplace resourceData) throws IOException, PermitApiError, PermitContextError {
@@ -215,7 +215,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      * @param resourceData The {@link ResourceUpdate} object containing the updated data for the resource.
      * @return The {@link ResourceRead} object representing the updated resource.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public ResourceRead update(String resourceKey, ResourceUpdate resourceData) throws IOException, PermitApiError, PermitContextError {
@@ -237,7 +237,7 @@ public class ResourcesApi extends BaseApi implements IResourcesApi {
      *
      * @param resourceKey The key of the resource to delete.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public void delete(String resourceKey) throws IOException, PermitApiError, PermitContextError {

@@ -65,7 +65,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param perPage The number of items per page.
      * @return An array of TenantRead objects representing the retrieved tenants.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public TenantRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -95,7 +95,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param page The page number of the result set to retrieve.
      * @return An array of TenantRead objects representing the retrieved tenants.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public TenantRead[] list(int page) throws IOException, PermitApiError, PermitContextError {
@@ -107,7 +107,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      *
      * @return An array of TenantRead objects representing the retrieved tenants.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public TenantRead[] list() throws IOException, PermitApiError, PermitContextError {
@@ -122,7 +122,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param perPage The number of items per page.
      * @return A PaginatedResultUserRead object representing the retrieved paginated result of users.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public PaginatedResultUserRead listTenantUsers(String tenantKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
@@ -150,7 +150,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param page      The page number of the result set to retrieve.
      * @return A PaginatedResultUserRead object representing the retrieved paginated result of users.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public PaginatedResultUserRead listTenantUsers(String tenantKey, int page) throws IOException, PermitApiError, PermitContextError {
@@ -163,7 +163,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param tenantKey The key of the tenant.
      * @return A PaginatedResultUserRead object representing the retrieved paginated result of users.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public PaginatedResultUserRead listTenantUsers(String tenantKey) throws IOException, PermitApiError, PermitContextError {
@@ -176,7 +176,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param tenantKey The key of the tenant.
      * @return A TenantRead object representing the retrieved tenant.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public TenantRead get(String tenantKey) throws IOException, PermitApiError, PermitContextError {
@@ -197,7 +197,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param tenantKey The key of the tenant.
      * @return A TenantRead object representing the retrieved tenant.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public TenantRead getByKey(String tenantKey) throws IOException, PermitApiError, PermitContextError {
@@ -210,7 +210,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param tenantId The ID of the tenant.
      * @return A TenantRead object representing the retrieved tenant.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public TenantRead getById(UUID tenantId) throws IOException, PermitApiError, PermitContextError {
@@ -223,7 +223,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param tenantData The TenantCreate object representing the tenant data.
      * @return A TenantRead object representing the created tenant.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public TenantRead create(TenantCreate tenantData) throws IOException, PermitApiError, PermitContextError {
@@ -247,7 +247,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @param tenantData The TenantUpdate object representing the updated tenant data.
      * @return A TenantRead object representing the updated tenant.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public TenantRead update(String tenantKey, TenantUpdate tenantData) throws IOException, PermitApiError, PermitContextError {
@@ -269,7 +269,7 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      *
      * @param tenantKey The key of the tenant to be deleted.
      * @throws IOException           If an I/O error occurs during the HTTP request.
-     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If there is an error in the Permit context.
      */
     public void delete(String tenantKey) throws IOException, PermitApiError, PermitContextError {
