@@ -20,11 +20,26 @@ interface IRoleAssignmentsApi {
     BulkRoleUnassignmentReport bulkUnassign(List<RoleAssignmentRemove> unassignments) throws IOException, PermitApiError, PermitContextError;
 }
 
+/**
+ * The RoleAssignmentsApi class provides methods for managing role assignments in the Permit API.
+ */
 public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
+    /**
+     * Constructs a new RoleAssignmentsApi instance with the specified OkHttpClient and PermitConfig.
+     *
+     * @param client The OkHttpClient instance to use for API requests.
+     * @param config The PermitConfig instance that contains the SDK configuration.
+     */
     public RoleAssignmentsApi(OkHttpClient client, PermitConfig config) {
         super(client, config, LoggerFactory.getLogger(RoleAssignmentsApi.class));
     }
 
+    /**
+     * Constructs the URL for role assignments based on the project and environment in the PermitConfig.
+     *
+     * @param url The URL string to append to the base URL.
+     * @return The complete URL for role assignments.
+     */
     private String getRoleAssignmentsUrl(String url) {
         return buildUrl(
                 String.format(
@@ -36,6 +51,20 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
         );
     }
 
+    /**
+     * Returns a paginated list of role assignments filtered by the optional user, tenant, and role.
+     * To mark "all users" or an empty user filter - pass `null` instead of the user key (same for tenant and role).
+     *
+     * @param userKey   The key of the user.
+     * @param tenantKey The key of the tenant.
+     * @param roleKey   The key of the role.
+     * @param page      The page number of the results.
+     * @param perPage   The number of results per page.
+     * @return An array of RoleAssignmentRead objects representing the role assignments.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
+     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitContextError    If there is an error in the Permit context.
+     */
     public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRoleAssignmentsUrl("");
@@ -66,14 +95,49 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
         }
     }
 
+    /**
+     * Lists role assignments based on the specified user, tenant, role, and page parameters with the default number of items per page.
+     *
+     * @param userKey   The key of the user.
+     * @param tenantKey The key of the tenant.
+     * @param roleKey   The key of the role.
+     * @param page      The page number of the results.
+     * @return An array of RoleAssignmentRead objects representing the role assignments.
+     * @throws IOException           If an I/Oerror occurs during the HTTP request.
+     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitContextError    If there is an error in the Permit context.
+     */
     public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, int page) throws IOException, PermitApiError, PermitContextError {
         return this.list(userKey, tenantKey, roleKey, page, 100);
     }
 
+    /**
+     * Lists role assignments based on the specified user, tenant, and role parameters with the default pagination parameters.
+     *
+     * @param userKey   The key of the user.
+     * @param tenantKey The key of the tenant.
+     * @param roleKey   The key of the role.
+     * @return An array of RoleAssignmentRead objects representing the role assignments.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
+     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitContextError    If there is an error in the Permit context.
+     */
     public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey) throws IOException, PermitApiError, PermitContextError {
         return this.list(userKey, tenantKey, roleKey, 1);
     }
 
+    /**
+     * Assigns a role using the provided role assignment data:
+     * - the user that will be assigned the role
+     * - the role to assign
+     * - the tenant in which the assignment will be granted
+     *
+     * @param assignment The RoleAssignmentCreate object containing the assignment data.
+     * @return The RoleAssignmentRead object representing the assigned role.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
+     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitContextError    If there is an error in the Permit context.
+     */
     public RoleAssignmentRead assign(RoleAssignmentCreate assignment) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRoleAssignmentsUrl("");
@@ -88,6 +152,17 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
         return this.<RoleAssignmentRead>callApiAndParseJson(request, RoleAssignmentRead.class);
     }
 
+    /**
+     * Removes a role assignment using the provided unassignment data:
+     * - the user that the role will be unassigned for
+     * - the role to unassign
+     * - the tenant in which the assignment will be removed
+     *
+     * @param unassignment The RoleAssignmentRemove object containing the unassignment data.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
+     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitContextError    If there is an error in the Permit context.
+     */
     public void unassign(RoleAssignmentRemove unassignment) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRoleAssignmentsUrl("");
@@ -104,6 +179,16 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
         }
     }
 
+    /**
+     * Assigns multiple roles in bulk using the provided role assignments data.
+     * Each role assignment is a tuple of (user, role, tenant).
+     *
+     * @param assignments The list of RoleAssignmentCreate objects containing the assignment data.
+     * @return The BulkRoleAssignmentReport object representing the report of bulk role assignments.
+     * @throws IOException           If an I/O error occurs during the HTTP request     
+     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitContextError    If there is an error in the Permit context.
+     */
     public BulkRoleAssignmentReport bulkAssign(List<RoleAssignmentCreate> assignments) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRoleAssignmentsUrl("/bulk");
@@ -118,6 +203,16 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
         return this.<BulkRoleAssignmentReport>callApiAndParseJson(request, BulkRoleAssignmentReport.class);
     }
 
+    /**
+     * Removes multiple role assignments in bulk using the provided unassignment data.
+     * Each role to unassign is a tuple of (user, role, tenant).
+     *
+     * @param unassignments The list of RoleAssignmentRemove objects containing the unassignment data.
+     * @return The BulkRoleUnassignmentReport object representing the report of bulk role unassignments.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
+     * @throws PermitApiError        If an error occurs in the Permit API.
+     * @throws PermitContextError    If there is an error in the Permit context.
+     */
     public BulkRoleUnassignmentReport bulkUnassign(List<RoleAssignmentRemove> unassignments) throws IOException, PermitApiError, PermitContextError {
         ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         String url = getRoleAssignmentsUrl("/bulk");
