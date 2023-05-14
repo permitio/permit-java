@@ -13,7 +13,7 @@ For [Maven](https://maven.apache.org/) projects, use:
 <dependency>
   <groupId>io.permit</groupId>
   <artifactId>permit-sdk-java</artifactId>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 
@@ -22,7 +22,7 @@ For [Gradle](https://gradle.org/) projects, configure `permit-sdk-java` as a dep
 dependencies {
     // ...
 
-    implementation 'io.permit:permit-sdk-java:1.2.0'
+    implementation 'io.permit:permit-sdk-java:1.3.0'
 }
 ```
 
