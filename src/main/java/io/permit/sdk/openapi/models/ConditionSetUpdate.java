@@ -43,6 +43,15 @@ public class ConditionSetUpdate {
     @SerializedName("conditions")
     @Expose
     public HashMap<String, Object> conditions;
+    /**
+     * Parent Id
+     * <p>
+     * Parent Condition Set
+     * 
+     */
+    @SerializedName("parent_id")
+    @Expose
+    public java.lang.String parentId;
 
     public ConditionSetUpdate withName(java.lang.String name) {
         this.name = name;
@@ -56,6 +65,11 @@ public class ConditionSetUpdate {
 
     public ConditionSetUpdate withConditions(HashMap<String, Object> conditions) {
         this.conditions = conditions;
+        return this;
+    }
+
+    public ConditionSetUpdate withParentId(java.lang.String parentId) {
+        this.parentId = parentId;
         return this;
     }
 

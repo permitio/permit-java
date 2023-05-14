@@ -1,0 +1,18 @@
+{
+  "title": "EnvironmentCopyTarget",
+  "type": "object",
+  "properties": {
+    "existing": {
+      "title": "Existing",
+      "type": "string",
+      "description": "Identifier of an existing environment to copy into"
+    },
+    "new": {
+      "title": "New",
+      "existingJavaType": "io.permit.sdk.openapi.models.EnvironmentCreate",
+      "description": "Description of the environment to create. This environment must not already exist."
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

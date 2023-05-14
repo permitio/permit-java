@@ -19,6 +19,11 @@
       "description": "a boolean expression that consists of multiple conditions, with and/or logic.",
       "default": {},
       "existingJavaType": "java.util.HashMap<String, Object>"
+    },
+    "parent_id": {
+      "title": "Parent Id",
+      "type": "string",
+      "description": "Parent Condition Set"
     }
   },
   "additionalProperties": false,

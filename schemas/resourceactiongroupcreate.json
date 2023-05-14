@@ -1,0 +1,43 @@
+{
+  "title": "ResourceActionGroupCreate",
+  "required": [
+    "key",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "pattern": "^[A-Za-z0-9\\-_]+$",
+      "type": "string",
+      "description": "A URL-friendly name of the action group (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action group."
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the action group"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this action group represents in your system"
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix",
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    },
+    "actions": {
+      "title": "Actions",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

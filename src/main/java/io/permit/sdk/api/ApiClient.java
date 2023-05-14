@@ -25,21 +25,85 @@ interface IDeprecatedApis {
     void unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitContextError, PermitApiError;
 }
 
+/**
+ * The {@code ApiClient} class provides a client for interacting with the Permit REST API.
+ * It encapsulates the HTTP client and provides methods for accessing different API endpoints.
+ */
 public class ApiClient implements IDeprecatedApis {
     final static Logger logger = LoggerFactory.getLogger(ApiClient.class);
     private final OkHttpClient client;
     private final PermitConfig config;
 
+    /**
+     * The {@code ProjectsApi} instance for accessing project related API endpoints.
+     */
     public final ProjectsApi projects;
+
+    /**
+     * The {@code EnvironmentsApi} instance for accessing environment related API endpoints.
+     */
     public final EnvironmentsApi environments;
+
+    /**
+     * The {@code ResourcesApi} instance for accessing resource related API endpoints.
+     */
     public final ResourcesApi resources;
+
+    /**
+     * The {@code ResourceActionsApi} instance for accessing resource actions related API endpoints.
+     */
     public final ResourceActionsApi resourceActions;
+
+    /**
+     * The {@code ResourceActionGroupsApi} instance for accessing action group related API endpoints.
+     */
+    public final ResourceActionGroupsApi resourceActionGroups;
+
+    /**
+     * The {@code ResourceAttributesApi} instance for accessing resource attributes related API endpoints.
+     */
     public final ResourceAttributesApi resourceAttributes;
+
+    /**
+     * The {@code RolesApi} instance for accessing role related API endpoints.
+     */
     public final RolesApi roles;
+
+    /**
+     * The {@code ConditionSetsApi} instance for accessing condition set related API endpoints.
+     */
+    public final ConditionSetsApi conditionSets;
+
+    /**
+     * The {@code TenantsApi} instance for accessing tenant related API endpoints.
+     */
     public final TenantsApi tenants;
+
+    /**
+     * The {@code UsersApi} instance for accessing user related API endpoints.
+     */
     public final UsersApi users;
+
+    /**
+     * The {@code RoleAssignmentsApi} instance for accessing role assignment related API endpoints.
+     */
+    public final RoleAssignmentsApi roleAssignments;
+
+    /**
+     * The {@code ConditionSetRulesApi} instance for accessing condition set rules related API endpoints.
+     */
+    public final ConditionSetRulesApi conditionSetRules;
+
+    /**
+     * The {@code ElementsApi} instance for accessing Permit Elements related API endpoints.
+     */
     public final ElementsApi elements;
 
+    /**
+     * Constructs a new instance of the {@code ApiClient} class with the specified configuration.
+     *
+     * @param config The Permit SDK configuration.
+     */
     public ApiClient(PermitConfig config) {
         this.config = config;
         this.client = new OkHttpClient.Builder()
@@ -50,10 +114,14 @@ public class ApiClient implements IDeprecatedApis {
         this.environments = new EnvironmentsApi(this.client, this.config);
         this.resources = new ResourcesApi(this.client, this.config);
         this.resourceActions = new ResourceActionsApi(this.client, this.config);
+        this.resourceActionGroups = new ResourceActionGroupsApi(this.client, this.config);
         this.resourceAttributes = new ResourceAttributesApi(this.client, this.config);
         this.roles = new RolesApi(this.client, this.config);
+        this.conditionSets = new ConditionSetsApi(this.client, this.config);
         this.tenants = new TenantsApi(this.client, this.config);
         this.users = new UsersApi(this.client, this.config);
+        this.roleAssignments = new RoleAssignmentsApi(this.client, this.config);
+        this.conditionSetRules = new ConditionSetRulesApi(this.client, this.config);
         this.elements = new ElementsApi(this.client, this.config);
     }
 
@@ -144,7 +212,7 @@ public class ApiClient implements IDeprecatedApis {
 
     /**
      * Creates a new tenant. 
-     * @throws PermitApiError if a tenant already exists with the given key.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
      *
      * @deprecated replaced with permit.api.tenants.create()
      * @see io.permit.sdk.api.TenantsApi#create(TenantCreate) 

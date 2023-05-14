@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
@@ -44,6 +45,15 @@ public class RoleUpdate {
     @Expose
     public List<String> permissions;
     /**
+     * Attributes
+     * <p>
+     * optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+     * 
+     */
+    @SerializedName("attributes")
+    @Expose
+    public HashMap<String, Object> attributes;
+    /**
      * Extends
      * <p>
      * list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.
@@ -65,6 +75,11 @@ public class RoleUpdate {
 
     public RoleUpdate withPermissions(List<String> permissions) {
         this.permissions = permissions;
+        return this;
+    }
+
+    public RoleUpdate withAttributes(HashMap<String, Object> attributes) {
+        this.attributes = attributes;
         return this;
     }
 

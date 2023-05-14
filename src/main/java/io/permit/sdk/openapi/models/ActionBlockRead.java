@@ -1,6 +1,7 @@
 
 package io.permit.sdk.openapi.models;
 
+import java.util.HashMap;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -33,6 +34,15 @@ public class ActionBlockRead {
     @SerializedName("description")
     @Expose
     public String description;
+    /**
+     * Attributes
+     * <p>
+     * Arbitrary action attributes that can be used for filtering or enforcement of attribute-based access control policies.
+     * 
+     */
+    @SerializedName("attributes")
+    @Expose
+    public HashMap<String, Object> attributes;
     /**
      * Id
      * <p>
@@ -76,6 +86,11 @@ public class ActionBlockRead {
 
     public ActionBlockRead withDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public ActionBlockRead withAttributes(HashMap<String, Object> attributes) {
+        this.attributes = attributes;
         return this;
     }
 

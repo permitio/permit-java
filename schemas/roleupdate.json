@@ -20,6 +20,13 @@
       },
       "description": "list of action keys that define what actions this resource role is permitted to do"
     },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    },
     "extends": {
       "title": "Extends",
       "type": "array",
