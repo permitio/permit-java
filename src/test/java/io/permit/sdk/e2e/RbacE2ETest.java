@@ -1,10 +1,9 @@
-package io.permit.sdk;
+package io.permit.sdk.e2e;
 
-import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
+import io.permit.sdk.PermitE2ETestBase;
 import io.permit.sdk.api.PermitApiError;
 import io.permit.sdk.api.PermitContextError;
-import io.permit.sdk.api.UsersApi;
+import io.permit.sdk.Permit;
 import io.permit.sdk.api.models.CreateOrUpdateResult;
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
@@ -26,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
  * eventually we want to create an environment programmatically
  * and then extract the api key and start the test.
  */
-public class PermissionCheckE2ETest extends PermitE2ETestBase {
-    private final Logger logger = LoggerFactory.getLogger(PermissionCheckE2ETest.class);
+public class RbacE2ETest extends PermitE2ETestBase {
+    private final Logger logger = LoggerFactory.getLogger(RbacE2ETest.class);
 
     @Test
     void testPermissionCheckRBAC() {

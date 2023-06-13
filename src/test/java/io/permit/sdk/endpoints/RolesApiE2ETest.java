@@ -1,7 +1,9 @@
-package io.permit.sdk;
+package io.permit.sdk.endpoints;
 
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
+import io.permit.sdk.Permit;
+import io.permit.sdk.PermitE2ETestBase;
 import io.permit.sdk.api.PermitApiError;
 import io.permit.sdk.api.PermitContextError;
 import io.permit.sdk.openapi.models.RoleCreate;
@@ -22,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RolesApiE2ETest extends PermitE2ETestBase {
     @Test
     void testRolesApi() {
+        logger.info("initial setup of objects");
         // init the client
         Permit permit = new Permit(this.config);
         Gson gson = new Gson();
