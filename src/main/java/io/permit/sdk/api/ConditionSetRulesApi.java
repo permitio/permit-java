@@ -58,6 +58,16 @@ interface IConditionSetRulesApi {
     ConditionSetRuleRead[] list(String userSetKey, String permissionKey, String resourceSetKey) throws IOException, PermitApiError, PermitContextError;
 
     /**
+     * Retrieves all the condition set rules (no filters) with default pagination
+     *
+     * @return An array of {@link ConditionSetRuleRead} objects.
+     * @throws IOException          If an I/O error occurs while sending the request.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
+     */
+    ConditionSetRuleRead[] list() throws IOException, PermitApiError, PermitContextError;
+
+    /**
      * Creates a new condition set rule.
      *
      * @param rule The condition set rule to create.
@@ -186,6 +196,19 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
      */
     public ConditionSetRuleRead[] list(String userSetKey, String permissionKey, String resourceSetKey) throws IOException, PermitApiError, PermitContextError {
         return this.list(userSetKey, permissionKey, resourceSetKey, 1);
+    }
+
+    /**
+     * Retrieves all the condition set rules (no filters) with default pagination
+     *
+     * @return An array of {@link ConditionSetRuleRead} objects.
+     * @throws IOException          If an I/O error occurs while sending the request.
+     * @throws PermitApiError       If the Permit API returns a response with an error status code.
+     * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
+     */
+    @Override
+    public ConditionSetRuleRead[] list() throws IOException, PermitApiError, PermitContextError {
+        return this.list(null, null, null);
     }
 
     /**

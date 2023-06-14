@@ -18,12 +18,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * this e2e test should run against a clean permit environment.
- * if the environment contains any objects the test will fail.
- * eventually we want to create an environment programmatically
- * and then extract the api key and start the test.
- */
+
 public class ResourcesApiE2ETest extends PermitE2ETestBase {
     private static final String DOCUMENT_KEY = "document";
     private static final String FOLDER_KEY = "folder";
