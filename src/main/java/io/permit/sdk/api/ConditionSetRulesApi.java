@@ -231,7 +231,8 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
                         .post(jsonBody)
         );
 
-        return this.<ConditionSetRuleRead>callApiAndParseJson(request, ConditionSetRuleRead.class);
+        ConditionSetRuleRead[] createdRuleArray = this.<ConditionSetRuleRead[]>callApiAndParseJson(request, ConditionSetRuleRead[].class);
+        return createdRuleArray[0];
     }
 
     /**

@@ -1,7 +1,6 @@
 package io.permit.sdk.endpoints;
 
 import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
 import io.permit.sdk.Permit;
 import io.permit.sdk.PermitE2ETestBase;
 import io.permit.sdk.api.PermitApiError;
@@ -12,10 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,6 +28,40 @@ public class ConditionSetsE2ETest extends PermitE2ETestBase {
     private static ConditionSetCreate usersetData;
     private static ConditionSetCreate resourcesetData;
     private static ConditionSetRuleCreate ruleData;
+
+    private static HashMap<String, Object> getUsersetConditions() {
+        HashMap<String, Integer> ageCondition = new HashMap<String, Integer>() {{
+            put("greater-than", 30);
+        }};
+
+        HashMap<String, HashMap<String, Integer>> attributeRef = new HashMap<>();
+        attributeRef.put("user.age", ageCondition);
+
+        List<HashMap<String, HashMap<String, Integer>>> andConditions = new ArrayList<>();
+        andConditions.add(attributeRef);
+
+        HashMap<String, Object> conditions = new HashMap<>();
+        conditions.put("allOf", andConditions);
+
+        return conditions;
+    }
+
+    private static HashMap<String, Object> getResourcesetConditions() {
+        HashMap<String, Boolean> privateCondition = new HashMap<String, Boolean>() {{
+            put("equals", false);
+        }};
+
+        HashMap<String, HashMap<String, Boolean>> attributeRef = new HashMap<>();
+        attributeRef.put("resource.private", privateCondition);
+
+        List<HashMap<String, HashMap<String, Boolean>>> andConditions = new ArrayList<>();
+        andConditions.add(attributeRef);
+
+        HashMap<String, Object> conditions = new HashMap<>();
+        conditions.put("allOf", andConditions);
+
+        return conditions;
+    }
 
     @BeforeAll
     static void setup() {
@@ -64,38 +94,14 @@ public class ConditionSetsE2ETest extends PermitE2ETestBase {
             new ConditionSetCreate(USERSET_KEY, "Users over 30")
         )
             .withType(ConditionSetType.USERSET)
-            .withConditions(new HashMap<String, Object>() {{
-                put("allOf", Collections.singletonList(
-                    new HashMap<String, List<HashMap<String, HashMap<String, Integer>>>>() {{
-                        put("allOf", Collections.singletonList(
-                            new HashMap<String, HashMap<String, Integer>>() {{
-                                put("user.age", new HashMap<String, Integer>() {{
-                                    put("greater-than", 30);
-                                }});
-                            }}
-                        ));
-                    }}
-                ));
-            }})
+            .withConditions(getUsersetConditions())
         );
 
         resourcesetData = ((
             new ConditionSetCreate(RESOURCESET_KEY, "Private Docs")
         )
             .withType(ConditionSetType.RESOURCESET)
-            .withConditions(new HashMap<String, Object>() {{
-                put("allOf", Collections.singletonList(
-                    new HashMap<String, List<HashMap<String, HashMap<String, Boolean>>>>() {{
-                        put("allOf", Collections.singletonList(
-                            new HashMap<String, HashMap<String, Boolean>>() {{
-                                put("resource.private", new HashMap<String, Boolean>() {{
-                                    put("equals", false);
-                                }});
-                            }}
-                        ));
-                    }}
-                ));
-            }})
+            .withConditions(getResourcesetConditions())
         );
 
         ruleData = new ConditionSetRuleCreate(USERSET_KEY, DOCUMENT_KEY + ":sign", RESOURCESET_KEY);
@@ -127,7 +133,7 @@ public class ConditionSetsE2ETest extends PermitE2ETestBase {
     }
 
     @Test
-    void testResourcesApi() {
+    void testConditionSetsApi() {
         // init the client
         Permit permit = new Permit(this.config);
         Gson gson = new Gson();
@@ -175,7 +181,7 @@ public class ConditionSetsE2ETest extends PermitE2ETestBase {
             assertEquals(userset.name, usersetData.name);
             assertEquals(userset.description, usersetData.description);
 
-            ConditionSetRead resourceset = permit.api.conditionSets.create(resourcesetData);
+            ConditionSetRead resourceset = permit.api.conditionSets.create(resourcesetData.withResourceId(document.id));
             assertNotNull(resourceset);
             assertNotNull(resourceset.id);
             assertEquals(resourceset.key, resourcesetData.key);
