@@ -117,6 +117,7 @@ public class Enforcer implements IEnforcerApi {
             .post(body)
             .addHeader("Content-Type", "application/json")
             .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+            .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
             .build();
 
         try (Response response = client.newCall(request).execute()) {
