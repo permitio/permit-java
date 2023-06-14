@@ -138,3 +138,8 @@ Most params to UserCreates are optional, and only the unique user key is needed.
 ```java
 CreateOrUpdateResult<UserRead> result = permit.api.users.sync(new UserCreate("[USER KEY]"));
 ```
+
+## Javadoc reference
+To view the javadoc reference, [click here](https://javadoc.io/doc/io.permit/permit-sdk-java/1.3.0/index.html).
+
+It's easiest to start with the root [Permit](https://javadoc.io/static/io.permit/permit-sdk-java/1.3.0/io/permit/sdk/Permit.html) class.
