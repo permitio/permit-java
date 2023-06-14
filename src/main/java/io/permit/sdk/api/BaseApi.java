@@ -7,12 +7,9 @@ import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.PermitContext;
 import io.permit.sdk.openapi.models.APIKeyScopeRead;
-import io.permit.sdk.openapi.models.RoleCreate;
-import io.permit.sdk.openapi.models.RoleRead;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +29,7 @@ public abstract class BaseApi {
         this.headers = new Headers.Builder()
             .add("Content-Type", "application/json")
             .add("Authorization", String.format("Bearer %s", this.config.getToken()))
+            .add("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
             .build();
     }
 

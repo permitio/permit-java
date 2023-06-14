@@ -26,6 +26,8 @@ public class PermitConfig {
     private final String defaultTenant;
     private final Boolean useDefaultTenantIfEmpty;
     private PermitContext context;
+    public final String version;
+    private final static String defaultVersion = "1.3.1-rc";
 
     private PermitConfig(Builder builder) {
         this.token = builder.token;
@@ -41,6 +43,8 @@ public class PermitConfig {
         this.defaultTenant = builder.defaultTenant;
         this.useDefaultTenantIfEmpty = builder.useDefaultTenantIfEmpty;
         this.context = builder.context;
+        String runtimeVersion = Permit.class.getPackage().getImplementationVersion();
+        this.version = (runtimeVersion == null) ? defaultVersion : runtimeVersion;
     }
 
     /**
