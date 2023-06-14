@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.models.*;
@@ -34,7 +35,8 @@ public class ElementsApi extends BaseApi implements IElementsApi {
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EmbeddedLoginRequestOutput loginAs(String userKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = buildUrl("/v2/auth/elements_login_as");
         RequestBody jsonBody = getJsonRequestBody(new UserLoginRequestInput(userKey, tenantKey));
 

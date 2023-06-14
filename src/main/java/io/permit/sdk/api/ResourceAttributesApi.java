@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.*;
@@ -74,7 +75,8 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead[] list(String resourceKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getResourceAttributesUrl(resourceKey, "");
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         Request request = buildRequest(
@@ -132,7 +134,8 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead get(String resourceKey, String attributeKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getResourceAttributesUrl(resourceKey, String.format("/%s", attributeKey));
         Request request = buildRequest(
             new Request.Builder()
@@ -184,7 +187,8 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead create(String resourceKey, ResourceAttributeCreate attributeData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getResourceAttributesUrl(resourceKey,"");
         RequestBody jsonBody = getJsonRequestBody(attributeData);
 
@@ -209,7 +213,8 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceAttributeRead update(String resourceKey, String attributeKey, ResourceAttributeUpdate attributeData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getResourceAttributesUrl(resourceKey, String.format("/%s", attributeKey));
         RequestBody jsonBody = getJsonRequestBody(attributeData);
 
@@ -232,7 +237,8 @@ public class ResourceAttributesApi extends BaseApi implements IResourceAttribute
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String resourceKey, String attributeKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getResourceAttributesUrl(resourceKey, String.format("/%s", attributeKey));
         Request request = buildRequest(
                 new Request.Builder()

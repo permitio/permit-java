@@ -2,6 +2,7 @@ package io.permit.sdk.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.PermitContext;
@@ -138,30 +139,39 @@ public abstract class BaseApi {
         }
     }
 
-    protected void ensureContext(ApiKeyLevel callLevel) throws PermitContextError, IOException {
+    protected void ensureAccessLevel(ApiKeyLevel requiredAccessLevel) throws PermitContextError, IOException {
         // set context if not already set
-        if (this.config.getContext().getApiKeyLevel() == ApiKeyLevel.WAIT_FOR_INIT) {
+        // Should only happen once in the lifetime of the SDK
+        if (config.getContext().getContextLevel() == ApiContextLevel.WAIT_FOR_INIT ||
+            config.getContext().getPermittedAccessLevel() == ApiKeyLevel.WAIT_FOR_INIT) {
             setContextFromApiKey();
         }
 
-        // verify context matches requested call level
-        if (callLevel == ApiKeyLevel.PROJECT_LEVEL_API_KEY && this.config.getContext().getProject() == null) {
-            throw new PermitContextError(
-                "You're trying to use an SDK method that's specific to a project," +
-                "but you haven't set the current project in your client's context yet," +
-                "or you are using an organization level API key." +
-                "Please set the context to a specific" +
-                "project using `permit.set_context()` method."
-            );
+        if (requiredAccessLevel != config.getContext().getPermittedAccessLevel()) {
+            if (requiredAccessLevel.getValue() < config.getContext().getPermittedAccessLevel().getValue()) {
+                throw new PermitContextError(
+                    "You're trying to use an SDK method that requires an API Key with access level: " +
+                    requiredAccessLevel + ", however the SDK is running with an API key with level " +
+                    config.getContext().getPermittedAccessLevel() + "."
+                );
+            }
+        }
+    }
+
+
+    protected void ensureContext(ApiContextLevel requiredContext) throws PermitContextError, IOException {
+        // set context if not already set
+        // Should only happen once in the lifetime of the SDK
+        if (config.getContext().getContextLevel() == ApiContextLevel.WAIT_FOR_INIT ||
+            config.getContext().getPermittedAccessLevel() == ApiKeyLevel.WAIT_FOR_INIT) {
+            setContextFromApiKey();
         }
 
-        if (callLevel == ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY && this.config.getContext().getEnvironment() == null) {
+        if (config.getContext().getContextLevel().getValue() < requiredContext.getValue()) {
             throw new PermitContextError(
-                "You're trying to use an SDK method that's specific to an environment," +
-                "but you haven't set the current environment in your client's context yet," +
-                "or you are using an organization/project level API key." +
-                "Please set the context to a specific" +
-                "environment using `permit.set_context()` method."
+                "You're trying to use an SDK method that requires an API context of " + requiredContext +
+                ", however the SDK is running in a less specific context level: " +
+                config.getContext().getContextLevel() + "."
             );
         }
     }

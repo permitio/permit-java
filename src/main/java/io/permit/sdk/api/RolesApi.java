@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.*;
@@ -68,7 +69,8 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @throws PermitContextError    If the configured SDK context {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRolesUrl("");
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         Request request = buildRequest(
@@ -123,7 +125,8 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead get(String roleKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRolesUrl(String.format("/%s", roleKey));
         Request request = buildRequest(
             new Request.Builder()
@@ -171,7 +174,8 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead create(RoleCreate roleData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRolesUrl("");
         RequestBody jsonBody = getJsonRequestBody(roleData);
 
@@ -195,7 +199,8 @@ public class RolesApi extends BaseApi implements IRolesApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleRead update(String roleKey, RoleUpdate roleData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRolesUrl(String.format("/%s", roleKey));
         RequestBody jsonBody = getJsonRequestBody(roleData);
 
@@ -217,7 +222,8 @@ public class RolesApi extends BaseApi implements IRolesApi {
     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
     */
     public void delete(String roleKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRolesUrl(String.format("/%s", roleKey));
         Request request = buildRequest(
                 new Request.Builder()
@@ -241,7 +247,8 @@ public class RolesApi extends BaseApi implements IRolesApi {
     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
     */
     public RoleRead assignPermissions(String roleKey, ArrayList<String> permissions) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRolesUrl(String.format("/%s/permissions", roleKey));
         RequestBody jsonBody = getJsonRequestBody(new AddRolePermissions(permissions));
 
@@ -265,7 +272,8 @@ public class RolesApi extends BaseApi implements IRolesApi {
     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
     */
     public RoleRead removePermissions(String roleKey, ArrayList<String> permissions) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRolesUrl(String.format("/%s/permissions", roleKey));
         RequestBody jsonBody = getJsonRequestBody(new RemoveRolePermissions(permissions));
 

@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.*;
@@ -66,7 +67,8 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ProjectRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ORGANIZATION_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getProjectsUrl("");
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         Request request = buildRequest(
@@ -121,7 +123,8 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ProjectRead get(String projectKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ORGANIZATION_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getProjectsUrl(String.format("/%s", projectKey));
         Request request = buildRequest(
             new Request.Builder()
@@ -169,7 +172,8 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ProjectRead create(ProjectCreate projectData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ORGANIZATION_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ORGANIZATION_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getProjectsUrl("");
         RequestBody jsonBody = getJsonRequestBody(projectData);
 
@@ -193,7 +197,8 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ProjectRead update(String projectKey, ProjectUpdate projectData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ORGANIZATION_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getProjectsUrl(String.format("/%s", projectKey));
         RequestBody jsonBody = getJsonRequestBody(projectData);
 
@@ -215,7 +220,8 @@ public class ProjectsApi extends BaseApi implements IProjectsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String projectKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ORGANIZATION_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getProjectsUrl(String.format("/%s", projectKey));
         Request request = buildRequest(
                 new Request.Builder()
