@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Objects;
 
 interface IRoleAssignmentsApi {
-    RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError;
-    RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, int page) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, String resourceInstanceKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, String resourceInstanceKey, int page) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, String resourceInstanceKey) throws IOException, PermitApiError, PermitContextError;
     RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] list() throws IOException, PermitApiError, PermitContextError;
     RoleAssignmentRead assign(RoleAssignmentCreate assignment) throws IOException, PermitApiError, PermitContextError;
     void unassign(RoleAssignmentRemove unassignment) throws IOException, PermitApiError, PermitContextError;
     BulkRoleAssignmentReport bulkAssign(List<RoleAssignmentCreate> assignments) throws IOException, PermitApiError, PermitContextError;
@@ -53,12 +55,13 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
     }
 
     /**
-     * Returns a paginated list of role assignments filtered by the optional user, tenant, and role.
+     * Returns a paginated list of role assignments filtered by the optional user, role, tenant or resource instance.
      * To mark "all users" or an empty user filter - pass `null` instead of the user key (same for tenant and role).
      *
-     * @param userKey   The key of the user.
-     * @param tenantKey The key of the tenant.
-     * @param roleKey   The key of the role.
+     * @param userKey   The key of the user (optional).
+     * @param tenantKey The key of the tenant (optional).
+     * @param roleKey   The key of the role (optional).
+     * @param resourceInstanceKey   The key of the resource instance (optional).
      * @param page      The page number of the results.
      * @param perPage   The number of results per page.
      * @return An array of RoleAssignmentRead objects representing the role assignments.
@@ -66,7 +69,7 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
-    public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
+    public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, String resourceInstanceKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
         ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
         ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRoleAssignmentsUrl("");
@@ -74,11 +77,14 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
         if (userKey != null) {
             urlBuilder.addQueryParameter("user", userKey);
         }
+        if (roleKey != null) {
+            urlBuilder.addQueryParameter("role", roleKey);
+        }
         if (tenantKey != null) {
             urlBuilder.addQueryParameter("tenant", tenantKey);
         }
-        if (roleKey != null) {
-            urlBuilder.addQueryParameter("role", roleKey);
+        if (resourceInstanceKey != null) {
+            urlBuilder.addQueryParameter("resource_instance", resourceInstanceKey);
         }
         Request request = buildRequest(
             new Request.Builder()
@@ -98,23 +104,40 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
     }
 
     /**
-     * Lists role assignments based on the specified user, tenant, role, and page parameters with the default number of items per page.
+     * Lists role assignments based on the specified user, role, tenant, resource instance and page parameters with the default number of items per page.
      *
      * @param userKey   The key of the user.
      * @param tenantKey The key of the tenant.
      * @param roleKey   The key of the role.
+     * @param resourceInstanceKey   The key of the resource instance (optional).
      * @param page      The page number of the results.
      * @return An array of RoleAssignmentRead objects representing the role assignments.
      * @throws IOException           If an I/Oerror occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
-    public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, int page) throws IOException, PermitApiError, PermitContextError {
-        return this.list(userKey, tenantKey, roleKey, page, 100);
+    public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, String resourceInstanceKey, int page) throws IOException, PermitApiError, PermitContextError {
+        return this.list(userKey, tenantKey, roleKey, resourceInstanceKey, page, 100);
     }
 
     /**
-     * Lists role assignments based on the specified user, tenant, and role parameters with the default pagination parameters.
+     * Lists role assignments based on the specified user, role, tenant and resource instance parameters with the default pagination parameters.
+     *
+     * @param userKey   The key of the user.
+     * @param tenantKey The key of the tenant.
+     * @param roleKey   The key of the role.
+     * @param resourceInstanceKey   The key of the resource instance (optional).
+     * @return An array of RoleAssignmentRead objects representing the role assignments.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
+     */
+    public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, String resourceInstanceKey) throws IOException, PermitApiError, PermitContextError {
+        return this.list(userKey, tenantKey, roleKey, resourceInstanceKey, 1);
+    }
+
+    /**
+     * Lists role assignments based on the specified user, role and tenant parameters with the default pagination parameters.
      *
      * @param userKey   The key of the user.
      * @param tenantKey The key of the tenant.
@@ -124,8 +147,22 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
+    @Override
     public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey) throws IOException, PermitApiError, PermitContextError {
-        return this.list(userKey, tenantKey, roleKey, 1);
+        return this.list(userKey, tenantKey, roleKey, null, 1);
+    }
+
+    /**
+     * Lists all role assignments with the default pagination parameters.
+     *
+     * @return An array of RoleAssignmentRead objects representing the role assignments.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
+     * @throws PermitApiError        If the Permit API returns a response with an error status code.
+     * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
+     */
+    @Override
+    public RoleAssignmentRead[] list() throws IOException, PermitApiError, PermitContextError {
+        return this.list(null, null, null, null, 1);
     }
 
     /**
