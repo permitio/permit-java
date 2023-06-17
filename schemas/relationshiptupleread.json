@@ -1,0 +1,111 @@
+{
+  "title": "RelationshipTupleRead",
+  "required": [
+    "id",
+    "subject",
+    "relation",
+    "object",
+    "tenant",
+    "subject_id",
+    "relation_id",
+    "object_id",
+    "tenant_id",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "created_at",
+    "updated_at"
+  ],
+  "type": "object",
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the relationship tuple"
+    },
+    "subject": {
+      "title": "Subject",
+      "type": "string",
+      "description": "resource_key:resource_instance_key of the subject"
+    },
+    "relation": {
+      "title": "Relation",
+      "type": "string",
+      "description": "key of the assigned relation"
+    },
+    "object": {
+      "title": "Object",
+      "type": "string",
+      "description": "resource_key:resource_instance_key of the object"
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string",
+      "description": "The tenant the relationship tuple is associated with"
+    },
+    "subject_id": {
+      "title": "Subject Id",
+      "type": "string",
+      "description": "Unique id of the subject"
+    },
+    "relation_id": {
+      "title": "Relation Id",
+      "type": "string",
+      "description": "Unique id of the relation"
+    },
+    "object_id": {
+      "title": "Object Id",
+      "type": "string",
+      "description": "Unique id of the object"
+    },
+    "tenant_id": {
+      "title": "Tenant Id",
+      "type": "string",
+      "description": "Unique id of the tenant"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the relationship tuple belongs to."
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the relationship tuple belongs to."
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the relationship tuple belongs to."
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the relationship tuple was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the relationship tuple was created (ISO_8601 format).",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "subject": "organization:permitio",
+    "relation": "owner",
+    "object": "repo:opal",
+    "subject_id": "7c60d51f-b44e-4682-87d6-449835ea4d11",
+    "relation_id": "405d8375-3514-403b-8c43-83ae74cfe022",
+    "object_id": "12f84e49-af17-4b0c-8cd7-01258769c2ba",
+    "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e733",
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -4,7 +4,6 @@
     "id",
     "user",
     "role",
-    "tenant",
     "user_id",
     "role_id",
     "tenant_id",
@@ -34,6 +33,16 @@
       "title": "Tenant",
       "type": "string",
       "description": "the tenant the role is associated with"
+    },
+    "resource_instance": {
+      "title": "Resource Instance",
+      "type": "string",
+      "description": "the resource instance the role is associated with"
+    },
+    "resource_instance_id": {
+      "title": "Resource Instance Id",
+      "type": "string",
+      "description": "Unique id of the resource instance"
     },
     "user_id": {
       "title": "User Id",

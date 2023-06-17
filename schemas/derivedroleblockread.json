@@ -1,0 +1,44 @@
+{
+  "title": "DerivedRoleBlockRead",
+  "required": ["id"],
+  "type": "object",
+  "properties": {
+    "when": {
+      "title": "When",
+      "existingJavaType": "io.permit.sdk.openapi.models.DerivedRoleSettings",
+      "description": "the settings of the derived role",
+      "default": {
+        "no_direct_roles_on_object": false
+      }
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "The unique id of the derived_role"
+    },
+    "users_with_role": {
+      "title": "Users With Role",
+      "type": "array",
+      "items": {
+        "$ref": "DerivedRoleRuleRead.json"
+      },
+      "description": "the rules of the derived role",
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "2a19e318-1965-4170-9045-a1c83bf2d821",
+    "users_with_role": [
+      {
+        "role": "Admin",
+        "on_resource": "organization",
+        "linked_by_relation": "owner",
+        "role_id": "bf01c795-c36a-4a3a-8cab-34253e9a9b25",
+        "resource_id": "b436cb2d-a0f9-4a59-a97c-57d8a2a61d49",
+        "relation_id": "d7fa434c-3c90-44ae-a811-e39a84337135"
+      }
+    ]
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

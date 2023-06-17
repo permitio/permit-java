@@ -73,6 +73,17 @@
       "title": "Attributes",
       "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.AttributeBlockRead>",
       "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies."
+    },
+    "roles": {
+      "title": "Roles",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.ResourceRoleRead>",
+      "description": "Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, etc."
+    },
+    "relations": {
+      "title": "Relations",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.RelationBlockRead>",
+      "description": "\n        A relations definition block, typically contained within a resource type definition block.\n        The relations represents the ways you can interact with a protected resource.\n        ",
+      "default": {}
     }
   },
   "additionalProperties": false,
@@ -106,16 +117,41 @@
         "description": "the contributor role can only read from the repo"
       },
       "maintainer": {
+        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+        "key": "maintainer",
+        "name": "Maintainer",
+        "description": "the maintainer role can read from the repo and push changes",
         "permissions": [
           "push"
         ],
-        "extends": [
-          "contributor"
-        ]
+        "resource": "repo",
+        "granted_to": {
+          "id": "2a19e318-1965-4170-9045-a1c83bf2d821",
+          "users_with_role": [
+            {
+              "role": "Admin",
+              "on_resource": "organization",
+              "linked_by_relation": "owner",
+              "role_id": "bf01c795-c36a-4a3a-8cab-34253e9a9b25",
+              "resource_id": "b436cb2d-a0f9-4a59-a97c-57d8a2a61d49",
+              "relation_id": "d7fa434c-3c90-44ae-a811-e39a84337135"
+            }
+          ]
+        },
+        "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+        "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+        "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+        "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+        "created_at": "2019-08-24T14:15:22Z",
+        "updated_at": "2019-08-24T14:15:22Z"
       }
     },
     "relations": {
-      "parent": "Organization"
+      "parent": {
+        "resource_id": "c3eb3be5-8bc5-4616-8e2f-0816717fade8",
+        "relation_name": "parent",
+        "resource": "parent-resource"
+      }
     },
     "attributes": {
       "created": {

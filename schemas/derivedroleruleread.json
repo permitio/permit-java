@@ -1,0 +1,54 @@
+{
+  "title": "DerivedRoleRuleRead",
+  "required": [
+    "role_id",
+    "resource_id",
+    "relation_id",
+    "role",
+    "on_resource",
+    "linked_by_relation"
+  ],
+  "type": "object",
+  "properties": {
+    "role_id": {
+      "title": "Role Id",
+      "type": "string",
+      "description": "the role id that needs to exist on the related resource (from the relation)"
+    },
+    "resource_id": {
+      "title": "Resource Id",
+      "type": "string",
+      "description": "the resource id that needs to exist on the related role (from the relation)"
+    },
+    "relation_id": {
+      "title": "Relation Id",
+      "type": "string",
+      "description": "the relation id that needs to exist between the resource and the related resource"
+    },
+    "role": {
+      "title": "Role",
+      "type": "string",
+      "description": "the role key that needs to exist on the related resource (from the relation)"
+    },
+    "on_resource": {
+      "title": "On Resource",
+      "type": "string",
+      "description": "the resource key that needs to exist on the related role (from the relation)"
+    },
+    "linked_by_relation": {
+      "title": "Linked By Relation",
+      "type": "string",
+      "description": "the relation key that needs to exist between the resource and the related resource"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "role": "Admin",
+    "on_resource": "organization",
+    "linked_by_relation": "owner",
+    "role_id": "bf01c795-c36a-4a3a-8cab-34253e9a9b25",
+    "resource_id": "b436cb2d-a0f9-4a59-a97c-57d8a2a61d49",
+    "relation_id": "d7fa434c-3c90-44ae-a811-e39a84337135"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

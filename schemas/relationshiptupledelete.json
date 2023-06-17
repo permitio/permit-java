@@ -1,0 +1,33 @@
+{
+  "title": "RelationshipTupleDelete",
+  "required": [
+    "subject",
+    "relation",
+    "object"
+  ],
+  "type": "object",
+  "properties": {
+    "subject": {
+      "title": "Subject",
+      "type": "string",
+      "description": "the resource instance assigned the new relation (accepts either the resource instance id or resource_key:resource_instance_key)"
+    },
+    "relation": {
+      "title": "Relation",
+      "type": "string",
+      "description": "the relation to assign between the subject and object"
+    },
+    "object": {
+      "title": "Object",
+      "type": "string",
+      "description": "the resource instance on which the new relation is assigned (accepts either the resource instance id or resource_key:resource_instance_key)"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "subject": "organization:permitio",
+    "relation": "owner",
+    "object": "repo:removed_repo"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

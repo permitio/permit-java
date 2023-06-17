@@ -8,6 +8,7 @@
     "project_id",
     "environment_id",
     "resource_id",
+    "resource",
     "created_at",
     "updated_at"
   ],
@@ -39,6 +40,17 @@
       },
       "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list."
     },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    },
+    "granted_to": {
+      "title": "Granted To",
+      "existingJavaType": "io.permit.sdk.openapi.models.DerivedRoleBlockRead",
+      "description": "Derived role that inherit will be applied on this role"
+    },
     "key": {
       "title": "Key",
       "type": "string",
@@ -69,6 +81,11 @@
       "type": "string",
       "description": "Unique id of the resource that the role belongs to."
     },
+    "resource": {
+      "title": "Resource",
+      "type": "string",
+      "description": "The unique resource key that the role belongs to."
+    },
     "created_at": {
       "title": "Created At",
       "type": "string",
@@ -94,6 +111,20 @@
     "extends": [
       "contributor"
     ],
+    "resource": "repo",
+    "granted_to": {
+      "id": "2a19e318-1965-4170-9045-a1c83bf2d821",
+      "users_with_role": [
+        {
+          "role": "Admin",
+          "on_resource": "organization",
+          "linked_by_relation": "owner",
+          "role_id": "bf01c795-c36a-4a3a-8cab-34253e9a9b25",
+          "resource_id": "b436cb2d-a0f9-4a59-a97c-57d8a2a61d49",
+          "relation_id": "d7fa434c-3c90-44ae-a811-e39a84337135"
+        }
+      ]
+    },
     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",

@@ -1,0 +1,15 @@
+{
+  "title": "DerivedRoleSettings",
+  "type": "object",
+  "properties": {
+    "no_direct_roles_on_object": {
+      "title": "No Direct Roles On Object",
+      "type": "boolean",
+      "description": "If true, the derived role will not take action if the resource has any direct role",
+      "default": false
+    }
+  },
+  "additionalProperties": false,
+  "description": "Settings for a derived role",
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -34,6 +34,11 @@
         "type": "string"
       },
       "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list."
+    },
+    "granted_to": {
+      "title": "Granted To",
+      "existingJavaType": "io.permit.sdk.openapi.models.DerivedRoleBlockEdit",
+      "description": "Derived role that inherit will be applied on this role"
     }
   },
   "additionalProperties": false,

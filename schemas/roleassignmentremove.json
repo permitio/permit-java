@@ -2,7 +2,6 @@
   "title": "RoleAssignmentRemove",
   "required": [
     "role",
-    "tenant",
     "user"
   ],
   "type": "object",
@@ -16,6 +15,11 @@
       "title": "Tenant",
       "type": "string",
       "description": "the tenant the role is associated with (accepts either the tenant id or the tenant key)"
+    },
+    "resource_instance": {
+      "title": "Resource Instance",
+      "type": "string",
+      "description": "the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)"
     },
     "user": {
       "title": "User",

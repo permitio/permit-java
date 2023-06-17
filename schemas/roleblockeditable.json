@@ -1,5 +1,6 @@
 {
-  "title": "ResourceRoleUpdate",
+  "title": "RoleBlockEditable",
+  "required": ["name"],
   "type": "object",
   "properties": {
     "name": {
@@ -20,19 +21,10 @@
       },
       "description": "list of action keys that define what actions this resource role is permitted to do"
     },
-    "extends": {
-      "title": "Extends",
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list."
-    },
     "attributes": {
       "title": "Attributes",
       "type": "object",
-      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
-      "existingJavaType": "java.util.HashMap<String, Object>"
+      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator"
     },
     "granted_to": {
       "title": "Granted To",
@@ -41,11 +33,5 @@
     }
   },
   "additionalProperties": false,
-  "example": {
-    "description": "the maintainer role can read from the repo and push changes",
-    "permissions": [
-      "push"
-    ]
-  },
   "$schema": "http://json-schema.org/schema#"
 }
