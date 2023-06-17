@@ -1,5 +1,5 @@
 {
-  "title": "PaginatedResult[UserRead]",
+  "title": "PaginatedResult[RoleRead]",
   "required": [
     "data",
     "total_count"
@@ -10,9 +10,9 @@
       "title": "Data",
       "type": "array",
       "items": {
-        "$ref": "UserRead.json"
+        "$ref": "RoleRead.json"
       },
-      "description": "List of Users"
+      "description": "List of Roles"
     },
     "total_count": {
       "title": "Total Count",

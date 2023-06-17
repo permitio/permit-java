@@ -1,0 +1,34 @@
+{
+  "title": "DerivedRoleBlockEdit",
+  "type": "object",
+  "properties": {
+    "when": {
+      "title": "When",
+      "existingJavaType": "io.permit.sdk.openapi.models.DerivedRoleSettings",
+      "description": "the settings of the derived role",
+      "default": {
+        "no_direct_roles_on_object": false
+      }
+    },
+    "users_with_role": {
+      "title": "Users With Role",
+      "type": "array",
+      "items": {
+        "$ref": "DerivedRoleRuleCreate.json"
+      },
+      "description": "the rules of the derived role",
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "users_with_role": [
+      {
+        "role": "Admin",
+        "on_resource": "organization",
+        "linked_by_relation": "owner"
+      }
+    ]
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

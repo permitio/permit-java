@@ -1,0 +1,24 @@
+{
+  "title": "RelationBlockRead",
+  "required": ["resource_id", "resource"],
+  "type": "object",
+  "properties": {
+    "resource_id": {
+      "title": "Resource Id",
+      "type": "string",
+      "description": "Unique id of the relation"
+    },
+    "resource": {
+      "title": "Resource",
+      "type": "string",
+      "description": "The resource key"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "resource_id": "c3eb3be5-8bc5-4616-8e2f-0816717fade8",
+    "relation_name": "parent",
+    "resource": "parent-resource"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

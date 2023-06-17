@@ -1,5 +1,5 @@
 {
-  "title": "PaginatedResult[UserRead]",
+  "title": "PaginatedResult[ConditionSetRead]",
   "required": [
     "data",
     "total_count"
@@ -10,9 +10,9 @@
       "title": "Data",
       "type": "array",
       "items": {
-        "$ref": "UserRead.json"
+        "$ref": "ConditionSetRead.json"
       },
-      "description": "List of Users"
+      "description": "List of Condition Sets"
     },
     "total_count": {
       "title": "Total Count",
