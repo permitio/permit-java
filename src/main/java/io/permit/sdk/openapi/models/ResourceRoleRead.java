@@ -2,6 +2,7 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
@@ -54,6 +55,24 @@ public class ResourceRoleRead {
     @SerializedName("extends")
     @Expose
     public List<String> _extends;
+    /**
+     * Attributes
+     * <p>
+     * optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator
+     * 
+     */
+    @SerializedName("attributes")
+    @Expose
+    public HashMap<String, Object> attributes;
+    /**
+     * Granted To
+     * <p>
+     * Derived role that inherit will be applied on this role
+     * 
+     */
+    @SerializedName("granted_to")
+    @Expose
+    public DerivedRoleBlockRead grantedTo;
     /**
      * Key
      * <p>
@@ -115,6 +134,16 @@ public class ResourceRoleRead {
     @Expose
     public String resourceId;
     /**
+     * Resource
+     * <p>
+     * The unique resource key that the role belongs to.
+     * (Required)
+     * 
+     */
+    @SerializedName("resource")
+    @Expose
+    public String resource;
+    /**
      * Created At
      * <p>
      * Date and time when the role was created (ISO_8601 format).
@@ -148,13 +177,14 @@ public class ResourceRoleRead {
      * @param createdAt
      * @param resourceId
      * @param environmentId
+     * @param resource
      * @param name
      * @param id
      * @param projectId
      * @param key
      * @param updatedAt
      */
-    public ResourceRoleRead(String name, String key, String id, String organizationId, String projectId, String environmentId, String resourceId, Date createdAt, Date updatedAt) {
+    public ResourceRoleRead(String name, String key, String id, String organizationId, String projectId, String environmentId, String resourceId, String resource, Date createdAt, Date updatedAt) {
         super();
         this.name = name;
         this.key = key;
@@ -163,6 +193,7 @@ public class ResourceRoleRead {
         this.projectId = projectId;
         this.environmentId = environmentId;
         this.resourceId = resourceId;
+        this.resource = resource;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -184,6 +215,16 @@ public class ResourceRoleRead {
 
     public ResourceRoleRead withExtends(List<String> _extends) {
         this._extends = _extends;
+        return this;
+    }
+
+    public ResourceRoleRead withAttributes(HashMap<String, Object> attributes) {
+        this.attributes = attributes;
+        return this;
+    }
+
+    public ResourceRoleRead withGrantedTo(DerivedRoleBlockRead grantedTo) {
+        this.grantedTo = grantedTo;
         return this;
     }
 
@@ -214,6 +255,11 @@ public class ResourceRoleRead {
 
     public ResourceRoleRead withResourceId(String resourceId) {
         this.resourceId = resourceId;
+        return this;
+    }
+
+    public ResourceRoleRead withResource(String resource) {
+        this.resource = resource;
         return this;
     }
 

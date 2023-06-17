@@ -29,12 +29,20 @@ public class UserRoleRemove {
      * Tenant
      * <p>
      * the tenant the role is associated with (accepts either the tenant id or the tenant key)
-     * (Required)
      * 
      */
     @SerializedName("tenant")
     @Expose
     public String tenant;
+    /**
+     * Resource Instance
+     * <p>
+     * the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)
+     * 
+     */
+    @SerializedName("resource_instance")
+    @Expose
+    public String resourceInstance;
 
     /**
      * No args constructor for use in serialization
@@ -46,8 +54,12 @@ public class UserRoleRemove {
     /**
      * 
      * @param role
-     * @param tenant
      */
+    public UserRoleRemove(String role) {
+        super();
+        this.role = role;
+    }
+
     public UserRoleRemove(String role, String tenant) {
         super();
         this.role = role;
@@ -61,6 +73,11 @@ public class UserRoleRemove {
 
     public UserRoleRemove withTenant(String tenant) {
         this.tenant = tenant;
+        return this;
+    }
+
+    public UserRoleRemove withResourceInstance(String resourceInstance) {
+        this.resourceInstance = resourceInstance;
         return this;
     }
 

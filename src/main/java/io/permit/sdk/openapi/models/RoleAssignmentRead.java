@@ -57,6 +57,24 @@ public class RoleAssignmentRead {
     @Expose
     public String tenant;
     /**
+     * Resource Instance
+     * <p>
+     * the resource instance the role is associated with
+     * 
+     */
+    @SerializedName("resource_instance")
+    @Expose
+    public String resourceInstance;
+    /**
+     * Resource Instance Id
+     * <p>
+     * Unique id of the resource instance
+     * 
+     */
+    @SerializedName("resource_instance_id")
+    @Expose
+    public String resourceInstanceId;
+    /**
      * User Id
      * <p>
      * Unique id of the user
@@ -180,6 +198,16 @@ public class RoleAssignmentRead {
 
     public RoleAssignmentRead withTenant(String tenant) {
         this.tenant = tenant;
+        return this;
+    }
+
+    public RoleAssignmentRead withResourceInstance(String resourceInstance) {
+        this.resourceInstance = resourceInstance;
+        return this;
+    }
+
+    public RoleAssignmentRead withResourceInstanceId(String resourceInstanceId) {
+        this.resourceInstanceId = resourceInstanceId;
         return this;
     }
 

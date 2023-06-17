@@ -1,26 +1,27 @@
 
 package io.permit.sdk.openapi.models;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.HashMap;
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
 /**
- * RoleUpdate
+ * RoleBlockEditable
  * <p>
  * 
  * 
  */
 @Generated("jsonschema2pojo")
-public class RoleUpdate {
+public class RoleBlockEditable {
 
     /**
      * Name
      * <p>
      * The name of the role
+     * (Required)
      * 
      */
     @SerializedName("name")
@@ -54,15 +55,6 @@ public class RoleUpdate {
     @Expose
     public HashMap<String, Object> attributes;
     /**
-     * Extends
-     * <p>
-     * list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list.
-     * 
-     */
-    @SerializedName("extends")
-    @Expose
-    public List<String> _extends;
-    /**
      * Granted To
      * <p>
      * Derived role that inherit will be applied on this role
@@ -72,32 +64,43 @@ public class RoleUpdate {
     @Expose
     public DerivedRoleBlockEdit grantedTo;
 
-    public RoleUpdate withName(String name) {
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public RoleBlockEditable() {
+    }
+
+    /**
+     * 
+     * @param name
+     */
+    public RoleBlockEditable(String name) {
+        super();
+        this.name = name;
+    }
+
+    public RoleBlockEditable withName(String name) {
         this.name = name;
         return this;
     }
 
-    public RoleUpdate withDescription(String description) {
+    public RoleBlockEditable withDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public RoleUpdate withPermissions(List<String> permissions) {
+    public RoleBlockEditable withPermissions(List<String> permissions) {
         this.permissions = permissions;
         return this;
     }
 
-    public RoleUpdate withAttributes(HashMap<String, Object> attributes) {
+    public RoleBlockEditable withAttributes(HashMap<String, Object> attributes) {
         this.attributes = attributes;
         return this;
     }
 
-    public RoleUpdate withExtends(List<String> _extends) {
-        this._extends = _extends;
-        return this;
-    }
-
-    public RoleUpdate withGrantedTo(DerivedRoleBlockEdit grantedTo) {
+    public RoleBlockEditable withGrantedTo(DerivedRoleBlockEdit grantedTo) {
         this.grantedTo = grantedTo;
         return this;
     }
