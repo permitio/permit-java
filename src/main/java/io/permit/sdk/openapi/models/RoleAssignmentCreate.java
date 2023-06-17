@@ -29,12 +29,20 @@ public class RoleAssignmentCreate {
      * Tenant
      * <p>
      * the tenant the role is associated with (accepts either the tenant id or the tenant key)
-     * (Required)
      * 
      */
     @SerializedName("tenant")
     @Expose
     public String tenant;
+    /**
+     * Resource Instance
+     * <p>
+     * the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)
+     * 
+     */
+    @SerializedName("resource_instance")
+    @Expose
+    public String resourceInstance;
     /**
      * User
      * <p>
@@ -57,12 +65,10 @@ public class RoleAssignmentCreate {
      * 
      * @param role
      * @param user
-     * @param tenant
      */
-    public RoleAssignmentCreate(String role, String tenant, String user) {
+    public RoleAssignmentCreate(String role, String user) {
         super();
         this.role = role;
-        this.tenant = tenant;
         this.user = user;
     }
 
@@ -73,6 +79,11 @@ public class RoleAssignmentCreate {
 
     public RoleAssignmentCreate withTenant(String tenant) {
         this.tenant = tenant;
+        return this;
+    }
+
+    public RoleAssignmentCreate withResourceInstance(String resourceInstance) {
+        this.resourceInstance = resourceInstance;
         return this;
     }
 

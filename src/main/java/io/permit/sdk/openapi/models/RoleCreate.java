@@ -73,6 +73,15 @@ public class RoleCreate {
     @SerializedName("extends")
     @Expose
     public List<String> _extends;
+    /**
+     * Granted To
+     * <p>
+     * Derived role that inherit will be applied on this role
+     * 
+     */
+    @SerializedName("granted_to")
+    @Expose
+    public DerivedRoleBlockEdit grantedTo;
 
     /**
      * No args constructor for use in serialization
@@ -119,6 +128,11 @@ public class RoleCreate {
 
     public RoleCreate withExtends(List<String> _extends) {
         this._extends = _extends;
+        return this;
+    }
+
+    public RoleCreate withGrantedTo(DerivedRoleBlockEdit grantedTo) {
+        this.grantedTo = grantedTo;
         return this;
     }
 

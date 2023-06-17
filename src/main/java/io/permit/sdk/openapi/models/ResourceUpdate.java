@@ -64,6 +64,24 @@ public class ResourceUpdate {
     @SerializedName("attributes")
     @Expose
     public HashMap<String, AttributeBlockEditable> attributes;
+    /**
+     * Roles
+     * <p>
+     * Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, base roles, etc.
+     * 
+     */
+    @SerializedName("roles")
+    @Expose
+    public HashMap<String, RoleBlockEditable> roles;
+    /**
+     * Relations
+     * <p>
+     * Relations to other resources. The key is the relation key, and the value is the related resource.
+     * 
+     */
+    @SerializedName("relations")
+    @Expose
+    public HashMap<String, String> relations;
 
     public ResourceUpdate withName(java.lang.String name) {
         this.name = name;
@@ -87,6 +105,16 @@ public class ResourceUpdate {
 
     public ResourceUpdate withAttributes(HashMap<String, AttributeBlockEditable> attributes) {
         this.attributes = attributes;
+        return this;
+    }
+
+    public ResourceUpdate withRoles(HashMap<String, RoleBlockEditable> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    public ResourceUpdate withRelations(HashMap<String, String> relations) {
+        this.relations = relations;
         return this;
     }
 

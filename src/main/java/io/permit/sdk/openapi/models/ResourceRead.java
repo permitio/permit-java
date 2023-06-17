@@ -136,6 +136,27 @@ public class ResourceRead {
     @SerializedName("attributes")
     @Expose
     public HashMap<String, AttributeBlockRead> attributes;
+    /**
+     * Roles
+     * <p>
+     * Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, etc.
+     * 
+     */
+    @SerializedName("roles")
+    @Expose
+    public HashMap<String, ResourceRoleRead> roles;
+    /**
+     * Relations
+     * <p>
+     * 
+     *         A relations definition block, typically contained within a resource type definition block.
+     *         The relations represents the ways you can interact with a protected resource.
+     *         
+     * 
+     */
+    @SerializedName("relations")
+    @Expose
+    public HashMap<String, RelationBlockRead> relations;
 
     /**
      * No args constructor for use in serialization
@@ -224,6 +245,16 @@ public class ResourceRead {
 
     public ResourceRead withAttributes(HashMap<String, AttributeBlockRead> attributes) {
         this.attributes = attributes;
+        return this;
+    }
+
+    public ResourceRead withRoles(HashMap<String, ResourceRoleRead> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    public ResourceRead withRelations(HashMap<String, RelationBlockRead> relations) {
+        this.relations = relations;
         return this;
     }
 
