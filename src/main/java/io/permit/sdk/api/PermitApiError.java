@@ -3,7 +3,7 @@ package io.permit.sdk.api;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 
-public class PermitApiError extends Throwable {
+public class PermitApiError extends Exception {
     final private int responseCode;
     final private String rawResponse;
 

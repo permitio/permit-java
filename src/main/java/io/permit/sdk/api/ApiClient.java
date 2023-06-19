@@ -100,6 +100,22 @@ public class ApiClient implements IDeprecatedApis {
     public final ElementsApi elements;
 
     /**
+     * The {@code RelationshipTuplesApi} instance for accessing Relationship Tuples.
+     */
+    public final RelationshipTuplesApi relationshipTuples;
+
+    /**
+     * The {@code ResourceRolesApi} instance for accessing Resource Roles.
+     */
+    public final ResourceRolesApi resourceRoles;
+
+    /**
+     * The {@code ResourceRelationsApi} instance for accessing Resource Relations.
+     */
+    public final ResourceRelationsApi resourceRelations;
+
+
+    /**
      * Constructs a new instance of the {@code ApiClient} class with the specified configuration.
      *
      * @param config The Permit SDK configuration.
@@ -123,6 +139,9 @@ public class ApiClient implements IDeprecatedApis {
         this.roleAssignments = new RoleAssignmentsApi(this.client, this.config);
         this.conditionSetRules = new ConditionSetRulesApi(this.client, this.config);
         this.elements = new ElementsApi(this.client, this.config);
+        this.relationshipTuples = new RelationshipTuplesApi(this.client, this.config);
+        this.resourceRoles = new ResourceRolesApi(this.client, this.config);
+        this.resourceRelations = new ResourceRelationsApi(this.client, this.config);
     }
 
     /**
