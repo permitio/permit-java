@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.*;
@@ -66,7 +67,8 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getConditionSetsUrl("");
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         Request request = buildRequest(
@@ -121,7 +123,8 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead get(String conditionSetKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getConditionSetsUrl(String.format("/%s", conditionSetKey));
         Request request = buildRequest(
             new Request.Builder()
@@ -168,7 +171,8 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead create(ConditionSetCreate conditionSetData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getConditionSetsUrl("");
         RequestBody jsonBody = getJsonRequestBody(conditionSetData);
 
@@ -192,7 +196,8 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRead update(String conditionSetKey, ConditionSetUpdate conditionSetData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getConditionSetsUrl(String.format("/%s", conditionSetKey));
         RequestBody jsonBody = getJsonRequestBody(conditionSetData);
 
@@ -214,7 +219,8 @@ public class ConditionSetsApi extends BaseApi implements IConditionSetsApi {
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String conditionSetKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getConditionSetsUrl(String.format("/%s", conditionSetKey));
         Request request = buildRequest(
                 new Request.Builder()

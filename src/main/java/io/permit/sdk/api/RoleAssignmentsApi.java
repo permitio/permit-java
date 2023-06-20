@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.*;
@@ -66,7 +67,8 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead[] list(String userKey, String tenantKey, String roleKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRoleAssignmentsUrl("");
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         if (userKey != null) {
@@ -139,7 +141,8 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead assign(RoleAssignmentCreate assignment) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRoleAssignmentsUrl("");
         RequestBody jsonBody = getJsonRequestBody(assignment);
 
@@ -164,7 +167,8 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void unassign(RoleAssignmentRemove unassignment) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRoleAssignmentsUrl("");
         RequestBody jsonBody = getJsonRequestBody(unassignment);
 
@@ -190,7 +194,8 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public BulkRoleAssignmentReport bulkAssign(List<RoleAssignmentCreate> assignments) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRoleAssignmentsUrl("/bulk");
         RequestBody jsonBody = getJsonRequestBody(assignments);
 
@@ -214,7 +219,8 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public BulkRoleUnassignmentReport bulkUnassign(List<RoleAssignmentRemove> unassignments) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getRoleAssignmentsUrl("/bulk");
         RequestBody jsonBody = getJsonRequestBody(unassignments);
 
