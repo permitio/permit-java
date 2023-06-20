@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.models.CreateOrUpdateResult;
@@ -76,7 +77,8 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public PaginatedResultUserRead list(int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getUsersUrl("");
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         Request request = buildRequest(
@@ -131,7 +133,8 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public UserRead get(String userKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getUsersUrl(String.format("/%s", userKey));
         Request request = buildRequest(
             new Request.Builder()
@@ -178,7 +181,8 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public UserRead create(UserCreate userData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getUsersUrl("");
         RequestBody jsonBody = getJsonRequestBody(userData);
 
@@ -202,7 +206,8 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public UserRead update(String userKey, UserUpdate userData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getUsersUrl(String.format("/%s", userKey));
         RequestBody jsonBody = getJsonRequestBody(userData);
 
@@ -233,7 +238,8 @@ public class UsersApi extends BaseApi implements IUsersApi {
             );
         }
 
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getUsersUrl(String.format("/%s", userData.key)); // TODO: fix url to PUT /v2/.../users
         RequestBody jsonBody = getJsonRequestBody(userData);
 
@@ -288,7 +294,8 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String userKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getUsersUrl(String.format("/%s", userKey));
         Request request = buildRequest(
                 new Request.Builder()
@@ -313,7 +320,8 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getUsersUrl(String.format("/%s/roles", userKey));
         RequestBody jsonBody = getJsonRequestBody(new UserRoleCreate(roleKey, tenantKey));
 
@@ -337,7 +345,8 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getUsersUrl(String.format("/%s/roles", userKey));
         RequestBody jsonBody = getJsonRequestBody(new UserRoleRemove(roleKey, tenantKey));
 
@@ -365,7 +374,8 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, String tenantKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = buildUrl(
             String.format(
                 "/v2/facts/%s/%s/role_assignments",

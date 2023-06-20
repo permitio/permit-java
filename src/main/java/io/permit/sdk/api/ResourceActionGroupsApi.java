@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.*;
@@ -69,7 +70,8 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead[] list(String resourceKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getResourceActionGroupsUrl(resourceKey, "");
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         Request request = buildRequest(
@@ -127,7 +129,8 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead get(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getResourceActionGroupsUrl(resourceKey, String.format("/%s", groupKey));
         Request request = buildRequest(
             new Request.Builder()
@@ -178,7 +181,8 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ResourceActionGroupRead create(String resourceKey, ResourceActionGroupCreate groupData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getResourceActionGroupsUrl(resourceKey,"");
         RequestBody jsonBody = getJsonRequestBody(groupData);
 
@@ -201,7 +205,8 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
      * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getResourceActionGroupsUrl(resourceKey, String.format("/%s", groupKey));
         Request request = buildRequest(
                 new Request.Builder()

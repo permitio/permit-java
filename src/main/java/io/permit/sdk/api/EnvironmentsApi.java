@@ -1,6 +1,7 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.*;
@@ -69,7 +70,8 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead[] list(String projectKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getEnvironmentsUrl(projectKey, "");
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         Request request = buildRequest(
@@ -127,7 +129,8 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead get(String projectKey, String environmentKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getEnvironmentsUrl(projectKey, String.format("/%s", environmentKey));
         Request request = buildRequest(
             new Request.Builder()
@@ -178,7 +181,8 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead create(String projectKey, EnvironmentCreate environmentData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getEnvironmentsUrl(projectKey,"");
         RequestBody jsonBody = getJsonRequestBody(environmentData);
 
@@ -203,7 +207,8 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead update(String projectKey, String environmentKey, EnvironmentUpdate environmentData) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getEnvironmentsUrl(projectKey, String.format("/%s", environmentKey));
         RequestBody jsonBody = getJsonRequestBody(environmentData);
 
@@ -233,7 +238,8 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public EnvironmentRead copy(String projectKey, String environmentKey, EnvironmentCopy copyParams) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getEnvironmentsUrl(projectKey, String.format("/%s/copy", environmentKey));
         RequestBody jsonBody = getJsonRequestBody(copyParams);
 
@@ -256,7 +262,8 @@ public class EnvironmentsApi extends BaseApi implements IEnvironmentsApi {
      * @throws PermitContextError     If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(String projectKey, String environmentKey) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.PROJECT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ORGANIZATION);
         String url = getEnvironmentsUrl(projectKey, String.format("/%s", environmentKey));
         Request request = buildRequest(
                 new Request.Builder()

@@ -1,6 +1,8 @@
 package io.permit.sdk.api;
 
 import com.google.gson.Gson;
+
+import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.openapi.models.*;
@@ -136,7 +138,8 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRuleRead[] list(String userSetKey, String permissionKey, String resourceSetKey, int page, int perPage) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getConditionSetRulesUrl("");
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(url)).newBuilder();
         if (userSetKey != null) {
@@ -221,7 +224,8 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public ConditionSetRuleRead create(ConditionSetRuleCreate rule) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getConditionSetRulesUrl("");
         RequestBody jsonBody = getJsonRequestBody(rule);
 
@@ -244,7 +248,8 @@ public class ConditionSetRulesApi extends BaseApi implements IConditionSetRulesA
      * @throws PermitContextError   If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
     public void delete(ConditionSetRuleRemove rule) throws IOException, PermitApiError, PermitContextError {
-        ensureContext(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
         String url = getConditionSetRulesUrl("");
         RequestBody jsonBody = getJsonRequestBody(rule);
 
