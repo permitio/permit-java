@@ -27,7 +27,7 @@ public class PermitConfig {
     private final Boolean useDefaultTenantIfEmpty;
     private PermitContext context;
     public final String version;
-    private final static String defaultVersion = "1.3.1-rc";
+    private final static String defaultVersion = "unknown";
 
     private PermitConfig(Builder builder) {
         this.token = builder.token;
