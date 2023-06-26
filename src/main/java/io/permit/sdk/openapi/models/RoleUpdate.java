@@ -62,6 +62,15 @@ public class RoleUpdate {
     @SerializedName("extends")
     @Expose
     public List<String> _extends;
+    /**
+     * Granted To
+     * <p>
+     * Derived role that inherit will be applied on this role
+     * 
+     */
+    @SerializedName("granted_to")
+    @Expose
+    public DerivedRoleBlockEdit grantedTo;
 
     public RoleUpdate withName(String name) {
         this.name = name;
@@ -85,6 +94,11 @@ public class RoleUpdate {
 
     public RoleUpdate withExtends(List<String> _extends) {
         this._extends = _extends;
+        return this;
+    }
+
+    public RoleUpdate withGrantedTo(DerivedRoleBlockEdit grantedTo) {
+        this.grantedTo = grantedTo;
         return this;
     }
 

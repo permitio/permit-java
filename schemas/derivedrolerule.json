@@ -1,0 +1,24 @@
+{
+  "title": "DerivedRoleRule",
+  "required": [
+    "relation",
+    "related_resource",
+    "related_role"
+  ],
+  "type": "object",
+  "properties": {
+    "relation": {
+      "title": "Relation",
+      "type": "string"
+    },
+    "related_resource": {
+      "title": "Related Resource",
+      "type": "string"
+    },
+    "related_role": {
+      "title": "Related Role",
+      "type": "string"
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

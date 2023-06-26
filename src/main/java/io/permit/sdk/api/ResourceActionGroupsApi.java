@@ -20,7 +20,8 @@ interface IResourceActionGroupsApi {
     ResourceActionGroupRead get(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError;
     ResourceActionGroupRead getByKey(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError;
     ResourceActionGroupRead getById(UUID resourceId, UUID groupId) throws IOException, PermitApiError, PermitContextError;
-    ResourceActionGroupRead create(String resourceKey, ResourceActionGroupCreate actionData) throws IOException, PermitApiError, PermitContextError;
+    ResourceActionGroupRead create(String resourceKey, ResourceActionGroupCreate groupData) throws IOException, PermitApiError, PermitContextError;
+    ResourceActionGroupRead update(String resourceKey, String groupKey, ResourceActionGroupUpdate groupData) throws IOException, PermitApiError, PermitContextError;
     void delete(String resourceKey, String groupKey) throws IOException, PermitApiError, PermitContextError;
 }
 
@@ -193,6 +194,33 @@ public class ResourceActionGroupsApi extends BaseApi implements IResourceActionG
         );
 
         return this.<ResourceActionGroupRead>callApiAndParseJson(request, ResourceActionGroupRead.class);
+    }
+
+    /**
+     * Updates an existing action group under the specified resource.
+     *
+     * @param resourceKey The resource key.
+     * @param groupKey The group key.
+     * @param groupData The {@link ResourceActionGroupCreate} object containing the data to update.
+     * @return The {@link ResourceActionGroupRead} object representing the updated action group.
+     * @throws IOException If an I/O error occurs during the HTTP request.
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
+     * @throws PermitContextError If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
+     */
+    @Override
+    public ResourceActionGroupRead update(String resourceKey, String groupKey, ResourceActionGroupUpdate groupData) throws IOException, PermitApiError, PermitContextError {
+        ensureAccessLevel(ApiKeyLevel.ENVIRONMENT_LEVEL_API_KEY);
+        ensureContext(ApiContextLevel.ENVIRONMENT);
+        String url = getResourceActionGroupsUrl(resourceKey, String.format("/%s", groupKey));
+        RequestBody jsonBody = getJsonRequestBody(groupData);
+
+        Request request = buildRequest(
+                new Request.Builder()
+                        .url(url)
+                        .patch(jsonBody)
+        );
+
+        return this.callApiAndParseJson(request, ResourceActionGroupRead.class);
     }
 
     /**

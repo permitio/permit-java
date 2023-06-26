@@ -11,7 +11,8 @@
       "type": "array",
       "items": {
         "$ref": "UserRead.json"
-      }
+      },
+      "description": "List of Users"
     },
     "total_count": {
       "title": "Total Count",

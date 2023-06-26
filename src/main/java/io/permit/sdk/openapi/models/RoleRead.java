@@ -65,6 +65,16 @@ public class RoleRead {
     @Expose
     public List<String> _extends;
     /**
+     * Granted To
+     * <p>
+     * A derived role defintion block, typically contained whithin a role definition.
+     *         The derived role is a role that is derived from the role definition.
+     * 
+     */
+    @SerializedName("granted_to")
+    @Expose
+    public DerivedRoleBlockRead grantedTo;
+    /**
      * Key
      * <p>
      * A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role.
@@ -187,6 +197,11 @@ public class RoleRead {
 
     public RoleRead withExtends(List<String> _extends) {
         this._extends = _extends;
+        return this;
+    }
+
+    public RoleRead withGrantedTo(DerivedRoleBlockRead grantedTo) {
+        this.grantedTo = grantedTo;
         return this;
     }
 

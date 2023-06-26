@@ -26,6 +26,16 @@
       "title": "Attributes",
       "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.AttributeBlockEditable>",
       "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies."
+    },
+    "roles": {
+      "title": "Roles",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.RoleBlockEditable>",
+      "description": "Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, base roles, etc."
+    },
+    "relations": {
+      "title": "Relations",
+      "existingJavaType": "java.util.HashMap<String, String>",
+      "description": "Relations to other resources. The key is the relation key, and the value is the related resource."
     }
   },
   "additionalProperties": false,

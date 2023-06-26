@@ -1,0 +1,39 @@
+{
+  "title": "RelationCreate",
+  "required": [
+    "key",
+    "name",
+    "subject_resource"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "pattern": "^[A-Za-z0-9\\-_]+$",
+      "type": "string",
+      "description": "A URL-friendly name of the relation (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the relation."
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the relation"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this relation respresents in your system"
+    },
+    "subject_resource": {
+      "title": "Subject Resource",
+      "type": "string",
+      "description": "The subject resource ID or key"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "key": "parent",
+    "name": "parent",
+    "subject_resource": "organization"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -148,7 +148,7 @@ public class RbacE2ETest extends PermitE2ETestBase {
             assertEquals(ra.userId, user.id);
             assertEquals(ra.roleId, viewer.id);
             assertEquals(ra.tenantId, tenant.id);
-            assertEquals(ra.user, user.email); // TODO: fix bug
+            assertTrue(ra.user.equals(user.key) || ra.user.equals(user.email)); // TODO: remove user.email
             assertEquals(ra.role, viewer.key);
             assertEquals(ra.tenant, tenant.key);
 

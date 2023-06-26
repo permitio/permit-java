@@ -1,0 +1,32 @@
+{
+  "title": "ResourceActionGroupUpdate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the action group"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this action group represents in your system"
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "existingJavaType": "java.util.HashMap<String, Object>",
+      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action group. This metadata can be used to filter action groups using query parameters with attr_ prefix"
+    },
+    "actions": {
+      "title": "Actions",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

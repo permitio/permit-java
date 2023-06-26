@@ -1,0 +1,33 @@
+{
+  "title": "DerivedRoleRuleDelete",
+  "required": [
+    "role",
+    "on_resource",
+    "linked_by_relation"
+  ],
+  "type": "object",
+  "properties": {
+    "role": {
+      "title": "Role",
+      "type": "string",
+      "description": "the role key that needs to exist on the related resource (from the relation)"
+    },
+    "on_resource": {
+      "title": "On Resource",
+      "type": "string",
+      "description": "the resource key that needs to exist on the related role (from the relation)"
+    },
+    "linked_by_relation": {
+      "title": "Linked By Relation",
+      "type": "string",
+      "description": "the relation key that needs to exist between the resource and the related resource"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "role": "Admin",
+    "on_resource": "organization",
+    "linked_by_relation": "owner"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}
