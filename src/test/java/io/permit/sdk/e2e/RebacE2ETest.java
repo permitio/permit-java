@@ -67,7 +67,7 @@ class PermissionsAssertions {
     List<CheckAssertion> assertions;
 }
 
-public class ReBACE2ETest extends PermitE2ETestBase {
+public class RebacE2ETest extends PermitE2ETestBase {
     final int WAIT_PERIOD = 30; // in seconds
 
     // Role keys
