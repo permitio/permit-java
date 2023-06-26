@@ -65,6 +65,21 @@ public class ApiClient implements IDeprecatedApis {
     public final ResourceAttributesApi resourceAttributes;
 
     /**
+     * The {@code ResourceRolesApi} instance for accessing Resource Roles.
+     */
+    public final ResourceRolesApi resourceRoles;
+
+    /**
+     * The {@code ResourceRelationsApi} instance for accessing Resource Relations.
+     */
+    public final ResourceRelationsApi resourceRelations;
+
+    /**
+     * The {@code ResourceInstancesApi} instance for accessing Resource Instances.
+     */
+    public final ResourceInstancesApi resourceInstances;
+
+    /**
      * The {@code RolesApi} instance for accessing role related API endpoints.
      */
     public final RolesApi roles;
@@ -90,6 +105,11 @@ public class ApiClient implements IDeprecatedApis {
     public final RoleAssignmentsApi roleAssignments;
 
     /**
+     * The {@code RelationshipTuplesApi} instance for accessing Relationship Tuples.
+     */
+    public final RelationshipTuplesApi relationshipTuples;
+
+    /**
      * The {@code ConditionSetRulesApi} instance for accessing condition set rules related API endpoints.
      */
     public final ConditionSetRulesApi conditionSetRules;
@@ -98,21 +118,6 @@ public class ApiClient implements IDeprecatedApis {
      * The {@code ElementsApi} instance for accessing Permit Elements related API endpoints.
      */
     public final ElementsApi elements;
-
-    /**
-     * The {@code RelationshipTuplesApi} instance for accessing Relationship Tuples.
-     */
-    public final RelationshipTuplesApi relationshipTuples;
-
-    /**
-     * The {@code ResourceRolesApi} instance for accessing Resource Roles.
-     */
-    public final ResourceRolesApi resourceRoles;
-
-    /**
-     * The {@code ResourceRelationsApi} instance for accessing Resource Relations.
-     */
-    public final ResourceRelationsApi resourceRelations;
 
 
     /**
@@ -132,16 +137,17 @@ public class ApiClient implements IDeprecatedApis {
         this.resourceActions = new ResourceActionsApi(this.client, this.config);
         this.resourceActionGroups = new ResourceActionGroupsApi(this.client, this.config);
         this.resourceAttributes = new ResourceAttributesApi(this.client, this.config);
+        this.resourceRoles = new ResourceRolesApi(this.client, this.config);
+        this.resourceRelations = new ResourceRelationsApi(this.client, this.config);
+        this.resourceInstances = new ResourceInstancesApi(this.client, this.config);
         this.roles = new RolesApi(this.client, this.config);
         this.conditionSets = new ConditionSetsApi(this.client, this.config);
         this.tenants = new TenantsApi(this.client, this.config);
         this.users = new UsersApi(this.client, this.config);
         this.roleAssignments = new RoleAssignmentsApi(this.client, this.config);
+        this.relationshipTuples = new RelationshipTuplesApi(this.client, this.config);
         this.conditionSetRules = new ConditionSetRulesApi(this.client, this.config);
         this.elements = new ElementsApi(this.client, this.config);
-        this.relationshipTuples = new RelationshipTuplesApi(this.client, this.config);
-        this.resourceRoles = new ResourceRolesApi(this.client, this.config);
-        this.resourceRelations = new ResourceRelationsApi(this.client, this.config);
     }
 
     /**
