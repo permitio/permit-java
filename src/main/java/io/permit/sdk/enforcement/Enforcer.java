@@ -118,6 +118,7 @@ public class Enforcer implements IEnforcerApi {
             .addHeader("Content-Type", "application/json")
             .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
             .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+            .addHeader("X-Tenant-ID", normalizedResource.getTenant()) // sharding key
             .build();
 
         try (Response response = client.newCall(request).execute()) {
