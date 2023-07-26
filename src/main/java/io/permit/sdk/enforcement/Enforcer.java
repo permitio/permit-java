@@ -44,6 +44,22 @@ class EnforcerInput {
     }
 }
 
+class CheckUrlInput {
+    public final User user;
+    public final String http_method;
+    public final String url;
+    public final String tenant;
+    public final HashMap<String, Object> context;
+
+    CheckUrlInput(User user, String http_method, String url, String tenant, HashMap<String, Object> context) {
+        this.user = user;
+        this.http_method = http_method;
+        this.url = url;
+        this.tenant = tenant;
+        this.context = context;
+    }
+}
+
 /**
 * The {@code OpaResult} class represents the result of a Permit enforcement check returned by the policy agent.
 */
@@ -172,5 +188,77 @@ public class Enforcer implements IEnforcerApi {
     @Override
     public boolean check(User user, String action, Resource resource) throws IOException {
         return this.check(user, action, resource, new Context());
+    }
+
+    @Override
+    public boolean checkUrl(User user, String httpMethod, String url, String tenant, Context context) throws IOException {
+        CheckUrlInput input = new CheckUrlInput(
+                user,
+                httpMethod,
+                url,
+                tenant,
+                context
+        );
+
+        // request body
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(input);
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+
+        // create the request
+        String apiUrl = String.format("%s/allowed_url", this.config.getPdpAddress());
+        Request request = new Request.Builder()
+                .url(apiUrl)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+                .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+                .addHeader("X-Tenant-ID", tenant) // sharding key
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                String errorMessage = String.format(
+                        "Error in permit.checkUrl(%s, %s, %s, %s): got unexpected status code %d",
+                        user.toString(),
+                        httpMethod,
+                        url,
+                        tenant,
+                        response.code()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            ResponseBody responseBody = response.body();
+            if (responseBody == null) {
+                String errorMessage = String.format(
+                        "Error in permit.check(%s, %s, %s, %s): got empty response",
+                        user,
+                        httpMethod,
+                        url,
+                        tenant
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            String responseString = responseBody.string();
+            OpaResult result = gson.fromJson(responseString, OpaResult.class);
+            if (this.config.isDebugMode()) {
+                logger.info(String.format(
+                        "permit.check(%s, %s, %s, %s) = %s",
+                        user,
+                        httpMethod,
+                        url,
+                        tenant,
+                        result.allow.toString()
+                ));
+            }
+            return result.allow;
+        }
+    }
+
+    @Override
+    public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException {
+        return this.checkUrl(user, httpMethod, url, tenant, new Context());
     }
 }
