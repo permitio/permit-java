@@ -9,26 +9,29 @@ This guide will walk you through the steps of installing the Permit.io Java SDK 
 ## Installation
 
 For [Maven](https://maven.apache.org/) projects, use:
+
 ```xml
 <dependency>
   <groupId>io.permit</groupId>
   <artifactId>permit-sdk-java</artifactId>
-  <version>1.3.0</version>
+  <version>1.4.0</version>
 </dependency>
 ```
 
 For [Gradle](https://gradle.org/) projects, configure `permit-sdk-java` as a dependency in your `build.gradle` file:
+
 ```groovy
 dependencies {
     // ...
 
-    implementation 'io.permit:permit-sdk-java:1.3.0'
+    implementation 'io.permit:permit-sdk-java:1.4.0'
 }
 ```
 
 ## Usage
 
 ### Initializing the SDK
+
 To init the SDK, you need to create a new Permit client with the API key you got from the Permit.io dashboard.
 
 First we will create a new `PermitConfig` object so we can pass it to the Permit client.
@@ -52,6 +55,7 @@ Permit permit = new Permit(
 ```
 
 ### Checking permissions
+
 To check permissions using our `permit.check()` method, you will have to create User and Resource models as input to the permission check.
 The models are located in ``
 
@@ -80,6 +84,7 @@ if (permitted) {
 ```
 
 A more complicated example (passing attributes on the user object, using an explicit tenant in the resource):
+
 ```java
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
@@ -107,12 +112,14 @@ if (permitted) {
 ```
 
 ### Syncing users
+
 When the user first logins, and after you check if he authenticated successfully (i.e: **by checking the JWT access token**) -
 you need to declare the user in the permission system so you can run `permit.check()` on that user.
 
 To declare (or "sync") a user in the Permit.io API, use the `permit.api.users.sync()` method.
 
 Follow the example below:
+
 ```java
 import io.permit.sdk.api.models.CreateOrUpdateResult;
 import io.permit.sdk.enforcement.User;
@@ -140,6 +147,7 @@ CreateOrUpdateResult<UserRead> result = permit.api.users.sync(new UserCreate("[U
 ```
 
 ## Javadoc reference
-To view the javadoc reference, [click here](https://javadoc.io/doc/io.permit/permit-sdk-java/1.3.0/index.html).
 
-It's easiest to start with the root [Permit](https://javadoc.io/static/io.permit/permit-sdk-java/1.3.0/io/permit/sdk/Permit.html) class.
+To view the javadoc reference, [click here](https://javadoc.io/doc/io.permit/permit-sdk-java/1.4.0/index.html).
+
+It's easiest to start with the root [Permit](https://javadoc.io/static/io.permit/permit-sdk-java/1.4.0/io/permit/sdk/Permit.html) class.
