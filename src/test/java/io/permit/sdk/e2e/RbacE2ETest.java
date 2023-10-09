@@ -1,10 +1,12 @@
 package io.permit.sdk.e2e;
 
+import com.google.common.primitives.Booleans;
 import io.permit.sdk.PermitE2ETestBase;
 import io.permit.sdk.api.PermitApiError;
 import io.permit.sdk.api.PermitContextError;
 import io.permit.sdk.Permit;
 import io.permit.sdk.api.models.CreateOrUpdateResult;
+import io.permit.sdk.enforcement.CheckQuery;
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
 import io.permit.sdk.openapi.models.*;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -180,6 +183,25 @@ public class RbacE2ETest extends PermitE2ETestBase {
                 "create",
                 new Resource.Builder("document").withTenant(tenant.key).build()
             ));
+
+            logger.info("testing bulk permission check");
+            boolean[] checks = permit.bulkCheck(Arrays.asList(
+                // positive permission check
+                new CheckQuery(
+                    userInput,
+                    "read",
+                    new Resource.Builder("document").withTenant(tenant.key).build()
+                ),
+                // negative permission check
+                new CheckQuery(
+                    User.fromString("auth0|elon"),
+                    "create",
+                    new Resource.Builder("document").withTenant(tenant.key).build()
+                )
+            ));
+            assertEquals(checks.length, 2);
+            assertTrue(checks[0]);
+            assertFalse(checks[1]);
 
             // change the user role
             permit.api.users.assignRole(user.key, admin.key, tenant.key);

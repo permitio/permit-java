@@ -1,13 +1,19 @@
 package io.permit.sdk.enforcement;
 
+import com.google.common.primitives.Booleans;
 import com.google.gson.Gson;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.HttpLoggingInterceptor;
+import io.permit.sdk.openapi.models.RoleRead;
 import io.permit.sdk.util.Context;
 import io.permit.sdk.util.ContextStore;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -26,7 +32,7 @@ class EnforcerInput {
     public final User user;
     public final String action;
     public final Resource resource;
-    public final HashMap<String, Object> context;
+    public final Context context;
 
     /**
     * Constructs a new instance of the {@code EnforcerInput} class with the specified data.
@@ -36,7 +42,7 @@ class EnforcerInput {
     * @param resource The resource on which the action is performed.
     * @param context  The context for the authorization check.
     */
-    EnforcerInput(User user, String action, Resource resource, HashMap<String, Object> context) {
+    EnforcerInput(User user, String action, Resource resource, Context context) {
         this.user = user;
         this.action = action;
         this.resource = resource;
@@ -72,6 +78,22 @@ class OpaResult {
     * @param allow {@code true} if the action is allowed, {@code false} otherwise.
     */
     OpaResult(Boolean allow) {
+        this.allow = allow;
+    }
+}
+
+/**
+ * The {@code OpaBulkResult} class represents the result of a Permit bulk enforcement check returned by the policy agent.
+ */
+class OpaBulkResult {
+    public final List<OpaResult> allow;
+
+    /**
+     * Constructs a new instance of the {@code OpaResult} class with the specified result.
+     *
+     * @param allow {@code true} if the action is allowed, {@code false} otherwise.
+     */
+    OpaBulkResult(List<OpaResult> allow) {
         this.allow = allow;
     }
 }
@@ -258,7 +280,84 @@ public class Enforcer implements IEnforcerApi {
     }
 
     @Override
+    public boolean[] bulkCheck(List<CheckQuery> checks) throws IOException {
+        List<EnforcerInput> inputs = new ArrayList<>();
+
+        for (CheckQuery check: checks) {
+            Resource normalizedResource = check.resource.normalize(this.config);
+            inputs.add(new EnforcerInput(check.user, check.action, normalizedResource, check.context));
+        }
+
+        // request body
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(inputs);
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+
+        // create the request
+        String url = String.format("%s/allowed/bulk", this.config.getPdpAddress());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+                .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                String errorMessage = String.format(
+                        "Error in %s: got unexpected status code %d",
+                        bulkCheckRepr(inputs),
+                        response.code()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            ResponseBody responseBody = response.body();
+            if (responseBody == null) {
+                String errorMessage = String.format(
+                        "Error in %s: got empty response",
+                        bulkCheckRepr(inputs)
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+
+            String responseString = responseBody.string();
+            OpaBulkResult result = gson.fromJson(responseString, OpaBulkResult.class);
+            if (this.config.isDebugMode()) {
+                for (int i = 0; i < result.allow.size(); i++) {
+                    logger.info(String.format(
+                        "permit.bulkCheck[%d/%d](%s, %s, %s) = %s",
+                        i + 1,
+                        result.allow.size(),
+                        inputs.get(i).user,
+                        inputs.get(i).action,
+                        inputs.get(i).resource,
+                        result.allow.get(i).allow
+                    ));
+                }
+
+            }
+            return Booleans.toArray(result.allow.stream().map(r -> r.allow).collect(Collectors.toList()));
+        }
+    }
+
+    @Override
     public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException {
         return this.checkUrl(user, httpMethod, url, tenant, new Context());
+    }
+
+    private String bulkCheckRepr(List<EnforcerInput> inputs) {
+        return String.format(
+            "permit.bulkCheck(%s)",
+            inputs.stream().map(i -> String.format(
+                    "%s, %s, %s, %s",
+                    i.user,
+                    i.action,
+                    i.resource,
+                    i.context
+            )).collect(Collectors.toList())
+        );
     }
 }
