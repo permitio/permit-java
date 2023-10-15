@@ -8,6 +8,7 @@ import io.permit.sdk.Permit;
 import io.permit.sdk.api.models.CreateOrUpdateResult;
 import io.permit.sdk.enforcement.CheckQuery;
 import io.permit.sdk.enforcement.Resource;
+import io.permit.sdk.enforcement.TenantDetails;
 import io.permit.sdk.enforcement.User;
 import io.permit.sdk.openapi.models.*;
 import org.junit.jupiter.api.Test;
@@ -124,10 +125,23 @@ public class RbacE2ETest extends PermitE2ETestBase {
             assertEquals(tenant.description, "The car company");
             assertNull(tenant.attributes);
 
+            // create another tenant
+            HashMap<String, Object> tenantAttributes = new HashMap<>();
+            tenantAttributes.put("tier", "pro");
+            tenantAttributes.put("unit", "one");
+
+            TenantRead tenant2 = permit.api.tenants.create(
+                    new TenantCreate("twitter", "Twitter Inc").withAttributes(tenantAttributes)
+            );
+            assertEquals(tenant2.key, "twitter");
+            assertEquals(((String)tenant2.attributes.get("tier")), "pro");
+            assertEquals(((String)tenant2.attributes.get("unit")), "one");
+
             // create a user
             HashMap<String, Object> userAttributes = new HashMap<>();
             userAttributes.put("age", Integer.valueOf(50));
             userAttributes.put("fav_color", "red");
+
 
             User userInput = (new User.Builder("auth0|elon"))
                 .withEmail("elonmusk@tesla.com")
@@ -154,6 +168,12 @@ public class RbacE2ETest extends PermitE2ETestBase {
             assertTrue(ra.user.equals(user.key) || ra.user.equals(user.email)); // TODO: remove user.email
             assertEquals(ra.role, viewer.key);
             assertEquals(ra.tenant, tenant.key);
+
+            // assign a second role in another tenant
+            RoleAssignmentRead ra2 = permit.api.users.assignRole("auth0|elon", "admin", "twitter");
+            assertEquals(ra2.userId, user.id);
+            assertEquals(ra2.roleId, admin.id);
+            assertEquals(ra2.tenantId, tenant2.id);
 
             logger.info("sleeping 20 seconds before permit.check() to make sure all writes propagated from cloud to PDP");
             Thread.sleep(20000);
@@ -203,6 +223,27 @@ public class RbacE2ETest extends PermitE2ETestBase {
             assertTrue(checks[0]);
             assertFalse(checks[1]);
 
+            logger.info("testing 'check in all tenants' on read:document");
+            List<TenantDetails> allowedTenants = permit.checkInAllTenants(
+                userInput,
+                "read",
+                new Resource.Builder("document").build()
+            );
+            assertEquals(allowedTenants.size(), 2);
+            assertTrue(allowedTenants.get(0).key.equals(tenant.key) || allowedTenants.get(0).key.equals(tenant2.key));
+            assertTrue(allowedTenants.get(1).key.equals(tenant.key) || allowedTenants.get(1).key.equals(tenant2.key));
+            assertNotEquals(allowedTenants.get(0).key, allowedTenants.get(1).key);
+
+            logger.info("testing 'check in all tenants' on create:document");
+            List<TenantDetails> allowedTenants2 = permit.checkInAllTenants(
+                    userInput,
+                    "create",
+                    new Resource.Builder("document").build()
+            );
+            assertEquals(allowedTenants2.size(), 1);
+            assertEquals(allowedTenants2.get(0).key, tenant2.key);
+            assertEquals(((String)allowedTenants2.get(0).attributes.get("unit")), "one");
+
             // change the user role
             permit.api.users.assignRole(user.key, admin.key, tenant.key);
             permit.api.users.unassignRole(user.key, viewer.key, tenant.key);
@@ -235,6 +276,7 @@ public class RbacE2ETest extends PermitE2ETestBase {
                 permit.api.roles.delete("admin");
                 permit.api.roles.delete("viewer");
                 permit.api.tenants.delete("tesla");
+                permit.api.tenants.delete("twitter");
                 permit.api.users.delete("auth0|elon");
                 assertEquals(permit.api.resources.list().length, 0);
                 assertEquals(permit.api.roles.list().length, 0);

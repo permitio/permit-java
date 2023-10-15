@@ -132,12 +132,22 @@ public class Permit implements IEnforcerApi {
     }
 
     @Override
+    public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException {
+        return this.enforcer.checkUrl(user, httpMethod, url, tenant);
+    }
+
+    @Override
     public boolean[] bulkCheck(List<CheckQuery> checks) throws IOException {
         return this.enforcer.bulkCheck(checks);
     }
 
     @Override
-    public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException {
-        return this.enforcer.checkUrl(user, httpMethod, url, tenant);
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException {
+        return this.enforcer.checkInAllTenants(user, action, resource, context);
+    }
+
+    @Override
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException {
+        return this.enforcer.checkInAllTenants(user, action, resource);
     }
 }

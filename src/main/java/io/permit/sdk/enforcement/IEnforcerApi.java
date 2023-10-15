@@ -67,4 +67,30 @@ public interface IEnforcerApi {
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
     boolean[] bulkCheck(List<CheckQuery> checks) throws IOException;
+
+    /**
+     * Checks if a `user` is authorized to perform an `action` on a `resource` (with `context`) across all tenants.
+     * Returns only tenants in which the action is allowed for this user, including the tenant attributes.
+     *
+     * @param user     The user object representing the user.
+     * @param action   The action to be performed on the resource.
+     * @param resource The resource object representing the resource.
+     * @param context  The context object representing the context in which the action is performed.
+     * @return List of TenantDetails objects, representing the tenants in which the action is allowed.
+     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     */
+    List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException;
+
+    /**
+     * Checks if a `user` is authorized to perform an `action` on a `resource` across all tenants,
+     * without additional context. Returns only tenants in which the action is allowed for this user,
+     * including the tenant attributes.
+     *
+     * @param user The user object representing the user.
+     * @param action The action to be performed on the resource.
+     * @param resource The resource object representing the resource.
+     * @return List of TenantDetails objects, representing the tenants in which the action is allowed.
+     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     */
+    List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException;
 }

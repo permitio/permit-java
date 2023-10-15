@@ -4,7 +4,6 @@ import com.google.common.primitives.Booleans;
 import com.google.gson.Gson;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.HttpLoggingInterceptor;
-import io.permit.sdk.openapi.models.RoleRead;
 import io.permit.sdk.util.Context;
 import io.permit.sdk.util.ContextStore;
 
@@ -79,6 +78,32 @@ class OpaResult {
     */
     OpaResult(Boolean allow) {
         this.allow = allow;
+    }
+}
+
+
+/**
+ * The {@code TenantResult} class represents a single tenant returned by the checkInAllTenants query.
+ */
+class TenantResult {
+    public final Boolean allow;
+
+    public final TenantDetails tenant;
+
+    public TenantResult(Boolean allow, TenantDetails tenant) {
+        this.allow = allow;
+        this.tenant = tenant;
+    }
+}
+
+/**
+ * The {@code AllTenantsResult} class represents the result of the checkInAllTenants query.
+ */
+class AllTenantsResult {
+    public final TenantResult[] allowed_tenants;
+
+    public AllTenantsResult(TenantResult[] allowed_tenants) {
+        this.allowed_tenants = allowed_tenants;
     }
 }
 
@@ -341,6 +366,77 @@ public class Enforcer implements IEnforcerApi {
             }
             return Booleans.toArray(result.allow.stream().map(r -> r.allow).collect(Collectors.toList()));
         }
+    }
+
+    @Override
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException {
+        Resource normalizedResource = resource.normalize(this.config);
+        Context queryContext = this.contextStore.getDerivedContext(context);
+
+        EnforcerInput input = new EnforcerInput(
+                user,
+                action,
+                normalizedResource,
+                queryContext
+        );
+
+        // request body
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(input);
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+
+        // create the request
+        String url = String.format("%s/allowed/all-tenants", this.config.getPdpAddress());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+                .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                String errorMessage = String.format(
+                        "Error in permit.checkInAllTenants(%s, %s, %s): got unexpected status code %d",
+                        user.toString(),
+                        action,
+                        resource,
+                        response.code()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            ResponseBody responseBody = response.body();
+            if (responseBody == null) {
+                String errorMessage = String.format(
+                        "Error in permit.checkInAllTenants(%s, %s, %s): got empty response",
+                        user,
+                        action,
+                        resource
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            String responseString = responseBody.string();
+            AllTenantsResult result = gson.fromJson(responseString, AllTenantsResult.class);
+            List<TenantDetails> tenants = Arrays.stream(result.allowed_tenants).map(r -> r.tenant).collect(Collectors.toList());
+            if (this.config.isDebugMode()) {
+                logger.info(String.format(
+                        "permit.checkInAllTenants(%s, %s, %s) => allowed in: [%s]",
+                        user,
+                        action,
+                        resource,
+                        tenants.stream().map(t -> t.key).collect(Collectors.joining(", "))
+                ));
+            }
+            return tenants;
+        }
+    }
+
+    @Override
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException {
+        return checkInAllTenants(user, action, resource, new Context());
     }
 
     @Override
