@@ -7,7 +7,7 @@ import java.util.HashMap;
 /**
  * The {@code TenantDetails} class represents a single tenant information fetched from the PDP (key and attributes).
  */
-public final class TenantDetails {
+public class TenantDetails {
     public final String key;
     public final HashMap<String, Object> attributes;
     public TenantDetails(String key, HashMap<String, Object> attributes) {

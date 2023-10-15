@@ -440,6 +440,65 @@ public class Enforcer implements IEnforcerApi {
     }
 
     @Override
+    public UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException {
+        // request body
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(input);
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+
+        // create the request
+        String url = String.format("%s/user-permissions", this.config.getPdpAddress());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+                .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                String errorMessage = String.format(
+                        "Error in permit.getUserPermissions(%s, %s, %s, %s): got unexpected status code %d",
+                        input.user.toString(),
+                        input.tenants.toString(),
+                        input.resource_types.toString(),
+                        input.resources.toString(),
+                        response.code()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            ResponseBody responseBody = response.body();
+            if (responseBody == null) {
+                String errorMessage = String.format(
+                        "Error in permit.getUserPermissions(%s, %s, %s, %s): got empty response",
+                        input.user.toString(),
+                        input.tenants.toString(),
+                        input.resource_types.toString(),
+                        input.resources.toString()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            String responseString = responseBody.string();
+            UserPermissions result = gson.fromJson(responseString, UserPermissions.class);
+            if (this.config.isDebugMode()) {
+                logger.info(String.format(
+                        "permit.getUserPermissions(%s, %s, %s, %s) => returned %d permissions on %d objects",
+                        input.user.toString(),
+                        input.tenants != null ? input.tenants.toString() : "null",
+                        input.resource_types != null ? input.resource_types.toString() : "null",
+                        input.resources != null ? input.resources.toString() : "null",
+                        result.values().stream().map(obj -> obj.permissions.size()).reduce(0, Integer::sum),
+                        result.keySet().size()
+                ));
+            }
+            return result;
+        }
+    }
+
+    @Override
     public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException {
         return this.checkUrl(user, httpMethod, url, tenant, new Context());
     }

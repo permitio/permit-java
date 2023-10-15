@@ -150,4 +150,9 @@ public class Permit implements IEnforcerApi {
     public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException {
         return this.enforcer.checkInAllTenants(user, action, resource);
     }
+
+    @Override
+    public UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException {
+        return this.enforcer.getUserPermissions(input);
+    }
 }

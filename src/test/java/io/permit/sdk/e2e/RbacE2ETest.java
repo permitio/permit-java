@@ -6,10 +6,7 @@ import io.permit.sdk.api.PermitApiError;
 import io.permit.sdk.api.PermitContextError;
 import io.permit.sdk.Permit;
 import io.permit.sdk.api.models.CreateOrUpdateResult;
-import io.permit.sdk.enforcement.CheckQuery;
-import io.permit.sdk.enforcement.Resource;
-import io.permit.sdk.enforcement.TenantDetails;
-import io.permit.sdk.enforcement.User;
+import io.permit.sdk.enforcement.*;
 import io.permit.sdk.openapi.models.*;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -20,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +29,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class RbacE2ETest extends PermitE2ETestBase {
     private final Logger logger = LoggerFactory.getLogger(RbacE2ETest.class);
+
+    private static final String TENANT_RESOURCE_KEY = "__tenant";
 
     @Test
     void testPermissionCheckRBAC() {
@@ -243,6 +243,20 @@ public class RbacE2ETest extends PermitE2ETestBase {
             assertEquals(allowedTenants2.size(), 1);
             assertEquals(allowedTenants2.get(0).key, tenant2.key);
             assertEquals(((String)allowedTenants2.get(0).attributes.get("unit")), "one");
+
+            logger.info("testing 'get user permissions' on user 'elon'");
+            UserPermissions permissions = permit.getUserPermissions(
+                new GetUserPermissionsQuery(
+                    User.fromString("auth0|elon")
+                )
+            );
+            assertEquals(permissions.keySet().size(), 2); // elon has access to 2 tenants
+            String tenantObjectKey = String.format("%s:%s", TENANT_RESOURCE_KEY, tenant.key);
+            String tenant2ObjectKey = String.format("%s:%s", TENANT_RESOURCE_KEY, tenant2.key);
+            assertTrue(permissions.containsKey(tenantObjectKey));
+            assertTrue(permissions.containsKey(tenant2ObjectKey));
+            assertTrue(permissions.get(tenantObjectKey).permissions.contains("document:read"));
+            assertTrue(permissions.get(tenant2ObjectKey).permissions.contains("document:create"));
 
             // change the user role
             permit.api.users.assignRole(user.key, admin.key, tenant.key);

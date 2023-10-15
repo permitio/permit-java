@@ -93,4 +93,13 @@ public interface IEnforcerApi {
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
     List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException;
+
+    /**
+     * list all the permissions granted to a user (by default in all tenants and for all objects).
+     *
+     * @param input input to get user permissions api
+     * @return A UserPermissions object, that contains all the permissions granted to the user.
+     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     */
+    UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException;
 }
