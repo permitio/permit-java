@@ -1,12 +1,12 @@
 package io.permit.sdk.e2e;
 
+import com.google.common.primitives.Booleans;
 import io.permit.sdk.PermitE2ETestBase;
 import io.permit.sdk.api.PermitApiError;
 import io.permit.sdk.api.PermitContextError;
 import io.permit.sdk.Permit;
 import io.permit.sdk.api.models.CreateOrUpdateResult;
-import io.permit.sdk.enforcement.Resource;
-import io.permit.sdk.enforcement.User;
+import io.permit.sdk.enforcement.*;
 import io.permit.sdk.openapi.models.*;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,6 +29,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class RbacE2ETest extends PermitE2ETestBase {
     private final Logger logger = LoggerFactory.getLogger(RbacE2ETest.class);
+
+    private static final String TENANT_RESOURCE_KEY = "__tenant";
 
     @Test
     void testPermissionCheckRBAC() {
@@ -121,10 +125,23 @@ public class RbacE2ETest extends PermitE2ETestBase {
             assertEquals(tenant.description, "The car company");
             assertNull(tenant.attributes);
 
+            // create another tenant
+            HashMap<String, Object> tenantAttributes = new HashMap<>();
+            tenantAttributes.put("tier", "pro");
+            tenantAttributes.put("unit", "one");
+
+            TenantRead tenant2 = permit.api.tenants.create(
+                    new TenantCreate("twitter", "Twitter Inc").withAttributes(tenantAttributes)
+            );
+            assertEquals(tenant2.key, "twitter");
+            assertEquals(((String)tenant2.attributes.get("tier")), "pro");
+            assertEquals(((String)tenant2.attributes.get("unit")), "one");
+
             // create a user
             HashMap<String, Object> userAttributes = new HashMap<>();
             userAttributes.put("age", Integer.valueOf(50));
             userAttributes.put("fav_color", "red");
+
 
             User userInput = (new User.Builder("auth0|elon"))
                 .withEmail("elonmusk@tesla.com")
@@ -151,6 +168,12 @@ public class RbacE2ETest extends PermitE2ETestBase {
             assertTrue(ra.user.equals(user.key) || ra.user.equals(user.email)); // TODO: remove user.email
             assertEquals(ra.role, viewer.key);
             assertEquals(ra.tenant, tenant.key);
+
+            // assign a second role in another tenant
+            RoleAssignmentRead ra2 = permit.api.users.assignRole("auth0|elon", "admin", "twitter");
+            assertEquals(ra2.userId, user.id);
+            assertEquals(ra2.roleId, admin.id);
+            assertEquals(ra2.tenantId, tenant2.id);
 
             logger.info("sleeping 20 seconds before permit.check() to make sure all writes propagated from cloud to PDP");
             Thread.sleep(20000);
@@ -180,6 +203,60 @@ public class RbacE2ETest extends PermitE2ETestBase {
                 "create",
                 new Resource.Builder("document").withTenant(tenant.key).build()
             ));
+
+            logger.info("testing bulk permission check");
+            boolean[] checks = permit.bulkCheck(Arrays.asList(
+                // positive permission check
+                new CheckQuery(
+                    userInput,
+                    "read",
+                    new Resource.Builder("document").withTenant(tenant.key).build()
+                ),
+                // negative permission check
+                new CheckQuery(
+                    User.fromString("auth0|elon"),
+                    "create",
+                    new Resource.Builder("document").withTenant(tenant.key).build()
+                )
+            ));
+            assertEquals(checks.length, 2);
+            assertTrue(checks[0]);
+            assertFalse(checks[1]);
+
+            logger.info("testing 'check in all tenants' on read:document");
+            List<TenantDetails> allowedTenants = permit.checkInAllTenants(
+                userInput,
+                "read",
+                new Resource.Builder("document").build()
+            );
+            assertEquals(allowedTenants.size(), 2);
+            assertTrue(allowedTenants.get(0).key.equals(tenant.key) || allowedTenants.get(0).key.equals(tenant2.key));
+            assertTrue(allowedTenants.get(1).key.equals(tenant.key) || allowedTenants.get(1).key.equals(tenant2.key));
+            assertNotEquals(allowedTenants.get(0).key, allowedTenants.get(1).key);
+
+            logger.info("testing 'check in all tenants' on create:document");
+            List<TenantDetails> allowedTenants2 = permit.checkInAllTenants(
+                    userInput,
+                    "create",
+                    new Resource.Builder("document").build()
+            );
+            assertEquals(allowedTenants2.size(), 1);
+            assertEquals(allowedTenants2.get(0).key, tenant2.key);
+            assertEquals(((String)allowedTenants2.get(0).attributes.get("unit")), "one");
+
+            logger.info("testing 'get user permissions' on user 'elon'");
+            UserPermissions permissions = permit.getUserPermissions(
+                new GetUserPermissionsQuery(
+                    User.fromString("auth0|elon")
+                )
+            );
+            assertEquals(permissions.keySet().size(), 2); // elon has access to 2 tenants
+            String tenantObjectKey = String.format("%s:%s", TENANT_RESOURCE_KEY, tenant.key);
+            String tenant2ObjectKey = String.format("%s:%s", TENANT_RESOURCE_KEY, tenant2.key);
+            assertTrue(permissions.containsKey(tenantObjectKey));
+            assertTrue(permissions.containsKey(tenant2ObjectKey));
+            assertTrue(permissions.get(tenantObjectKey).permissions.contains("document:read"));
+            assertTrue(permissions.get(tenant2ObjectKey).permissions.contains("document:create"));
 
             // change the user role
             permit.api.users.assignRole(user.key, admin.key, tenant.key);
@@ -213,6 +290,7 @@ public class RbacE2ETest extends PermitE2ETestBase {
                 permit.api.roles.delete("admin");
                 permit.api.roles.delete("viewer");
                 permit.api.tenants.delete("tesla");
+                permit.api.tenants.delete("twitter");
                 permit.api.users.delete("auth0|elon");
                 assertEquals(permit.api.resources.list().length, 0);
                 assertEquals(permit.api.roles.list().length, 0);

@@ -1,5 +1,6 @@
 package io.permit.sdk.enforcement;
 
+import com.google.common.primitives.Booleans;
 import com.google.gson.Gson;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.HttpLoggingInterceptor;
@@ -7,7 +8,11 @@ import io.permit.sdk.util.Context;
 import io.permit.sdk.util.ContextStore;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -26,7 +31,7 @@ class EnforcerInput {
     public final User user;
     public final String action;
     public final Resource resource;
-    public final HashMap<String, Object> context;
+    public final Context context;
 
     /**
     * Constructs a new instance of the {@code EnforcerInput} class with the specified data.
@@ -36,7 +41,7 @@ class EnforcerInput {
     * @param resource The resource on which the action is performed.
     * @param context  The context for the authorization check.
     */
-    EnforcerInput(User user, String action, Resource resource, HashMap<String, Object> context) {
+    EnforcerInput(User user, String action, Resource resource, Context context) {
         this.user = user;
         this.action = action;
         this.resource = resource;
@@ -72,6 +77,48 @@ class OpaResult {
     * @param allow {@code true} if the action is allowed, {@code false} otherwise.
     */
     OpaResult(Boolean allow) {
+        this.allow = allow;
+    }
+}
+
+
+/**
+ * The {@code TenantResult} class represents a single tenant returned by the checkInAllTenants query.
+ */
+class TenantResult {
+    public final Boolean allow;
+
+    public final TenantDetails tenant;
+
+    public TenantResult(Boolean allow, TenantDetails tenant) {
+        this.allow = allow;
+        this.tenant = tenant;
+    }
+}
+
+/**
+ * The {@code AllTenantsResult} class represents the result of the checkInAllTenants query.
+ */
+class AllTenantsResult {
+    public final TenantResult[] allowed_tenants;
+
+    public AllTenantsResult(TenantResult[] allowed_tenants) {
+        this.allowed_tenants = allowed_tenants;
+    }
+}
+
+/**
+ * The {@code OpaBulkResult} class represents the result of a Permit bulk enforcement check returned by the policy agent.
+ */
+class OpaBulkResult {
+    public final List<OpaResult> allow;
+
+    /**
+     * Constructs a new instance of the {@code OpaResult} class with the specified result.
+     *
+     * @param allow {@code true} if the action is allowed, {@code false} otherwise.
+     */
+    OpaBulkResult(List<OpaResult> allow) {
         this.allow = allow;
     }
 }
@@ -258,7 +305,214 @@ public class Enforcer implements IEnforcerApi {
     }
 
     @Override
+    public boolean[] bulkCheck(List<CheckQuery> checks) throws IOException {
+        List<EnforcerInput> inputs = new ArrayList<>();
+
+        for (CheckQuery check: checks) {
+            Resource normalizedResource = check.resource.normalize(this.config);
+            inputs.add(new EnforcerInput(check.user, check.action, normalizedResource, check.context));
+        }
+
+        // request body
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(inputs);
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+
+        // create the request
+        String url = String.format("%s/allowed/bulk", this.config.getPdpAddress());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+                .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                String errorMessage = String.format(
+                        "Error in %s: got unexpected status code %d",
+                        bulkCheckRepr(inputs),
+                        response.code()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            ResponseBody responseBody = response.body();
+            if (responseBody == null) {
+                String errorMessage = String.format(
+                        "Error in %s: got empty response",
+                        bulkCheckRepr(inputs)
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+
+            String responseString = responseBody.string();
+            OpaBulkResult result = gson.fromJson(responseString, OpaBulkResult.class);
+            if (this.config.isDebugMode()) {
+                for (int i = 0; i < result.allow.size(); i++) {
+                    logger.info(String.format(
+                        "permit.bulkCheck[%d/%d](%s, %s, %s) = %s",
+                        i + 1,
+                        result.allow.size(),
+                        inputs.get(i).user,
+                        inputs.get(i).action,
+                        inputs.get(i).resource,
+                        result.allow.get(i).allow
+                    ));
+                }
+
+            }
+            return Booleans.toArray(result.allow.stream().map(r -> r.allow).collect(Collectors.toList()));
+        }
+    }
+
+    @Override
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException {
+        Resource normalizedResource = resource.normalize(this.config);
+        Context queryContext = this.contextStore.getDerivedContext(context);
+
+        EnforcerInput input = new EnforcerInput(
+                user,
+                action,
+                normalizedResource,
+                queryContext
+        );
+
+        // request body
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(input);
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+
+        // create the request
+        String url = String.format("%s/allowed/all-tenants", this.config.getPdpAddress());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+                .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                String errorMessage = String.format(
+                        "Error in permit.checkInAllTenants(%s, %s, %s): got unexpected status code %d",
+                        user.toString(),
+                        action,
+                        resource,
+                        response.code()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            ResponseBody responseBody = response.body();
+            if (responseBody == null) {
+                String errorMessage = String.format(
+                        "Error in permit.checkInAllTenants(%s, %s, %s): got empty response",
+                        user,
+                        action,
+                        resource
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            String responseString = responseBody.string();
+            AllTenantsResult result = gson.fromJson(responseString, AllTenantsResult.class);
+            List<TenantDetails> tenants = Arrays.stream(result.allowed_tenants).map(r -> r.tenant).collect(Collectors.toList());
+            if (this.config.isDebugMode()) {
+                logger.info(String.format(
+                        "permit.checkInAllTenants(%s, %s, %s) => allowed in: [%s]",
+                        user,
+                        action,
+                        resource,
+                        tenants.stream().map(t -> t.key).collect(Collectors.joining(", "))
+                ));
+            }
+            return tenants;
+        }
+    }
+
+    @Override
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException {
+        return checkInAllTenants(user, action, resource, new Context());
+    }
+
+    @Override
+    public UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException {
+        // request body
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(input);
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+
+        // create the request
+        String url = String.format("%s/user-permissions", this.config.getPdpAddress());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+                .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                String errorMessage = String.format(
+                        "Error in permit.getUserPermissions(%s, %s, %s, %s): got unexpected status code %d",
+                        input.user.toString(),
+                        input.tenants.toString(),
+                        input.resource_types.toString(),
+                        input.resources.toString(),
+                        response.code()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            ResponseBody responseBody = response.body();
+            if (responseBody == null) {
+                String errorMessage = String.format(
+                        "Error in permit.getUserPermissions(%s, %s, %s, %s): got empty response",
+                        input.user.toString(),
+                        input.tenants.toString(),
+                        input.resource_types.toString(),
+                        input.resources.toString()
+                );
+                logger.error(errorMessage);
+                throw new IOException(errorMessage);
+            }
+            String responseString = responseBody.string();
+            UserPermissions result = gson.fromJson(responseString, UserPermissions.class);
+            if (this.config.isDebugMode()) {
+                logger.info(String.format(
+                        "permit.getUserPermissions(%s, %s, %s, %s) => returned %d permissions on %d objects",
+                        input.user.toString(),
+                        input.tenants != null ? input.tenants.toString() : "null",
+                        input.resource_types != null ? input.resource_types.toString() : "null",
+                        input.resources != null ? input.resources.toString() : "null",
+                        result.values().stream().map(obj -> obj.permissions.size()).reduce(0, Integer::sum),
+                        result.keySet().size()
+                ));
+            }
+            return result;
+        }
+    }
+
+    @Override
     public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException {
         return this.checkUrl(user, httpMethod, url, tenant, new Context());
+    }
+
+    private String bulkCheckRepr(List<EnforcerInput> inputs) {
+        return String.format(
+            "permit.bulkCheck(%s)",
+            inputs.stream().map(i -> String.format(
+                    "%s, %s, %s, %s",
+                    i.user,
+                    i.action,
+                    i.resource,
+                    i.context
+            )).collect(Collectors.toList())
+        );
     }
 }

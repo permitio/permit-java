@@ -4,16 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.permit.sdk.api.ApiClient;
 import io.permit.sdk.api.ElementsApi;
-import io.permit.sdk.enforcement.Enforcer;
-import io.permit.sdk.enforcement.IEnforcerApi;
-import io.permit.sdk.enforcement.Resource;
-import io.permit.sdk.enforcement.User;
+import io.permit.sdk.enforcement.*;
 import io.permit.sdk.util.Context;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * The {@code Permit} class represents the main entry point for interacting with the Permit.io SDK.
@@ -136,5 +134,25 @@ public class Permit implements IEnforcerApi {
     @Override
     public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException {
         return this.enforcer.checkUrl(user, httpMethod, url, tenant);
+    }
+
+    @Override
+    public boolean[] bulkCheck(List<CheckQuery> checks) throws IOException {
+        return this.enforcer.bulkCheck(checks);
+    }
+
+    @Override
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException {
+        return this.enforcer.checkInAllTenants(user, action, resource, context);
+    }
+
+    @Override
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException {
+        return this.enforcer.checkInAllTenants(user, action, resource);
+    }
+
+    @Override
+    public UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException {
+        return this.enforcer.getUserPermissions(input);
     }
 }
