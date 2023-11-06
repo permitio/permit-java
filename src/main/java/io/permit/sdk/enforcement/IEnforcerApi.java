@@ -1,5 +1,6 @@
 package io.permit.sdk.enforcement;
 
+import io.permit.sdk.api.PermitApiError;
 import io.permit.sdk.util.Context;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public interface IEnforcerApi {
      * @return `true` if the user is authorized, `false` otherwise.
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
-    boolean check(User user, String action, Resource resource, Context context) throws IOException;
+    boolean check(User user, String action, Resource resource, Context context) throws IOException, PermitApiError;
 
     /**
      * Checks if a `user` is authorized to perform an `action` on a `resource` without additional context
@@ -27,7 +28,7 @@ public interface IEnforcerApi {
      * @return `true` if the user is authorized, `false` otherwise.
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
-    boolean check(User user, String action, Resource resource) throws IOException;
+    boolean check(User user, String action, Resource resource) throws IOException, PermitApiError;
 
     /**
      * Performs a permission check on a (resource, action) pair that are represented by an HTTP endpoint.
@@ -41,7 +42,7 @@ public interface IEnforcerApi {
      * @return `true` if the user is authorized, `false` otherwise.
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
-    boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException;
+    boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException, PermitApiError;
 
     /**
      * Performs a permission check on a (resource, action) pair that are represented by an HTTP endpoint.
@@ -57,7 +58,7 @@ public interface IEnforcerApi {
      * @return `true` if the user is authorized, `false` otherwise.
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
-    boolean checkUrl(User user, String httpMethod, String url, String tenant, Context context) throws IOException;
+    boolean checkUrl(User user, String httpMethod, String url, String tenant, Context context) throws IOException, PermitApiError;
 
     /**
      * Runs multiple permission checks in a single HTTP Request (Bulk Check).
@@ -66,7 +67,7 @@ public interface IEnforcerApi {
      * @return array containing `true` if the user is authorized, `false` otherwise for each check request.
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
-    boolean[] bulkCheck(List<CheckQuery> checks) throws IOException;
+    boolean[] bulkCheck(List<CheckQuery> checks) throws IOException, PermitApiError;
 
     /**
      * Checks if a `user` is authorized to perform an `action` on a `resource` (with `context`) across all tenants.
@@ -79,7 +80,7 @@ public interface IEnforcerApi {
      * @return List of TenantDetails objects, representing the tenants in which the action is allowed.
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
-    List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException;
+    List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException, PermitApiError;
 
     /**
      * Checks if a `user` is authorized to perform an `action` on a `resource` across all tenants,
@@ -92,7 +93,7 @@ public interface IEnforcerApi {
      * @return List of TenantDetails objects, representing the tenants in which the action is allowed.
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
-    List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException;
+    List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException, PermitApiError;
 
     /**
      * list all the permissions granted to a user (by default in all tenants and for all objects).
@@ -101,5 +102,5 @@ public interface IEnforcerApi {
      * @return A UserPermissions object, that contains all the permissions granted to the user.
      * @throws IOException if an error occurs while sending the authorization request to the PDP.
      */
-    UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException;
+    UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException, PermitApiError;
 }

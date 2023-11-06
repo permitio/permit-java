@@ -4,6 +4,8 @@ import com.google.common.primitives.Booleans;
 import com.google.gson.Gson;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.HttpLoggingInterceptor;
+import io.permit.sdk.api.PermitApiError;
+import io.permit.sdk.openapi.models.ConditionSetRuleRead;
 import io.permit.sdk.util.Context;
 import io.permit.sdk.util.ContextStore;
 
@@ -145,6 +147,55 @@ public class Enforcer implements IEnforcerApi {
             .build();
     }
 
+    private <T> T callApiAndParseJson(Request request, String requestRepr, Class<T> modelClass) throws IOException, PermitApiError {
+        try (Response response = client.newCall(request).execute()) {
+            throwIfErrorResponseCode(response, requestRepr);
+            String responseString = processResponseBody(response, requestRepr);
+            return (new Gson()).fromJson(responseString, modelClass);
+        }
+    }
+
+    private void throwIfErrorResponseCode(Response response, String requestRepr) throws PermitApiError, IOException {
+        if (!response.isSuccessful()) {
+            String errorMessage = String.format(
+                "Error in %s: got unexpected status code %d",
+                requestRepr,
+                response.code()
+            );
+            String responseContent = "";
+
+            ResponseBody responseBody = response.body();
+            if (responseBody != null) {
+                responseContent = responseBody.string();
+                errorMessage = String.format(
+                    "%s and error: %s",
+                    errorMessage,
+                    responseContent
+                );
+            }
+
+            logger.error(errorMessage);
+            throw new PermitApiError(
+                    errorMessage,
+                    response.code(),
+                    responseContent
+            );
+        }
+    }
+
+    private String processResponseBody(Response response, String requestRepr) throws IOException, PermitApiError {
+        ResponseBody responseBody = response.body();
+        if (responseBody == null) {
+            String errorMessage = String.format(
+                    "Error in %s: got empty response",
+                    requestRepr
+            );
+            logger.error(errorMessage);
+            throw new IOException(errorMessage);
+        }
+        return responseBody.string();
+    }
+
     /**
      * Checks whether the specified user is allowed to perform the given action on the given resource
      * with the provided context.
@@ -157,7 +208,7 @@ public class Enforcer implements IEnforcerApi {
      * @throws IOException If an error occurs during the authorization check.
      */
     @Override
-    public boolean check(User user, String action, Resource resource, Context context) throws IOException {
+    public boolean check(User user, String action, Resource resource, Context context) throws IOException, PermitApiError {
         Resource normalizedResource = resource.normalize(this.config);
         Context queryContext = this.contextStore.getDerivedContext(context);
 
@@ -184,42 +235,22 @@ public class Enforcer implements IEnforcerApi {
             .addHeader("X-Tenant-ID", normalizedResource.getTenant()) // sharding key
             .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                String errorMessage = String.format(
-                    "Error in permit.check(%s, %s, %s): got unexpected status code %d",
-                    user.toString(),
-                    action,
-                    resource,
-                    response.code()
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                String errorMessage = String.format(
-                    "Error in permit.check(%s, %s, %s): got empty response",
-                    user,
-                    action,
-                    resource
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            String responseString = responseBody.string();
-            OpaResult result = gson.fromJson(responseString, OpaResult.class);
-            if (this.config.isDebugMode()) {
-                logger.info(String.format(
-                        "permit.check(%s, %s, %s) = %s",
-                        user,
-                        action,
-                        resource,
-                        result.allow.toString()
-                ));
-            }
-            return result.allow;
+        String requestRepr = String.format(
+                "permit.check(%s, %s, %s)",
+                user.toString(),
+                action,
+                resource
+        );
+
+        OpaResult result = this.callApiAndParseJson(request, requestRepr, OpaResult.class);
+        if (this.config.isDebugMode()) {
+            logger.info(String.format(
+                    "%s = %s",
+                    requestRepr,
+                    result.allow.toString()
+            ));
         }
+        return result.allow;
     }
 
     /**
@@ -233,12 +264,12 @@ public class Enforcer implements IEnforcerApi {
     * @throws IOException If an error occurs during the authorization check.
     */
     @Override
-    public boolean check(User user, String action, Resource resource) throws IOException {
+    public boolean check(User user, String action, Resource resource) throws IOException, PermitApiError {
         return this.check(user, action, resource, new Context());
     }
 
     @Override
-    public boolean checkUrl(User user, String httpMethod, String url, String tenant, Context context) throws IOException {
+    public boolean checkUrl(User user, String httpMethod, String url, String tenant, Context context) throws IOException, PermitApiError {
         CheckUrlInput input = new CheckUrlInput(
                 user,
                 httpMethod,
@@ -263,49 +294,27 @@ public class Enforcer implements IEnforcerApi {
                 .addHeader("X-Tenant-ID", tenant) // sharding key
                 .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                String errorMessage = String.format(
-                        "Error in permit.checkUrl(%s, %s, %s, %s): got unexpected status code %d",
-                        user.toString(),
-                        httpMethod,
-                        url,
-                        tenant,
-                        response.code()
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                String errorMessage = String.format(
-                        "Error in permit.check(%s, %s, %s, %s): got empty response",
-                        user,
-                        httpMethod,
-                        url,
-                        tenant
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            String responseString = responseBody.string();
-            OpaResult result = gson.fromJson(responseString, OpaResult.class);
-            if (this.config.isDebugMode()) {
-                logger.info(String.format(
-                        "permit.check(%s, %s, %s, %s) = %s",
-                        user,
-                        httpMethod,
-                        url,
-                        tenant,
-                        result.allow.toString()
-                ));
-            }
-            return result.allow;
+        String requestRepr = String.format(
+                "permit.checkUrl(%s, %s, %s, %s)",
+                user.toString(),
+                httpMethod,
+                url,
+                tenant
+        );
+
+        OpaResult result = this.callApiAndParseJson(request, requestRepr, OpaResult.class);
+        if (this.config.isDebugMode()) {
+            logger.info(String.format(
+                    "%s = %s",
+                    requestRepr,
+                    result.allow.toString()
+            ));
         }
+        return result.allow;
     }
 
     @Override
-    public boolean[] bulkCheck(List<CheckQuery> checks) throws IOException {
+    public boolean[] bulkCheck(List<CheckQuery> checks) throws IOException, PermitApiError {
         List<EnforcerInput> inputs = new ArrayList<>();
 
         for (CheckQuery check: checks) {
@@ -328,31 +337,12 @@ public class Enforcer implements IEnforcerApi {
                 .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
                 .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                String errorMessage = String.format(
-                        "Error in %s: got unexpected status code %d",
-                        bulkCheckRepr(inputs),
-                        response.code()
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                String errorMessage = String.format(
-                        "Error in %s: got empty response",
-                        bulkCheckRepr(inputs)
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
+        String requestRepr = bulkCheckRepr(inputs);
 
-            String responseString = responseBody.string();
-            OpaBulkResult result = gson.fromJson(responseString, OpaBulkResult.class);
-            if (this.config.isDebugMode()) {
-                for (int i = 0; i < result.allow.size(); i++) {
-                    logger.info(String.format(
+        OpaBulkResult result = this.callApiAndParseJson(request, requestRepr, OpaBulkResult.class);
+        if (this.config.isDebugMode()) {
+            for (int i = 0; i < result.allow.size(); i++) {
+                logger.info(String.format(
                         "permit.bulkCheck[%d/%d](%s, %s, %s) = %s",
                         i + 1,
                         result.allow.size(),
@@ -360,16 +350,15 @@ public class Enforcer implements IEnforcerApi {
                         inputs.get(i).action,
                         inputs.get(i).resource,
                         result.allow.get(i).allow
-                    ));
-                }
-
+                ));
             }
-            return Booleans.toArray(result.allow.stream().map(r -> r.allow).collect(Collectors.toList()));
+
         }
+        return Booleans.toArray(result.allow.stream().map(r -> r.allow).collect(Collectors.toList()));
     }
 
     @Override
-    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException {
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException, PermitApiError {
         Resource normalizedResource = resource.normalize(this.config);
         Context queryContext = this.contextStore.getDerivedContext(context);
 
@@ -395,52 +384,34 @@ public class Enforcer implements IEnforcerApi {
                 .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
                 .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                String errorMessage = String.format(
-                        "Error in permit.checkInAllTenants(%s, %s, %s): got unexpected status code %d",
-                        user.toString(),
-                        action,
-                        resource,
-                        response.code()
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                String errorMessage = String.format(
-                        "Error in permit.checkInAllTenants(%s, %s, %s): got empty response",
-                        user,
-                        action,
-                        resource
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            String responseString = responseBody.string();
-            AllTenantsResult result = gson.fromJson(responseString, AllTenantsResult.class);
-            List<TenantDetails> tenants = Arrays.stream(result.allowed_tenants).map(r -> r.tenant).collect(Collectors.toList());
-            if (this.config.isDebugMode()) {
-                logger.info(String.format(
-                        "permit.checkInAllTenants(%s, %s, %s) => allowed in: [%s]",
-                        user,
-                        action,
-                        resource,
-                        tenants.stream().map(t -> t.key).collect(Collectors.joining(", "))
-                ));
-            }
-            return tenants;
+        String requestRepr = String.format(
+                "permit.checkInAllTenants(%s, %s, %s)",
+                user.toString(),
+                action,
+                resource
+        );
+
+        AllTenantsResult result = this.callApiAndParseJson(request, requestRepr, AllTenantsResult.class);
+        List<TenantDetails> tenants = Arrays.stream(result.allowed_tenants).map(r -> r.tenant).collect(Collectors.toList());
+        if (this.config.isDebugMode()) {
+            logger.info(String.format(
+                    "permit.checkInAllTenants(%s, %s, %s) => allowed in: [%s]",
+                    user,
+                    action,
+                    resource,
+                    tenants.stream().map(t -> t.key).collect(Collectors.joining(", "))
+            ));
         }
+        return tenants;
     }
 
     @Override
-    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException {
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException, PermitApiError {
         return checkInAllTenants(user, action, resource, new Context());
     }
 
     @Override
-    public UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException {
+    public UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException, PermitApiError {
         // request body
         Gson gson = new Gson();
         String requestBody = gson.toJson(input);
@@ -456,50 +427,28 @@ public class Enforcer implements IEnforcerApi {
                 .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
                 .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                String errorMessage = String.format(
-                        "Error in permit.getUserPermissions(%s, %s, %s, %s): got unexpected status code %d",
-                        input.user.toString(),
-                        input.tenants.toString(),
-                        input.resource_types.toString(),
-                        input.resources.toString(),
-                        response.code()
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                String errorMessage = String.format(
-                        "Error in permit.getUserPermissions(%s, %s, %s, %s): got empty response",
-                        input.user.toString(),
-                        input.tenants.toString(),
-                        input.resource_types.toString(),
-                        input.resources.toString()
-                );
-                logger.error(errorMessage);
-                throw new IOException(errorMessage);
-            }
-            String responseString = responseBody.string();
-            UserPermissions result = gson.fromJson(responseString, UserPermissions.class);
-            if (this.config.isDebugMode()) {
-                logger.info(String.format(
-                        "permit.getUserPermissions(%s, %s, %s, %s) => returned %d permissions on %d objects",
-                        input.user.toString(),
-                        input.tenants != null ? input.tenants.toString() : "null",
-                        input.resource_types != null ? input.resource_types.toString() : "null",
-                        input.resources != null ? input.resources.toString() : "null",
-                        result.values().stream().map(obj -> obj.permissions.size()).reduce(0, Integer::sum),
-                        result.keySet().size()
-                ));
-            }
-            return result;
+        String requestRepr = String.format(
+                "permit.getUserPermissions(%s, %s, %s, %s)",
+                input.user.toString(),
+                input.tenants != null ? input.tenants.toString() : "null",
+                input.resource_types != null ? input.resource_types.toString() : "null",
+                input.resources != null ? input.resources.toString() : "null"
+        );
+
+        UserPermissions result = this.callApiAndParseJson(request, requestRepr, UserPermissions.class);
+        if (this.config.isDebugMode()) {
+            logger.info(String.format(
+                    "%s => returned %d permissions on %d objects",
+                    requestRepr,
+                    result.values().stream().map(obj -> obj.permissions.size()).reduce(0, Integer::sum),
+                    result.keySet().size()
+            ));
         }
+        return result;
     }
 
     @Override
-    public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException {
+    public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException, PermitApiError {
         return this.checkUrl(user, httpMethod, url, tenant, new Context());
     }
 
