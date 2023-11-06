@@ -448,6 +448,40 @@ public class Enforcer implements IEnforcerApi {
     }
 
     @Override
+    public List<TenantDetails> getUserTenants(GetUserTenantsQuery input) throws IOException, PermitApiError {
+        // request body
+        Gson gson = new Gson();
+        String requestBody = gson.toJson(input);
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+
+        // create the request
+        String url = String.format("%s/user-tenants", this.config.getPdpAddress());
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+                .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+                .build();
+
+        String requestRepr = String.format(
+                "permit.getUserTenants(%s)",
+                input.user.toString()
+        );
+
+        TenantDetails[] result = this.callApiAndParseJson(request, requestRepr, TenantDetails[].class);
+        List<TenantDetails> tenants = Arrays.stream(result).collect(Collectors.toList());
+        if (this.config.isDebugMode()) {
+            logger.info(String.format(
+                    "%s => allowed in: [%s]",
+                    requestRepr,
+                    tenants.stream().map(t -> t.key).collect(Collectors.joining(", "))
+            ));
+        }
+        return tenants;
+    }
+
+    @Override
     public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException, PermitApiError {
         return this.checkUrl(user, httpMethod, url, tenant, new Context());
     }
