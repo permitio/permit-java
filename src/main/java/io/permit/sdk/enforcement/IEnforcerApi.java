@@ -15,7 +15,8 @@ public interface IEnforcerApi {
      * @param resource The resource object representing the resource.
      * @param context The context object representing the context in which the action is performed.
      * @return `true` if the user is authorized, `false` otherwise.
-     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     boolean check(User user, String action, Resource resource, Context context) throws IOException, PermitApiError;
 
@@ -26,7 +27,8 @@ public interface IEnforcerApi {
      * @param action The action to be performed on the resource.
      * @param resource The resource object representing the resource.
      * @return `true` if the user is authorized, `false` otherwise.
-     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     boolean check(User user, String action, Resource resource) throws IOException, PermitApiError;
 
@@ -40,7 +42,8 @@ public interface IEnforcerApi {
      * @param url the url the user is calling, typically determines the resource.
      * @param tenant the tenant determines the scope of the permission check.
      * @return `true` if the user is authorized, `false` otherwise.
-     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException, PermitApiError;
 
@@ -56,7 +59,8 @@ public interface IEnforcerApi {
      * @param tenant the tenant determines the scope of the permission check.
      * @param context The context object representing the context in which the action is performed.
      * @return `true` if the user is authorized, `false` otherwise.
-     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     boolean checkUrl(User user, String httpMethod, String url, String tenant, Context context) throws IOException, PermitApiError;
 
@@ -65,7 +69,8 @@ public interface IEnforcerApi {
      *
      * @param checks The check requests, each containing user, action, resource and context.
      * @return array containing `true` if the user is authorized, `false` otherwise for each check request.
-     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     boolean[] bulkCheck(List<CheckQuery> checks) throws IOException, PermitApiError;
 
@@ -78,7 +83,8 @@ public interface IEnforcerApi {
      * @param resource The resource object representing the resource.
      * @param context  The context object representing the context in which the action is performed.
      * @return List of TenantDetails objects, representing the tenants in which the action is allowed.
-     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException, PermitApiError;
 
@@ -91,7 +97,8 @@ public interface IEnforcerApi {
      * @param action The action to be performed on the resource.
      * @param resource The resource object representing the resource.
      * @return List of TenantDetails objects, representing the tenants in which the action is allowed.
-     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException, PermitApiError;
 
@@ -100,7 +107,8 @@ public interface IEnforcerApi {
      *
      * @param input input to get user permissions api
      * @return A UserPermissions object, that contains all the permissions granted to the user.
-     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException, PermitApiError;
 
@@ -109,7 +117,8 @@ public interface IEnforcerApi {
      *
      * @param input input to get user tenants api
      * @return List of TenantDetails objects, representing the tenants in which the action is allowed.
-     * @throws IOException if an error occurs while sending the authorization request to the PDP.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     List<TenantDetails> getUserTenants(GetUserTenantsQuery input) throws IOException, PermitApiError;
 }

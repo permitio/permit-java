@@ -261,7 +261,8 @@ public class Enforcer implements IEnforcerApi {
     * @param action   The action to be performed.
     * @param resource The resource on which the action is performed.
     * @return {@code true} if the user is allowed to perform the action, {@code false} otherwise.
-    * @throws IOException If an error occurs during the authorization check.
+    * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+    * @throws IOException if could not read the content of the returned http response.
     */
     @Override
     public boolean check(User user, String action, Resource resource) throws IOException, PermitApiError {

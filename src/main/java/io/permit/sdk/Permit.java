@@ -105,7 +105,8 @@ public class Permit implements IEnforcerApi {
      * @param resource The resource object representing the resource.
      * @param context  The context object representing the context in which the action is performed.
      * @return {@code true} if the user is authorized, {@code false} otherwise.
-     * @throws IOException if an error occurs while checking the authorization.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     @Override
     public boolean check(User user, String action, Resource resource, Context context) throws IOException, PermitApiError {
@@ -120,7 +121,8 @@ public class Permit implements IEnforcerApi {
      * @param action   The action to be performed on the resource.
      * @param resource The resource object representing the resource.
      * @return {@code true} if the user is authorized, {@code false} otherwise.
-     * @throws IOException if an error occurs while checking the authorization.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     @Override
     public boolean check(User user, String action, Resource resource) throws IOException, PermitApiError {
