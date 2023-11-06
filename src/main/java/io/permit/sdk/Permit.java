@@ -160,7 +160,12 @@ public class Permit implements IEnforcerApi {
     }
 
     @Override
-    public List<TenantDetails> getUserTenants(GetUserTenantsQuery input) throws IOException, PermitApiError {
-        return this.enforcer.getUserTenants(input);
+    public List<TenantDetails> getUserTenants(User user, Context context) throws IOException, PermitApiError {
+        return this.enforcer.getUserTenants(user, context);
+    }
+
+    @Override
+    public List<TenantDetails> getUserTenants(User user) throws IOException, PermitApiError {
+        return this.enforcer.getUserTenants(user);
     }
 }

@@ -115,10 +115,21 @@ public interface IEnforcerApi {
     /**
      * list all the tenants the user is associated with.
      *
-     * @param input input to get user tenants api
+     * @param user The user object representing the user.
+     * @param context  additional context to OPA
      * @return List of TenantDetails objects, representing the tenants in which the action is allowed.
      * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
      * @throws IOException if could not read the content of the returned http response.
      */
-    List<TenantDetails> getUserTenants(GetUserTenantsQuery input) throws IOException, PermitApiError;
+    List<TenantDetails> getUserTenants(User user, Context context) throws IOException, PermitApiError;
+
+    /**
+     * list all the tenants the user is associated with.
+     *
+     * @param user The user object representing the user.
+     * @return List of TenantDetails objects, representing the tenants in which the action is allowed.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
+     */
+    List<TenantDetails> getUserTenants(User user) throws IOException, PermitApiError;
 }

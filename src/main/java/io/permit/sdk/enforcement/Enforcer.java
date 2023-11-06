@@ -448,8 +448,7 @@ public class Enforcer implements IEnforcerApi {
         return result;
     }
 
-    @Override
-    public List<TenantDetails> getUserTenants(GetUserTenantsQuery input) throws IOException, PermitApiError {
+    private List<TenantDetails> getUserTenants(GetUserTenantsQuery input) throws IOException, PermitApiError {
         // request body
         Gson gson = new Gson();
         String requestBody = gson.toJson(input);
@@ -480,6 +479,16 @@ public class Enforcer implements IEnforcerApi {
             ));
         }
         return tenants;
+    }
+
+    @Override
+    public List<TenantDetails> getUserTenants(User user) throws IOException, PermitApiError {
+        return this.getUserTenants(new GetUserTenantsQuery(user));
+    }
+
+    @Override
+    public List<TenantDetails> getUserTenants(User user, Context context) throws IOException, PermitApiError {
+        return this.getUserTenants(new GetUserTenantsQuery(user, context));
     }
 
     @Override
