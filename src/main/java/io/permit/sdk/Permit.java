@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.permit.sdk.api.ApiClient;
 import io.permit.sdk.api.ElementsApi;
+import io.permit.sdk.api.PermitApiError;
 import io.permit.sdk.enforcement.*;
 import io.permit.sdk.util.Context;
 
@@ -104,10 +105,11 @@ public class Permit implements IEnforcerApi {
      * @param resource The resource object representing the resource.
      * @param context  The context object representing the context in which the action is performed.
      * @return {@code true} if the user is authorized, {@code false} otherwise.
-     * @throws IOException if an error occurs while checking the authorization.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     @Override
-    public boolean check(User user, String action, Resource resource, Context context) throws IOException {
+    public boolean check(User user, String action, Resource resource, Context context) throws IOException, PermitApiError {
         return this.enforcer.check(user, action, resource, context);
     }
 
@@ -119,40 +121,51 @@ public class Permit implements IEnforcerApi {
      * @param action   The action to be performed on the resource.
      * @param resource The resource object representing the resource.
      * @return {@code true} if the user is authorized, {@code false} otherwise.
-     * @throws IOException if an error occurs while checking the authorization.
+     * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
+     * @throws IOException if could not read the content of the returned http response.
      */
     @Override
-    public boolean check(User user, String action, Resource resource) throws IOException {
+    public boolean check(User user, String action, Resource resource) throws IOException, PermitApiError {
         return this.enforcer.check(user, action, resource);
     }
 
     @Override
-    public boolean checkUrl(User user, String httpMethod, String url, String tenant, Context context) throws IOException {
+    public boolean checkUrl(User user, String httpMethod, String url, String tenant, Context context) throws IOException, PermitApiError {
         return this.enforcer.checkUrl(user, httpMethod, url, tenant, context);
     }
 
     @Override
-    public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException {
+    public boolean checkUrl(User user, String httpMethod, String url, String tenant) throws IOException, PermitApiError {
         return this.enforcer.checkUrl(user, httpMethod, url, tenant);
     }
 
     @Override
-    public boolean[] bulkCheck(List<CheckQuery> checks) throws IOException {
+    public boolean[] bulkCheck(List<CheckQuery> checks) throws IOException, PermitApiError {
         return this.enforcer.bulkCheck(checks);
     }
 
     @Override
-    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException {
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource, Context context) throws IOException, PermitApiError {
         return this.enforcer.checkInAllTenants(user, action, resource, context);
     }
 
     @Override
-    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException {
+    public List<TenantDetails> checkInAllTenants(User user, String action, Resource resource) throws IOException, PermitApiError {
         return this.enforcer.checkInAllTenants(user, action, resource);
     }
 
     @Override
-    public UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException {
+    public UserPermissions getUserPermissions(GetUserPermissionsQuery input) throws IOException, PermitApiError {
         return this.enforcer.getUserPermissions(input);
+    }
+
+    @Override
+    public List<TenantDetails> getUserTenants(User user, Context context) throws IOException, PermitApiError {
+        return this.enforcer.getUserTenants(user, context);
+    }
+
+    @Override
+    public List<TenantDetails> getUserTenants(User user) throws IOException, PermitApiError {
+        return this.enforcer.getUserTenants(user);
     }
 }

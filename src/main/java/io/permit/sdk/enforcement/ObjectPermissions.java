@@ -10,10 +10,12 @@ public class ObjectPermissions {
     public final TenantDetails tenant;
     public final ResourceDetails resource;
     public final List<String> permissions;
+    public final List<String> roles;
 
-    public ObjectPermissions(TenantDetails tenant, ResourceDetails resource, List<String> permissions) {
+    public ObjectPermissions(TenantDetails tenant, ResourceDetails resource, List<String> permissions, List<String> roles) {
         this.tenant = tenant;
         this.resource = resource;
         this.permissions = permissions;
+        this.roles = roles;
     }
 }

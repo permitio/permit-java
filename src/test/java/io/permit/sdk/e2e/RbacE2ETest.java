@@ -258,6 +258,16 @@ public class RbacE2ETest extends PermitE2ETestBase {
             assertTrue(permissions.get(tenantObjectKey).permissions.contains("document:read"));
             assertTrue(permissions.get(tenant2ObjectKey).permissions.contains("document:create"));
 
+            logger.info("testing 'get user tenants' on user 'elon'");
+            List<TenantDetails> userTenants = permit.getUserTenants(
+                    User.fromString("auth0|elon")
+            );
+            assertEquals(userTenants.size(), 2);
+            assertTrue(userTenants.get(0).key.equals(tenant.key) || userTenants.get(0).key.equals(tenant2.key));
+            assertTrue(userTenants.get(1).key.equals(tenant.key) || userTenants.get(1).key.equals(tenant2.key));
+            assertNotEquals(userTenants.get(0).key, userTenants.get(1).key);
+
+
             // change the user role
             permit.api.users.assignRole(user.key, admin.key, tenant.key);
             permit.api.users.unassignRole(user.key, viewer.key, tenant.key);
