@@ -1,3 +1,4 @@
+![Java.png](imgs/Java.png)
 # Java SDK for Permit.io
 
 Java SDK for interacting with the Permit.io full-stack permissions platform.
