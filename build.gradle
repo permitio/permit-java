@@ -17,6 +17,8 @@ plugins {
     id 'com.palantir.git-version' version '0.13.0'
     // auto release to maven central (skip sonatype manual nexus release process)
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+    // translate json schemas to java classes
+//    id "org.jsonschema2pojo" version "1.1.3"
 }
 
 // It is important to set the group and the version to the root project
@@ -33,6 +35,9 @@ repositories {
 }
 
 java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
     // sources are required by maven central in order to accept the package
     withSourcesJar()
     // javadoc jar is required by maven central in order to accept the package
@@ -41,9 +46,30 @@ java {
 
 // package dependencies
 dependencies {
-    implementation 'ch.qos.logback:logback-classic:1.2.10'
-    implementation 'ch.qos.logback:logback-core:1.2.10'
+    // swagger
+    implementation 'io.swagger:swagger-annotations:1.6.5'
+
+    // http client
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
+
+    // json serialization and deserialization
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'io.gsonfire:gson-fire:1.8.5'
+
+    // openapi annotations
+    implementation 'javax.ws.rs:jsr311-api:1.1.1'
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.3'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation "jakarta.annotation:jakarta.annotation-api:1.3.5"
+
+    // logger
+    implementation 'ch.qos.logback:logback-classic:1.4.12'
+    implementation 'ch.qos.logback:logback-core:1.4.12'
     implementation 'org.slf4j:slf4j-api:1.7.33'
+
+
 
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
@@ -51,11 +77,77 @@ dependencies {
     // These dependencies are used internally, and not exposed to consumers on their own compile classpath.
     // google standard java library
     implementation 'com.google.guava:guava:30.1.1-jre'
-    // json serialization and deserialization
-    implementation 'com.google.code.gson:gson:2.8.9'
-    // http client
-    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+
+
 }
+
+//jsonSchema2Pojo {
+//    // Location of the JSON Schema file(s). This may refer to a single file or a directory of files.
+//    source = files("schemas/")
+//
+//    // Target directory for generated Java source files. The plugin will add this directory to the
+//    // java source set so the compiler will find and compile the newly generated source files.
+//    targetDirectory = file("src/main/java")
+//
+//    // Package name used for generated Java classes (for types where a fully qualified name has not
+//    // been supplied in the schema using the 'javaType' property).
+//    targetPackage = 'io.permit.sdk.openapi.models'
+//
+//    // Whether to allow 'additional' properties to be supported in classes by adding a map to
+//    // hold these. This is true by default, meaning that the schema rule 'additionalProperties'
+//    // controls whether the map is added. Set this to false to globally disable additional properties.
+//    includeAdditionalProperties = false
+//
+//    // Whether to include a javax.annotation.Generated (Java 8 and lower) or
+//    // javax.annotation.processing.Generated (Java 9+) in on generated types (default true).
+//    // See also: targetVersion.
+//    includeGeneratedAnnotation = true
+//
+//    // Whether to use the 'title' property of the schema to decide the class name (if not
+//    // set to true, the filename and property names are used).
+//    useTitleAsClassname = true
+//
+//    // Whether to empty the target directory before generation occurs, to clear out all source files
+//    // that have been generated previously. <strong>Be warned</strong>, when activated this option
+//    // will cause jsonschema2pojo to <strong>indiscriminately delete the entire contents of the target
+//    // directory (all files and folders)</strong> before it begins generating sources.
+//    removeOldOutput = false
+//
+//    // Whether to generate builder-style methods of the form withXxx(value) (that return this),
+//    // alongside the standard, void-return setters.
+//    generateBuilders = true
+//
+//    // If set to true, then the gang of four builder pattern will be used to generate builders on
+//    // generated classes. Note: This property works in collaboration with generateBuilders.
+//    // If generateBuilders is false then this property will not do anything.
+//    useInnerClassBuilders = false
+//
+//    // Whether to include hashCode and equals methods in generated Java types.
+//    includeHashcodeAndEquals = false
+//
+//    // Whether to include a toString method in generated Java types.
+//    includeToString = false
+//
+//    // Whether to include getters or to omit these accessor methods and create public fields instead.
+//    includeGetters = false
+//
+//    // Whether to include setters or to omit these accessor methods and create public fields instead.
+//    includeSetters = false
+//
+//    // Whether to use java.util.Optional for getters on properties that are not required
+//    useOptionalForGetters = true
+//
+//    // Whether to generate constructors or not.
+//    includeConstructors = true
+//
+//    // Whether to include only 'required' fields in generated constructors
+//    constructorsRequiredPropertiesOnly = true
+//
+//    annotationStyle = 'gson'
+//
+//    // Whether to initialize Set and List fields as empty collections, or leave them as null.
+//    initializeCollections = false
+//}
 
 publishing {
     repositories {

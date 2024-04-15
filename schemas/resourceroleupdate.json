@@ -1,0 +1,51 @@
+{
+  "title": "ResourceRoleUpdate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the role"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "optional description string explaining what this role represents, or what permissions are granted to it."
+    },
+    "permissions": {
+      "title": "Permissions",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "list of action keys that define what actions this resource role is permitted to do"
+    },
+    "extends": {
+      "title": "Extends",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list."
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    },
+    "granted_to": {
+      "title": "Granted To",
+      "existingJavaType": "io.permit.sdk.openapi.models.DerivedRoleBlockEdit",
+      "description": "Derived role that inherit will be applied on this role"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "description": "the maintainer role can read from the repo and push changes",
+    "permissions": [
+      "push"
+    ]
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

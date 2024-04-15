@@ -1,0 +1,55 @@
+{
+  "title": "OrganizationReadWithAPIKey",
+  "required": [
+    "key",
+    "id",
+    "created_at",
+    "updated_at",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the organization"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the organization was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the organization was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the organization, usually it's your company's name."
+    },
+    "settings": {
+      "title": "Settings",
+      "type": "object",
+      "description": "the settings for this project"
+    },
+    "api_key_id": {
+      "title": "Api Key Id",
+      "type": "string"
+    },
+    "api_key_secret": {
+      "title": "Api Key Secret",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,40 @@
+{
+  "title": "ResourceActionCreate",
+  "required": [
+    "key",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "pattern": "^[A-Za-z0-9\\-_]+$",
+      "type": "string",
+      "description": "A URL-friendly name of the action (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the action."
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the action"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this action respresents in your system"
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this action. This metadata can be used to filter actions using query parameters with attr_ prefix",
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "key": "read",
+    "name": "read",
+    "description": "read a document"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

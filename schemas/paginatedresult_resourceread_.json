@@ -1,0 +1,31 @@
+{
+  "title": "PaginatedResult[ResourceRead]",
+  "required": [
+    "data",
+    "total_count"
+  ],
+  "type": "object",
+  "properties": {
+    "data": {
+      "title": "Data",
+      "type": "array",
+      "items": {
+        "$ref": "ResourceRead.json"
+      },
+      "description": "List of Resources"
+    },
+    "total_count": {
+      "title": "Total Count",
+      "minimum": 0.0,
+      "type": "integer"
+    },
+    "page_count": {
+      "title": "Page Count",
+      "minimum": 0.0,
+      "type": "integer",
+      "default": 0
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

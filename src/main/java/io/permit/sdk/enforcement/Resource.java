@@ -6,17 +6,37 @@ import java.util.HashMap;
 
 public class Resource {
     private String type;
-    private String id = null;
+    private String key = null;
     private String tenant = null;
-    private HashMap<String, String> attributes = null;
-    private HashMap<String, String> context = new HashMap<>();
+    private HashMap<String, Object> attributes = null;
+    private HashMap<String, Object> context = new HashMap<>();
 
     public Resource(Builder builder) {
         this.type = builder.type;
-        this.id = builder.id;
+        this.key = builder.key;
         this.tenant = builder.tenant;
         this.attributes = builder.attributes;
         this.context = builder.context;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public String getKey() {
+        return this.key;
+    }
+
+    public String getTenant() {
+        return this.tenant;
+    }
+
+    public HashMap<String, Object> getAttributes() {
+        return this.attributes;
+    }
+
+    public HashMap<String, Object> getContext() {
+        return this.context;
     }
 
     public static Resource fromString(String resourceString) {
@@ -24,7 +44,7 @@ public class Resource {
     }
 
     public String toString() {
-        return (this.id == null) ? String.format("%s:*", this.type) : String.format("%s:%s", this.type, this.id);
+        return (this.key == null) ? String.format("%s:*", this.type) : String.format("%s:%s", this.type, this.key);
     }
 
     public Resource normalize(PermitConfig config) {
@@ -34,14 +54,14 @@ public class Resource {
                 : this.tenant;
 
         // copy tenant from resource.tenant to resource.context.tenant (until we change RBAC policy)
-        HashMap<String, String> safeContext = new HashMap<>();
+        HashMap<String, Object> safeContext = new HashMap<>();
         safeContext.putAll(this.context);
         if (safeTenant != null && !this.context.containsKey("tenant")) {
             safeContext.put("tenant", safeTenant);
         }
 
         Resource normalizedResource = new Resource.Builder(this.type)
-                .withId(this.id)
+                .withKey(this.key)
                 .withTenant(safeTenant)
                 .withAttributes(this.attributes)
                 .withContext(safeContext)
@@ -52,10 +72,10 @@ public class Resource {
 
     public static class Builder {
         private String type;
-        private String id = null;
+        private String key = null;
         private String tenant = null;
-        private HashMap<String, String> attributes = null;
-        private HashMap<String, String> context = new HashMap<>();
+        private HashMap<String, Object> attributes = null;
+        private HashMap<String, Object> context = new HashMap<>();
 
         private final String resourceDelimiter = ":";
 
@@ -71,12 +91,12 @@ public class Resource {
             }
             this.type = parts[0];
             if (parts.length > 1) {
-                this.id = parts[1];
+                this.key = parts[1];
             }
         }
 
-        public Builder withId(String id) {
-            this.id = id;
+        public Builder withKey(String key) {
+            this.key = key;
             return this;
         }
 
@@ -85,12 +105,12 @@ public class Resource {
             return this;
         }
 
-        public Builder withAttributes(HashMap<String, String> attributes) {
+        public Builder withAttributes(HashMap<String, Object> attributes) {
             this.attributes = attributes;
             return this;
         }
 
-        public Builder withContext(HashMap<String, String> context) {
+        public Builder withContext(HashMap<String, Object> context) {
             this.context = context;
             return this;
         }

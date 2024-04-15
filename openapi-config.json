@@ -1,0 +1,7 @@
+{
+  "apiPackage": "io.permit.sdk.openapi.api",
+  "invokerPackage": "io.permit.sdk.openapi.client",
+  "modelPackage": "io.permit.sdk.openapi.model",
+  "serializationLibrary": "gson",
+  "legacyDiscriminatorBehavior": "true"
+}

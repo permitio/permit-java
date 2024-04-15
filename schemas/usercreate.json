@@ -1,0 +1,54 @@
+{
+  "title": "UserCreate",
+  "required": [
+    "key"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "pattern": "^[A-Za-z0-9|@+\\-\\._]+$",
+      "type": "string",
+      "description": "A unique id by which Permit will identify the user for permission checks."
+    },
+    "email": {
+      "title": "Email",
+      "type": "string",
+      "description": "The email of the user. If synced, will be unique inside the environment.",
+      "format": "email"
+    },
+    "first_name": {
+      "title": "First Name",
+      "type": "string",
+      "description": "First name of the user."
+    },
+    "last_name": {
+      "title": "Last Name",
+      "type": "string",
+      "description": "Last name of the user."
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "Arbitrary user attributes that will be used to enforce attribute-based access control policies.",
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "key": "user|892179821739812389327",
+    "email": "jane@coolcompany.com",
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "attributes": {
+      "department": "marketing",
+      "age": 30,
+      "subscription": {
+        "tier": "pro",
+        "expired": false
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

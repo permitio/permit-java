@@ -9,7 +9,7 @@ public class UserModel {
     public String firstName = null;
     public String lastName = null;
     public String email = null;
-    public HashMap<String, String> attributes = null;
+    public HashMap<String, Object> attributes = null;
     public String organizationId = null;
     public ArrayList<String> tenantIds = null;
 }

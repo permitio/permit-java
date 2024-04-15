@@ -1,0 +1,96 @@
+{
+  "title": "TenantRead",
+  "required": [
+    "key",
+    "id",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "created_at",
+    "updated_at",
+    "last_action_at",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A unique id by which Permit will identify the tenant. The tenant key must be url-friendly (slugified)."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the tenant"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the tenant belongs to."
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the tenant belongs to."
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the tenant belongs to."
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the tenant was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the tenant was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "last_action_at": {
+      "title": "Last Action At",
+      "type": "string",
+      "description": "Date and time when the tenant was last active (ISO_8601 format). In other words, this is the last time a permission check was done on a resource belonging to this tenant.",
+      "format": "date-time"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "A descriptive name for the tenant"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "an optional longer description of the tenant"
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "Arbitraty tenant attributes that will be used to enforce attribute-based access control policies.",
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z",
+    "last_action_at": "2019-08-24T14:15:22Z",
+    "key": "stripeinc",
+    "name": "Stripe Inc",
+    "attributes": {
+      "allowed_locations": [
+        "US",
+        "CA"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

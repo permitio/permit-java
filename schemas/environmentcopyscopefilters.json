@@ -1,0 +1,26 @@
+{
+  "title": "EnvironmentCopyScopeFilters",
+  "type": "object",
+  "properties": {
+    "include": {
+      "title": "Include",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Objects to include (use * as wildcard)",
+      "default": []
+    },
+    "exclude": {
+      "title": "Exclude",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Object to exclude (use * as wildcard)",
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

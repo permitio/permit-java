@@ -1,0 +1,30 @@
+{
+  "title": "UserRoleRemove",
+  "required": [
+    "role"
+  ],
+  "type": "object",
+  "properties": {
+    "role": {
+      "title": "Role",
+      "type": "string",
+      "description": "the role that will be unassigned (accepts either the role id or the role key)"
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string",
+      "description": "the tenant the role is associated with (accepts either the tenant id or the tenant key)"
+    },
+    "resource_instance": {
+      "title": "Resource Instance",
+      "type": "string",
+      "description": "the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "role": "editor",
+    "tenant": "google-inc"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

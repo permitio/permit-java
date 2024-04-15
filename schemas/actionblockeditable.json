@@ -1,0 +1,25 @@
+{
+  "title": "ActionBlockEditable",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "a more descriptive name for the action"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "optional description string explaining what this action represents in your system"
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "Arbitrary action attributes that can be used for filtering or enforcement of attribute-based access control policies.",
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

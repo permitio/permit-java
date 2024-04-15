@@ -1,0 +1,25 @@
+{
+  "title": "DerivedRole",
+  "required": [
+    "settings",
+    "rules"
+  ],
+  "type": "object",
+  "properties": {
+    "conditions": {
+      "title": "Conditions",
+      "type": "string"
+    },
+    "settings": {
+      "existingJavaType": "io.permit.sdk.openapi.models.DerivedRoleSettings"
+    },
+    "rules": {
+      "title": "Rules",
+      "type": "array",
+      "items": {
+        "$ref": "DerivedRoleRule.json"
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,45 @@
+{
+  "title": "Statistics",
+  "required": [
+    "roles",
+    "users",
+    "policies",
+    "resources",
+    "tenants",
+    "has_decision_logs"
+  ],
+  "type": "object",
+  "properties": {
+    "roles": {
+      "title": "Roles",
+      "minimum": 0.0,
+      "type": "integer"
+    },
+    "users": {
+      "title": "Users",
+      "minimum": 0.0,
+      "type": "integer"
+    },
+    "policies": {
+      "title": "Policies",
+      "minimum": 0.0,
+      "type": "integer"
+    },
+    "resources": {
+      "title": "Resources",
+      "minimum": 0.0,
+      "type": "integer"
+    },
+    "tenants": {
+      "title": "Tenants",
+      "minimum": 0.0,
+      "type": "integer"
+    },
+    "has_decision_logs": {
+      "title": "Has Decision Logs",
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

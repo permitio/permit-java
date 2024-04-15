@@ -1,0 +1,170 @@
+{
+  "title": "ResourceRead",
+  "required": [
+    "key",
+    "id",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "created_at",
+    "updated_at",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the resource"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the resource belongs to."
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the resource belongs to."
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the resource belongs to."
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the resource was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the resource was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the resource"
+    },
+    "urn": {
+      "title": "Urn",
+      "type": "string",
+      "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this resource respresents in your system"
+    },
+    "actions": {
+      "title": "Actions",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.ActionBlockRead>",
+      "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
+    },
+    "attributes": {
+      "title": "Attributes",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.AttributeBlockRead>",
+      "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies."
+    },
+    "roles": {
+      "title": "Roles",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.ResourceRoleRead>",
+      "description": "Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, etc."
+    },
+    "relations": {
+      "title": "Relations",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.RelationBlockRead>",
+      "description": "\n        A relations definition block, typically contained within a resource type definition block.\n        The relations represents the ways you can interact with a protected resource.\n        ",
+      "default": {}
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z",
+    "key": "repository",
+    "name": "Repository",
+    "urn": "prn:github:scm:repository",
+    "description": "a git repository stored on github",
+    "actions": {
+      "clone": {
+        "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
+      },
+      "read": {
+        "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+      },
+      "push": {
+        "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+      }
+    },
+    "roles": {
+      "contributor": {
+        "permissions": [
+          "read"
+        ],
+        "description": "the contributor role can only read from the repo"
+      },
+      "maintainer": {
+        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+        "key": "maintainer",
+        "name": "Maintainer",
+        "description": "the maintainer role can read from the repo and push changes",
+        "permissions": [
+          "push"
+        ],
+        "resource": "repo",
+        "granted_to": {
+          "id": "2a19e318-1965-4170-9045-a1c83bf2d821",
+          "users_with_role": [
+            {
+              "role": "Admin",
+              "on_resource": "organization",
+              "linked_by_relation": "owner",
+              "role_id": "bf01c795-c36a-4a3a-8cab-34253e9a9b25",
+              "resource_id": "b436cb2d-a0f9-4a59-a97c-57d8a2a61d49",
+              "relation_id": "d7fa434c-3c90-44ae-a811-e39a84337135"
+            }
+          ]
+        },
+        "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+        "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+        "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+        "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+        "created_at": "2019-08-24T14:15:22Z",
+        "updated_at": "2019-08-24T14:15:22Z"
+      }
+    },
+    "relations": {
+      "parent": {
+        "resource_id": "c3eb3be5-8bc5-4616-8e2f-0816717fade8",
+        "relation_name": "parent",
+        "resource": "parent-resource"
+      }
+    },
+    "attributes": {
+      "created": {
+        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+        "type": "time",
+        "description": "the time (timestamp) the repository was created"
+      },
+      "private": {
+        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+        "type": "bool",
+        "description": "whether the repo is private (if false, the repo is public)"
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

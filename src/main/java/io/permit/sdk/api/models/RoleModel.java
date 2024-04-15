@@ -7,8 +7,8 @@ public class RoleModel {
     public String id = null;
     public String name = null;
     public String description = null;
-    public HashMap<String, String> attributes = null;
-    public HashMap<String, String> settings = null;
+    public HashMap<String, Object> attributes = null;
+    public HashMap<String, Object> settings = null;
     public Boolean isBuiltIn = null;
     public ArrayList<PermissionModel> permissions = null;
 }

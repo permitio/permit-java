@@ -1,417 +1,299 @@
 package io.permit.sdk.api;
 
-import com.google.gson.Gson;
 import io.permit.sdk.PermitConfig;
-import io.permit.sdk.api.models.*;
-import io.permit.sdk.enforcement.User;
+import io.permit.sdk.api.models.CreateOrUpdateResult;
+import io.permit.sdk.openapi.models.*;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.List;
 
-interface IReadApis {
-    UserModel getUser(String userKey) throws IOException, PermitApiException;
-    RoleModel getRole(String roleKey) throws IOException, PermitApiException;
-    TenantModel getTenant(String tenantKey) throws IOException, PermitApiException;
-    RoleAssignmentList getAssignedRoles(String userKey, String tenantKey) throws IOException, PermitApiException;
-    RoleAssignmentList getAssignedRolesInAllTenants(String userKey) throws IOException, PermitApiException;
+interface IDeprecatedApis {
+    UserRead getUser(String userKey) throws IOException, PermitApiError, PermitContextError;
+    RoleRead getRole(String roleKey) throws IOException, PermitApiError, PermitContextError;
+    TenantRead getTenant(String tenantKey) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, @NotNull String tenantKey) throws IOException, PermitApiError, PermitContextError;
+    RoleAssignmentRead[] getAssignedRolesInAllTenants(@NotNull String userKey) throws IOException, PermitApiError, PermitContextError;
+    CreateOrUpdateResult<UserRead> syncUser(UserCreate userData) throws IOException, PermitApiError, PermitContextError;
+    void deleteUser(String userKey) throws IOException, PermitContextError, PermitApiError;
+    TenantRead createTenant(TenantCreate tenantData) throws IOException, PermitApiError, PermitContextError;
+    TenantRead updateTenant(String tenantKey, TenantUpdate tenantData) throws IOException, PermitApiError, PermitContextError;
+    void deleteTenant(String tenantKey) throws IOException, PermitContextError, PermitApiError;
+    RoleAssignmentRead assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError;
+    void unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitContextError, PermitApiError;
 }
 
-interface IWriteApis {
-    UserModel syncUser(User user) throws IOException, PermitApiException;
-    Boolean deleteUser(String userKey) throws IOException;
-    TenantModel createTenant(TenantInput tenant) throws IOException, PermitApiException;
-    TenantModel updateTenant(TenantInput tenant) throws IOException, PermitApiException;
-    Boolean deleteTenant(String tenantKey) throws IOException;
-    RoleAssignmentModel assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiException;
-    Boolean unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiException;
-    ResourceList syncResources(SyncedResources spec) throws IOException, PermitApiException;
-}
-
-public class ApiClient implements IReadApis, IWriteApis {
-    final static int HTTP_404_NOT_FOUND = 404;
-
+/**
+ * The {@code ApiClient} class provides a client for interacting with the Permit REST API.
+ * It encapsulates the HTTP client and provides methods for accessing different API endpoints.
+ */
+public class ApiClient implements IDeprecatedApis {
     final static Logger logger = LoggerFactory.getLogger(ApiClient.class);
-    private final OkHttpClient client = new OkHttpClient();
+    private final OkHttpClient client;
     private final PermitConfig config;
-    private final Headers headers;
-    private final String baseUrl;
 
+    /**
+     * The {@code ProjectsApi} instance for accessing project related API endpoints.
+     */
+    public final ProjectsApi projects;
+
+    /**
+     * The {@code EnvironmentsApi} instance for accessing environment related API endpoints.
+     */
+    public final EnvironmentsApi environments;
+
+    /**
+     * The {@code ResourcesApi} instance for accessing resource related API endpoints.
+     */
+    public final ResourcesApi resources;
+
+    /**
+     * The {@code ResourceActionsApi} instance for accessing resource actions related API endpoints.
+     */
+    public final ResourceActionsApi resourceActions;
+
+    /**
+     * The {@code ResourceActionGroupsApi} instance for accessing action group related API endpoints.
+     */
+    public final ResourceActionGroupsApi resourceActionGroups;
+
+    /**
+     * The {@code ResourceAttributesApi} instance for accessing resource attributes related API endpoints.
+     */
+    public final ResourceAttributesApi resourceAttributes;
+
+    /**
+     * The {@code ResourceRolesApi} instance for accessing Resource Roles.
+     */
+    public final ResourceRolesApi resourceRoles;
+
+    /**
+     * The {@code ResourceRelationsApi} instance for accessing Resource Relations.
+     */
+    public final ResourceRelationsApi resourceRelations;
+
+    /**
+     * The {@code ResourceInstancesApi} instance for accessing Resource Instances.
+     */
+    public final ResourceInstancesApi resourceInstances;
+
+    /**
+     * The {@code RolesApi} instance for accessing role related API endpoints.
+     */
+    public final RolesApi roles;
+
+    /**
+     * The {@code ConditionSetsApi} instance for accessing condition set related API endpoints.
+     */
+    public final ConditionSetsApi conditionSets;
+
+    /**
+     * The {@code TenantsApi} instance for accessing tenant related API endpoints.
+     */
+    public final TenantsApi tenants;
+
+    /**
+     * The {@code UsersApi} instance for accessing user related API endpoints.
+     */
+    public final UsersApi users;
+
+    /**
+     * The {@code RoleAssignmentsApi} instance for accessing role assignment related API endpoints.
+     */
+    public final RoleAssignmentsApi roleAssignments;
+
+    /**
+     * The {@code RelationshipTuplesApi} instance for accessing Relationship Tuples.
+     */
+    public final RelationshipTuplesApi relationshipTuples;
+
+    /**
+     * The {@code ConditionSetRulesApi} instance for accessing condition set rules related API endpoints.
+     */
+    public final ConditionSetRulesApi conditionSetRules;
+
+    /**
+     * The {@code ElementsApi} instance for accessing Permit Elements related API endpoints.
+     */
+    public final ElementsApi elements;
+
+
+    /**
+     * Constructs a new instance of the {@code ApiClient} class with the specified configuration.
+     *
+     * @param config The Permit SDK configuration.
+     */
     public ApiClient(PermitConfig config) {
         this.config = config;
-        this.headers = new Headers.Builder()
-            .add("Content-Type", "application/json")
-            .add("Authorization", String.format("Bearer %s", this.config.getToken()))
-            .build();
-        this.baseUrl = this.config.getPdpAddress();
-    }
-
-    private void throwIfErrorResponseCode(String requestRepr, Response response, String responseContent, List<Integer> expectedErrorCodes) throws PermitApiException {
-        String log = String.format("Received response: %s : status code %d : %s", requestRepr, response.code(), responseContent);
-        if (!response.isSuccessful() && this.config.isDebugMode()) {
-            this.logger.error(log);
-        } else {
-            this.logger.debug(log);
-        }
-        if (!response.isSuccessful() && !expectedErrorCodes.contains(response.code())) {
-            throw new PermitApiException(
-                String.format(
-                        "unexpected status code: %d for request: %s",
-                        response.code(),
-                        requestRepr
-                )
-            );
-        }
-    }
-
-    private void throwIfErrorResponseCode(String requestRepr, Response response, String responseContent) throws PermitApiException {
-        throwIfErrorResponseCode(requestRepr, response, responseContent, List.of());
-    }
-
-    @Override
-    public UserModel getUser(String userKey) throws IOException, PermitApiException {
-        String url = String.format("%s/cloud/users/%s", this.baseUrl, userKey);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .get()
+        this.client = new OkHttpClient.Builder()
+                .addInterceptor(new HttpLoggingInterceptor(logger, config))
                 .build();
 
-        String requestRepr = String.format("permit.api.getUser(%s)", userKey);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        try (Response response = client.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                throw new IOException("got empty response");
-            }
-            String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString, List.of(HTTP_404_NOT_FOUND));
-            if (response.code() == HTTP_404_NOT_FOUND) {
-                return null;
-            }
-            Gson gson = new Gson();
-            return gson.fromJson(responseString, UserModel.class);
-        }
+        this.projects = new ProjectsApi(this.client, this.config);
+        this.environments = new EnvironmentsApi(this.client, this.config);
+        this.resources = new ResourcesApi(this.client, this.config);
+        this.resourceActions = new ResourceActionsApi(this.client, this.config);
+        this.resourceActionGroups = new ResourceActionGroupsApi(this.client, this.config);
+        this.resourceAttributes = new ResourceAttributesApi(this.client, this.config);
+        this.resourceRoles = new ResourceRolesApi(this.client, this.config);
+        this.resourceRelations = new ResourceRelationsApi(this.client, this.config);
+        this.resourceInstances = new ResourceInstancesApi(this.client, this.config);
+        this.roles = new RolesApi(this.client, this.config);
+        this.conditionSets = new ConditionSetsApi(this.client, this.config);
+        this.tenants = new TenantsApi(this.client, this.config);
+        this.users = new UsersApi(this.client, this.config);
+        this.roleAssignments = new RoleAssignmentsApi(this.client, this.config);
+        this.relationshipTuples = new RelationshipTuplesApi(this.client, this.config);
+        this.conditionSetRules = new ConditionSetRulesApi(this.client, this.config);
+        this.elements = new ElementsApi(this.client, this.config);
     }
 
+    /**
+     * Gets a user by its key
+     *
+     * @deprecated replaced with permit.api.users.get()
+     * @see io.permit.sdk.api.UsersApi#get(String)
+     */
+    @Deprecated
     @Override
-    public RoleModel getRole(String roleKey) throws IOException, PermitApiException {
-        String url = String.format("%s/cloud/roles/%s", this.baseUrl, roleKey);
-        Request request = new Request.Builder()
-            .url(url)
-            .headers(this.headers)
-            .get()
-            .build();
-
-        String requestRepr = String.format("permit.api.getRole(%s)", roleKey);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        try (Response response = client.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                throw new IOException("got empty response");
-            }
-            String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString, List.of(HTTP_404_NOT_FOUND));
-            if (response.code() == HTTP_404_NOT_FOUND) {
-                return null;
-            }
-            Gson gson = new Gson();
-            return gson.fromJson(responseString, RoleModel.class);
-        }
+    public UserRead getUser(String userKey) throws IOException, PermitApiError, PermitContextError {
+        return this.users.get(userKey);
     }
 
+    /**
+     * Gets a role by its key
+     *
+     * @deprecated replaced with permit.api.users.get()
+     * @see io.permit.sdk.api.RolesApi#get(String)
+     */
+    @Deprecated
     @Override
-    public TenantModel getTenant(String tenantKey) throws IOException, PermitApiException {
-        String url = String.format("%s/cloud/tenants/%s", this.baseUrl, tenantKey);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .get()
-                .build();
-
-        String requestRepr = String.format("permit.api.getTenant(%s)", tenantKey);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        try (Response response = client.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                throw new IOException("got empty response");
-            }
-            String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString, List.of(HTTP_404_NOT_FOUND));
-            if (response.code() == HTTP_404_NOT_FOUND) {
-                return null;
-            }
-            Gson gson = new Gson();
-            return gson.fromJson(responseString, TenantModel.class);
-        }
+    public RoleRead getRole(String roleKey) throws IOException, PermitApiError, PermitContextError {
+        return this.roles.get(roleKey);
     }
 
+    /**
+     * Gets a role by its key
+     *
+     * @deprecated replaced with permit.api.users.get()
+     * @see io.permit.sdk.api.TenantsApi#get(String)
+     */
+    @Deprecated
     @Override
-    public RoleAssignmentList getAssignedRoles(@NotNull String userKey, String tenantKey) throws IOException, PermitApiException {
-        String url = String.format("%s/role_assignments?user=%s", this.baseUrl, userKey);
-        if (tenantKey != null) {
-            url = url + String.format("&tenant=%s", tenantKey);
-        }
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .get()
-                .build();
-
-        String requestRepr = String.format("permit.api.getAssignedRoles(user=%s, tenant=%s", userKey, tenantKey);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        try (Response response = client.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                throw new IOException("got empty response");
-            }
-            String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString);
-            Gson gson = new Gson();
-            return gson.fromJson(responseString, RoleAssignmentList.class);
-        }
+    public TenantRead getTenant(String tenantKey) throws IOException, PermitApiError, PermitContextError {
+        return this.tenants.get(tenantKey);
     }
 
+    /**
+     * Gets the roles assigned to a user in a specific tenant
+     *
+     * @deprecated replaced with permit.api.users.getAssignedRoles()
+     * @see io.permit.sdk.api.UsersApi#getAssignedRoles(String, String, int, int)
+     */
+    @Deprecated
     @Override
-    public RoleAssignmentList getAssignedRolesInAllTenants(String userKey) throws IOException, PermitApiException {
-        return this.getAssignedRoles(userKey, null);
+    public RoleAssignmentRead[] getAssignedRoles(@NotNull String userKey, @NotNull String tenantKey) throws IOException, PermitApiError, PermitContextError {
+        return this.users.getAssignedRoles(userKey, tenantKey, 1, 100);
     }
 
+    /**
+     * Gets the roles assigned to a user in all tenants
+     *
+     * @deprecated replaced with permit.api.users.getAssignedRoles()
+     * @see io.permit.sdk.api.UsersApi#getAssignedRoles(String, String, int, int)
+     */
+    @Deprecated
     @Override
-    public UserModel syncUser(User user) throws IOException, PermitApiException {
-        // request body
-        Gson gson = new Gson();
-        String requestBody = gson.toJson(user);
-        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
-
-        // create the request
-        String url = String.format("%s/cloud/users", this.baseUrl);
-        Request request = new Request.Builder()
-            .url(url)
-            .headers(this.headers)
-            .put(body)
-            .build();
-
-        String requestRepr = String.format("permit.api.syncUser(%s)", requestBody);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        // send the request
-        try (Response response = client.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                throw new IOException("got empty response");
-            }
-            String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString);
-            return gson.fromJson(responseString, UserModel.class);
-        }
+    public RoleAssignmentRead[] getAssignedRolesInAllTenants(@NotNull String userKey) throws IOException, PermitApiError, PermitContextError {
+        return this.users.getAssignedRoles(userKey, null, 1, 100);
     }
 
+    /**
+     * Syncs a user to the permissions system, i.e: creates the user if it's not already created, or updates the user in place.
+     * The user is identified by its key (a customer-side unique id that identifies the user).
+     *
+     * @deprecated replaced with permit.api.users.get()
+     * @see io.permit.sdk.api.UsersApi#sync(UserCreate)
+     */
+    @Deprecated
     @Override
-    public Boolean deleteUser(String userKey) throws IOException {
-        // create the request
-        String url = String.format("%s/cloud/users/%s", this.baseUrl, userKey);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .delete()
-                .build();
-
-        String requestRepr = String.format("permit.api.deleteUser(%s)", userKey);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        // send the request
-        try (Response response = client.newCall(request).execute()) {
-            logger.debug(String.format("Received response: %s : status code %d", requestRepr, response.code()));
-            return response.isSuccessful(); // return 204 on success, error codes otherwise
-        }
+    public CreateOrUpdateResult<UserRead> syncUser(UserCreate userData) throws IOException, PermitApiError, PermitContextError {
+        return this.users.sync(userData);
     }
 
+    /**
+     * Deletes a user from the permission system (this will delete the user from all tenants at once).
+     *
+     * @deprecated replaced with permit.api.users.delete()
+     * @see io.permit.sdk.api.UsersApi#delete(String)
+     */
+    @Deprecated
     @Override
-    public TenantModel createTenant(TenantInput tenant) throws IOException, PermitApiException {
-        NewTenant newTenant = new NewTenant();
-        newTenant.externalId = tenant.key;
-        newTenant.name = tenant.name;
-        if (tenant.description != null) {
-            newTenant.description = tenant.description;
-        }
-        // request body
-        Gson gson = new Gson();
-        String requestBody = gson.toJson(newTenant);
-        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
-
-        // create the request
-        String url = String.format("%s/cloud/tenants", this.baseUrl);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .put(body)
-                .build();
-
-        String requestRepr = String.format("permit.api.createTenant(%s)", requestBody);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        // send the request
-        try (Response response = client.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                throw new IOException("got empty response");
-            }
-            String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString);
-            return gson.fromJson(responseString, TenantModel.class);
-        }
+    public void deleteUser(String userKey) throws IOException, PermitContextError, PermitApiError {
+        this.users.delete(userKey);
     }
 
+    /**
+     * Creates a new tenant. 
+     * @throws PermitApiError If the Permit API returns a response with an error status code.
+     *
+     * @deprecated replaced with permit.api.tenants.create()
+     * @see io.permit.sdk.api.TenantsApi#create(TenantCreate) 
+     */
+    @Deprecated
     @Override
-    public TenantModel updateTenant(TenantInput tenant) throws IOException, PermitApiException {
-        NewTenant newTenant = new NewTenant();
-        newTenant.name = tenant.name;
-        if (tenant.description != null) {
-            newTenant.description = tenant.description;
-        }
-        // request body
-        Gson gson = new Gson();
-        String requestBody = gson.toJson(newTenant);
-        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
-
-        // create the request
-        String url = String.format("%s/cloud/tenants/%s", this.baseUrl, tenant.key);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .patch(body)
-                .build();
-
-        String requestRepr = String.format("permit.api.updateTenant(%s)", requestBody);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        // send the request
-        try (Response response = client.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                throw new IOException("got empty response");
-            }
-            String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString);
-            return gson.fromJson(responseString, TenantModel.class);
-        }
+    public TenantRead createTenant(TenantCreate tenantData) throws IOException, PermitApiError, PermitContextError {
+        return this.tenants.create(tenantData);
     }
 
+    /**
+     * Updates a tenant.
+     *
+     * @deprecated replaced with permit.api.tenants.update()
+     * @see io.permit.sdk.api.TenantsApi#update(String, TenantUpdate)
+     */
+    @Deprecated
     @Override
-    public Boolean deleteTenant(String tenantKey) throws IOException {
-        // create the request
-        String url = String.format("%s/cloud/tenants/%s", this.baseUrl, tenantKey);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .delete()
-                .build();
-
-        String requestRepr = String.format("permit.api.deleteTenant(%s)", tenantKey);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        // send the request
-        try (Response response = client.newCall(request).execute()) {
-            logger.debug(String.format("Received response: %s : status code %d", requestRepr, response.code()));
-            return response.isSuccessful(); // return 204 on success, error codes otherwise
-        }
+    public TenantRead updateTenant(String tenantKey, TenantUpdate tenantData) throws IOException, PermitApiError, PermitContextError {
+        return this.tenants.update(tenantKey, tenantData);
     }
 
+    /**
+     * Deletes a tenant from the system.
+     * All roles assigned to users in that tenants will be unassigned as a result.
+     *
+     * @deprecated replaced with permit.api.tenants.delete()
+     * @see io.permit.sdk.api.TenantsApi#delete(String)
+     */
+    @Deprecated
     @Override
-    public RoleAssignmentModel assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiException {
-        RoleAssignmentInput input = new RoleAssignmentInput();
-        input.user = userKey;
-        input.role = roleKey;
-        input.scope = tenantKey;
-
-        // request body
-        Gson gson = new Gson();
-        String requestBody = gson.toJson(input);
-        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
-
-        // create the request
-        String url = String.format("%s/cloud/role_assignments", this.baseUrl);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .post(body)
-                .build();
-
-        String requestRepr = String.format("permit.api.assignRole(%s)", requestBody);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        // send the request
-        try (Response response = client.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                throw new IOException("got empty response");
-            }
-            String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString);
-            return gson.fromJson(responseString, RoleAssignmentModel.class);
-        }
+    public void deleteTenant(String tenantKey) throws IOException, PermitContextError, PermitApiError {
+        this.tenants.delete(tenantKey);
     }
 
+    /**
+     * assigns a role to user in tenant, if not already assigned.
+     *
+     * @deprecated replaced with permit.api.users.assignRole()
+     * @see io.permit.sdk.api.UsersApi#assignRole(String, String, String)
+     */
+    @Deprecated
     @Override
-    public Boolean unassignRole(String userKey, String roleKey, String tenantKey) throws IOException {
-        // create the request
-        String url = String.format(
-                "%s/cloud/role_assignments?role=%s&user=%s&scope=%s",
-                this.baseUrl,
-                roleKey,
-                userKey,
-                tenantKey
-            );
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .delete()
-                .build();
-
-        String requestRepr = String.format("permit.api.unassignRole(%s,%s,%s)", userKey, roleKey, tenantKey);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        // send the request
-        try (Response response = client.newCall(request).execute()) {
-            return response.isSuccessful(); // return 204 on success, error codes otherwise
-        }
+    public RoleAssignmentRead assignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitApiError, PermitContextError {
+        return this.users.assignRole(userKey, roleKey, tenantKey);
     }
 
+    /**
+     * unassigns a role to user in tenant, if assigned.
+     *
+     * @deprecated replaced with permit.api.users.unassignRole()
+     * @see io.permit.sdk.api.UsersApi#unassignRole(String, String, String)
+     */
+    @Deprecated
     @Override
-    public ResourceList syncResources(SyncedResources spec) throws IOException, PermitApiException {
-        // request body
-        Gson gson = new Gson();
-        String requestBody = gson.toJson(spec);
-        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
-
-        // create the request
-        String url = String.format("%s/cloud/resources", this.baseUrl);
-        Request request = new Request.Builder()
-                .url(url)
-                .headers(this.headers)
-                .put(body)
-                .build();
-
-        String requestRepr = String.format("permit.api.syncResources(%s)", requestBody);
-        this.logger.debug(String.format("Sending request: %s", requestRepr));
-
-        // send the request
-        try (Response response = client.newCall(request).execute()) {
-            ResponseBody responseBody = response.body();
-            if (responseBody == null) {
-                throw new IOException("got empty response");
-            }
-            String responseString = responseBody.string();
-            throwIfErrorResponseCode(requestRepr, response, responseString);
-            return gson.fromJson(responseString, ResourceList.class);
-        }
+    public void unassignRole(String userKey, String roleKey, String tenantKey) throws IOException, PermitContextError, PermitApiError {
+        this.users.unassignRole(userKey, roleKey, tenantKey);
     }
 }

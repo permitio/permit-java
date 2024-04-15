@@ -1,0 +1,14 @@
+{
+  "title": "HTTPValidationError",
+  "type": "object",
+  "properties": {
+    "detail": {
+      "title": "Detail",
+      "type": "array",
+      "items": {
+        "$ref": "ValidationError.json"
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

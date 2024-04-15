@@ -1,0 +1,29 @@
+{
+  "title": "OrganizationCreate",
+  "required": [
+    "key",
+    "name"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "pattern": "^[A-Za-z0-9\\-_]+$",
+      "type": "string",
+      "description": "A URL-friendly name of the organization (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the organization."
+    },
+    "name": {
+      "title": "Name",
+      "pattern": "^[A-Za-z0-9\\.\\-\\_\\ ]+$",
+      "type": "string",
+      "description": "The name of the organization, usually it's your company's name."
+    },
+    "settings": {
+      "title": "Settings",
+      "type": "object",
+      "description": "the settings for this project"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

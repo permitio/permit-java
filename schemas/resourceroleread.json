@@ -1,0 +1,136 @@
+{
+  "title": "ResourceRoleRead",
+  "required": [
+    "name",
+    "key",
+    "id",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "resource_id",
+    "resource",
+    "created_at",
+    "updated_at"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the role"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "optional description string explaining what this role represents, or what permissions are granted to it."
+    },
+    "permissions": {
+      "title": "Permissions",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "list of action keys that define what actions this resource role is permitted to do"
+    },
+    "extends": {
+      "title": "Extends",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "list of role keys that define what roles this role extends. In other words: this role will automatically inherit all the permissions of the given roles in this list."
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "optional dictionary of key-value pairs that can be used to store arbitrary metadata about this role. This metadata can be used to filter role using query parameters with attr_ prefix, currently supports only 'equals' operator",
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    },
+    "granted_to": {
+      "title": "Granted To",
+      "existingJavaType": "io.permit.sdk.openapi.models.DerivedRoleBlockRead",
+      "description": "Derived role that inherit will be applied on this role"
+    },
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A URL-friendly name of the role (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the role."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the role"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the role belongs to."
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the role belongs to."
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the role belongs to."
+    },
+    "resource_id": {
+      "title": "Resource Id",
+      "type": "string",
+      "description": "Unique id of the resource that the role belongs to."
+    },
+    "resource": {
+      "title": "Resource",
+      "type": "string",
+      "description": "The unique resource key that the role belongs to."
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the role was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the role was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "key": "maintainer",
+    "name": "Maintainer",
+    "description": "the maintainer role can read from the repo and push changes",
+    "permissions": [
+      "push"
+    ],
+    "extends": [
+      "contributor"
+    ],
+    "resource": "repo",
+    "granted_to": {
+      "id": "2a19e318-1965-4170-9045-a1c83bf2d821",
+      "users_with_role": [
+        {
+          "role": "Admin",
+          "on_resource": "organization",
+          "linked_by_relation": "owner",
+          "role_id": "bf01c795-c36a-4a3a-8cab-34253e9a9b25",
+          "resource_id": "b436cb2d-a0f9-4a59-a97c-57d8a2a61d49",
+          "relation_id": "d7fa434c-3c90-44ae-a811-e39a84337135"
+        }
+      ]
+    },
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

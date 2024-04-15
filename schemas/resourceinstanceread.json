@@ -1,0 +1,100 @@
+{
+  "title": "ResourceInstanceRead",
+  "required": [
+    "key",
+    "resource",
+    "id",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "created_at",
+    "updated_at",
+    "resource_id"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it's unique on your end. The resource instance key must be url-friendly."
+    },
+    "tenant": {
+      "title": "Tenant",
+      "type": "string",
+      "description": "the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps."
+    },
+    "resource": {
+      "title": "Resource",
+      "type": "string",
+      "description": "the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`."
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the resource instance"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the resource instance belongs to."
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the resource instance belongs to."
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the resource instance belongs to."
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the resource instance was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the resource instance was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "resource_id": {
+      "title": "Resource Id",
+      "type": "string",
+      "description": "the id of the resource (type) of this resource instance."
+    },
+    "tenant_id": {
+      "title": "Tenant Id",
+      "type": "string",
+      "description": "the id of the tenant of this resource instance."
+    },
+    "attributes": {
+      "title": "Attributes",
+      "type": "object",
+      "description": "Arbitraty resource attributes that will be used to enforce attribute-based access control policies.",
+      "default": {},
+      "existingJavaType": "java.util.HashMap<String, Object>"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
+    "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z",
+    "key": "react",
+    "resource": "repository",
+    "tenant": "default",
+    "attributes": {
+      "private": "false",
+      "owner": "facebook"
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

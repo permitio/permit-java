@@ -1,0 +1,47 @@
+{
+  "title": "ResourceReplace",
+  "required": [
+    "name",
+    "actions"
+  ],
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the resource"
+    },
+    "urn": {
+      "title": "Urn",
+      "type": "string",
+      "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this resource respresents in your system"
+    },
+    "actions": {
+      "title": "Actions",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.ActionBlockEditable>",
+      "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
+    },
+    "attributes": {
+      "title": "Attributes",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.AttributeBlockEditable>",
+      "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies."
+    },
+    "roles": {
+      "title": "Roles",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.RoleBlockEditable>",
+      "description": "Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, base roles, etc."
+    },
+    "relations": {
+      "title": "Relations",
+      "existingJavaType": "java.util.HashMap<String, String>",
+      "description": "Relations to other resources. The key is the relation key, and the value is the related resource."
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

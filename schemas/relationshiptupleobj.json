@@ -1,0 +1,24 @@
+{
+  "title": "RelationshipTupleObj",
+  "required": [
+    "subject_str",
+    "relation_str",
+    "object_str"
+  ],
+  "type": "object",
+  "properties": {
+    "subject_str": {
+      "title": "Subject Str",
+      "type": "string"
+    },
+    "relation_str": {
+      "title": "Relation Str",
+      "type": "string"
+    },
+    "object_str": {
+      "title": "Object Str",
+      "type": "string"
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

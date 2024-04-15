@@ -1,0 +1,104 @@
+{
+  "title": "RelationRead",
+  "required": [
+    "subject_resource",
+    "key",
+    "name",
+    "id",
+    "organization_id",
+    "project_id",
+    "environment_id",
+    "created_at",
+    "updated_at",
+    "object_resource_id",
+    "object_resource",
+    "subject_resource_id"
+  ],
+  "type": "object",
+  "properties": {
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this relation respresents in your system"
+    },
+    "subject_resource": {
+      "title": "Subject Resource",
+      "type": "string",
+      "description": "The subject resource ID or key"
+    },
+    "key": {
+      "title": "Key",
+      "type": "string",
+      "description": "A URL-friendly name of the relation (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the relation."
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the relation"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string",
+      "description": "Unique id of the relation"
+    },
+    "organization_id": {
+      "title": "Organization Id",
+      "type": "string",
+      "description": "Unique id of the organization that the relation belongs to."
+    },
+    "project_id": {
+      "title": "Project Id",
+      "type": "string",
+      "description": "Unique id of the project that the relation belongs to."
+    },
+    "environment_id": {
+      "title": "Environment Id",
+      "type": "string",
+      "description": "Unique id of the environment that the relation belongs to."
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "description": "Date and time when the relation was created (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "title": "Updated At",
+      "type": "string",
+      "description": "Date and time when the relation was last updated/modified (ISO_8601 format).",
+      "format": "date-time"
+    },
+    "object_resource_id": {
+      "title": "Object Resource Id",
+      "type": "string",
+      "description": "The object resource id"
+    },
+    "object_resource": {
+      "title": "Object Resource",
+      "type": "string",
+      "description": "The object resource key"
+    },
+    "subject_resource_id": {
+      "title": "Subject Resource Id",
+      "type": "string",
+      "description": "The subject resource id"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "key": "parent",
+    "name": "parent",
+    "description": "parent relation",
+    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+    "object_resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+    "object_resource": "repo",
+    "subject_resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+    "subject_resource": "organization",
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

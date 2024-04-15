@@ -1,0 +1,19 @@
+{
+  "title": "ResourceAttributeUpdate",
+  "type": "object",
+  "properties": {
+    "type": {
+      "existingJavaType": "io.permit.sdk.openapi.models.AttributeType"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this attribute respresents in your system"
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "description": "whether or not the github repository is private"
+  },
+  "$schema": "http://json-schema.org/schema#"
+}

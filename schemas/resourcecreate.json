@@ -1,0 +1,94 @@
+{
+  "title": "ResourceCreate",
+  "required": [
+    "key",
+    "name",
+    "actions"
+  ],
+  "type": "object",
+  "properties": {
+    "key": {
+      "title": "Key",
+      "pattern": "^[A-Za-z0-9\\-_]+$",
+      "type": "string",
+      "description": "A URL-friendly name of the resource (i.e: slug). You will be able to query later using this key instead of the id (UUID) of the resource."
+    },
+    "name": {
+      "title": "Name",
+      "type": "string",
+      "description": "The name of the resource"
+    },
+    "urn": {
+      "title": "Urn",
+      "type": "string",
+      "description": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string",
+      "description": "An optional longer description of what this resource respresents in your system"
+    },
+    "actions": {
+      "title": "Actions",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.ActionBlockEditable>",
+      "description": "\n        A actions definition block, typically contained within a resource type definition block.\n        The actions represents the ways you can interact with a protected resource.\n        "
+    },
+    "attributes": {
+      "title": "Attributes",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.AttributeBlockEditable>",
+      "description": "Attributes that each resource of this type defines, and can be used in your ABAC policies."
+    },
+    "roles": {
+      "title": "Roles",
+      "existingJavaType": "java.util.HashMap<String, io.permit.sdk.openapi.models.RoleBlockEditable>",
+      "description": "Roles defined on this resource. The key is the role name, and the value contains the role properties such as granted permissions, base roles, etc."
+    },
+    "relations": {
+      "title": "Relations",
+      "existingJavaType": "java.util.HashMap<String, String>",
+      "description": "Relations to other resources. The key is the relation key, and the value is the related resource."
+    }
+  },
+  "additionalProperties": false,
+  "example": {
+    "key": "repository",
+    "name": "Repository",
+    "actions": {
+      "clone": {},
+      "read": {},
+      "push": {}
+    },
+    "roles": {
+      "contributor": {
+        "name": "contributor",
+        "permissions": [
+          "read"
+        ],
+        "description": "the contributor role can only read from the repo"
+      },
+      "maintainer": {
+        "name": "maintainer",
+        "permissions": [
+          "push"
+        ],
+        "extends": [
+          "contributor"
+        ]
+      }
+    },
+    "relations": {
+      "parent": "Organization"
+    },
+    "attributes": {
+      "created": {
+        "type": "time",
+        "description": "the time (timestamp) the repository was created"
+      },
+      "private": {
+        "type": "bool",
+        "description": "whether the repo is private (if false, the repo is public)"
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/schema#"
+}
