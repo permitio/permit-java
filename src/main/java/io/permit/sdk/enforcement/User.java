@@ -1,7 +1,9 @@
 package io.permit.sdk.enforcement;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import io.permit.sdk.openapi.models.UserRoleCreate;
 
 public class User {
     private String key;
@@ -9,6 +11,7 @@ public class User {
     private String lastName = null;
     private String email = null;
     private HashMap<String, Object> attributes = null;
+    private List<UserRoleCreate> roleAssignments = null;
 
     public User(Builder builder) {
         this.key = builder.key;
@@ -16,6 +19,7 @@ public class User {
         this.lastName = builder.lastName;
         this.email = builder.email;
         this.attributes = builder.attributes;
+        this.roleAssignments = builder.roleAssignments;
     }
 
     public String getKey() {
@@ -52,6 +56,7 @@ public class User {
         private String lastName = null;
         private String email = null;
         private HashMap<String, Object> attributes = null;
+        private List<UserRoleCreate> roleAssignments;
 
         public Builder(String userKey) {
             this.key = userKey;
@@ -74,6 +79,11 @@ public class User {
 
         public Builder withAttributes(HashMap<String, Object> attributes) {
             this.attributes = attributes;
+            return this;
+        }
+
+        public Builder withRoleAssignments(List<UserRoleCreate> roleAssignments) {
+            this.roleAssignments = roleAssignments;
             return this;
         }
 
