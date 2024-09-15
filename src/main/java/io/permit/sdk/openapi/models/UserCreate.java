@@ -2,7 +2,10 @@
 package io.permit.sdk.openapi.models;
 
 import java.util.HashMap;
+import java.util.List;
+
 import javax.annotation.Generated;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -62,7 +65,16 @@ public class UserCreate {
     @SerializedName("attributes")
     @Expose
     public HashMap<String, Object> attributes;
-
+    /**
+     * Role Assignments
+     * <p>
+     * List of roles to assign to the user in the environment.
+     * 
+     */
+    @SerializedName("role_assignments")
+    @Expose
+    public List<UserRoleCreate> roleAssignments;
+    
     /**
      * No args constructor for use in serialization
      * 
@@ -101,6 +113,11 @@ public class UserCreate {
 
     public UserCreate withAttributes(HashMap<String, Object> attributes) {
         this.attributes = attributes;
+        return this;
+    }
+
+    public UserCreate withRoleAssignments(List<UserRoleCreate> roleAssignments) {
+        this.roleAssignments = roleAssignments;
         return this;
     }
 

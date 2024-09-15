@@ -179,14 +179,21 @@ public class RebacE2ETest extends PermitE2ETestBase {
             new ShortDerivation("folder#commenter", "document#commenter", "parent"),
             new ShortDerivation("folder#editor", "document#editor", "parent")
     );
+
+    final List<UserRoleCreate> roleAssignments = Arrays.asList(
+        new UserRoleCreate("editor", "default")
+    );
+
     final UserCreate USER_PERMIT = new UserCreate()
             .withKey("asaf@permit.io")
             .withEmail("asaf@permit.io")
             .withFirstName("Asaf")
             .withLastName("Cohen")
+            .withRoleAssignments(roleAssignments)
             .withAttributes(new HashMap<String, Object>() {{
                 put("age", 35);
             }});
+            
     final UserCreate USER_CC = new UserCreate()
             .withKey("auth0|john")
             .withEmail("john@cocacola.com")
