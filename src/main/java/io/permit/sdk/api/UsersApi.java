@@ -252,7 +252,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
         try (Response response = client.newCall(request).execute()) {
             String responseString = processResponseBody(response);
             UserRead result = (new Gson()).fromJson(responseString, UserRead.class);
-            boolean created = (response.code() == 200); // TODO: fix response code to 201
+            boolean created = (response.code() == 201);
             return new CreateOrUpdateResult<UserRead>(result, created);
         }
     }
