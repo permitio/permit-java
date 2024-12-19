@@ -9,6 +9,7 @@ public class PermitConfig {
     // main config vars
     private final String token;
     private final String pdp;
+    private final String opa;
     private final String apiUrl;
     private final Boolean debugMode;
 
@@ -32,6 +33,7 @@ public class PermitConfig {
     private PermitConfig(Builder builder) {
         this.token = builder.token;
         this.pdp = builder.pdp;
+        this.opa = builder.opa;
         this.apiUrl = builder.apiUrl;
         this.debugMode = builder.debugMode;
         this.logLevel = builder.logLevel;
@@ -73,6 +75,15 @@ public class PermitConfig {
      */
     public String getPdpAddress() {
         return pdp;
+    }
+
+    /**
+     * Returns the URL of the OPA Inside Policy Decision Point (PDP) used to evaluate authorization queries (i.e: permission checks).
+     *
+     * @return The OPA URL.
+     */
+    public String getOpaAddress() {
+        return opa;
     }
 
      /**
@@ -194,6 +205,7 @@ public class PermitConfig {
         // main config vars
         private String token;
         private String pdp = "http://localhost:7766";
+        private String opa = "http://localhost:8181/v1/data/permit";
         private String apiUrl = "https://api.permit.io";
         private Boolean debugMode = false;
 
@@ -231,6 +243,17 @@ public class PermitConfig {
          */
         public Builder withPdpAddress(String pdp) {
             this.pdp = pdp;
+            return this;
+        }
+
+          /**
+         * Configures the Policy Decision Point (PDP) address.
+         *
+         * @param opa The PDP address to be set.
+         * @return The updated {@code Builder} object.
+         */
+        public Builder withOpaAddress(String opa) {
+            this.opa = opa;
             return this;
         }
 

@@ -37,6 +37,7 @@ repositories {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
+       // languageVersion = JavaLanguageVersion.of(17)
     }
     // sources are required by maven central in order to accept the package
     withSourcesJar()
