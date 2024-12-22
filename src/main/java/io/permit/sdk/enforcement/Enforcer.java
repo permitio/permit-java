@@ -1,29 +1,30 @@
 package io.permit.sdk.enforcement;
 
-import com.google.common.primitives.Booleans;
-import com.google.gson.Gson;
-import io.permit.sdk.PermitConfig;
-import io.permit.sdk.api.HttpLoggingInterceptor;
-import io.permit.sdk.api.PermitApiError;
-import io.permit.sdk.openapi.models.ConditionSetRuleRead;
-import io.permit.sdk.util.Context;
-import io.permit.sdk.util.ContextStore;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.primitives.Booleans;
+import com.google.gson.Gson;
+
+import io.permit.sdk.PermitConfig;
+import io.permit.sdk.api.HttpLoggingInterceptor;
+import io.permit.sdk.api.PermitApiError;
+import io.permit.sdk.util.Context;
+import io.permit.sdk.util.ContextStore;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
 * The {@code EnforcerInput} class represents the input data for the Permit PDP enforcement API.
@@ -446,6 +447,63 @@ public class Enforcer implements IEnforcerApi {
             ));
         }
         return result;
+    }
+
+
+    @Override
+    public UserPermissions getUserPermissionsFromOPA(GetUserPermissionsQuery input) throws IOException, PermitApiError {
+        // request body
+        Gson gson = new Gson();
+
+         // Inner map for the nested JSON
+        Map<String, Object> innerMap = new HashMap<>();
+        innerMap.put("user", input.user);
+        innerMap.put("tenants", input.tenants);
+        innerMap.put("resource_types", input.resource_types);
+        innerMap.put("resources", input.resources);
+        innerMap.put("context", input.context);
+
+        // Outer map wrapping the inner map
+        Map<String, Object> outerMap = new HashMap<>();
+        outerMap.put("input", innerMap);
+
+        // Serialize to JSON
+        String requestBody = gson.toJson(outerMap);
+
+        RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
+        String PERMISSIONS_PATH = "permit/user_permissions/permissions";
+        String url = String.format("%s/v1/data/%s", this.config.getOpaAddress(), PERMISSIONS_PATH);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", String.format("Bearer %s", this.config.getToken()))
+                .addHeader("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
+                .build();
+
+        String requestRepr = String.format(
+                "permit.getUserPermissions(%s, %s, %s, %s)",
+                input.user.toString(),
+                input.tenants != null ? input.tenants.toString() : "null",
+                input.resource_types != null ? input.resource_types.toString() : "null",
+                input.resources != null ? input.resources.toString() : "null"
+        );
+
+        UserPermissionsOpa result = this.callApiAndParseJson(request, requestRepr, UserPermissionsOpa.class);
+
+        UserPermissions userPermissions = new UserPermissions();
+        userPermissions.putAll(result.getResult()); 
+
+        if (this.config.isDebugMode()) {
+            logger.info(String.format(
+                    "%s => returned %d permissions on %d objects",
+                    requestRepr,
+                    userPermissions.values().stream().map(obj -> obj.permissions.size()).reduce(0, Integer::sum),
+                    userPermissions.keySet().size()
+            ));
+        }
+
+        return userPermissions;
     }
 
     private List<TenantDetails> getUserTenants(GetUserTenantsQuery input) throws IOException, PermitApiError {

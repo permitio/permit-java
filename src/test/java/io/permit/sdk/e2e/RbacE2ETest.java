@@ -36,7 +36,7 @@ public class RbacE2ETest extends PermitE2ETestBase {
     void testPermissionCheckRBAC() {
         // init the client
         Permit permit = new Permit(this.config);
-
+        Permit permitOpa = new Permit(this.opaConfig);
         try {
             // resource actions
             HashMap<String, ActionBlockEditable> actions = new HashMap<>();
@@ -250,7 +250,15 @@ public class RbacE2ETest extends PermitE2ETestBase {
                     User.fromString("auth0|elon")
                 )
             );
+
+            UserPermissions permissions_2 = permitOpa.getUserPermissionsFromOPA(
+                new GetUserPermissionsQuery(
+                    User.fromString("auth0|elon")
+                )
+            );
+
             assertEquals(permissions.keySet().size(), 2); // elon has access to 2 tenants
+            assertEquals(permissions_2.keySet().size(), 2); // elon has access to 2 tenants
             String tenantObjectKey = String.format("%s:%s", TENANT_RESOURCE_KEY, tenant.key);
             String tenant2ObjectKey = String.format("%s:%s", TENANT_RESOURCE_KEY, tenant2.key);
             assertTrue(permissions.containsKey(tenantObjectKey));

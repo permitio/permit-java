@@ -1,23 +1,26 @@
 package io.permit.sdk;
 
-import okhttp3.HttpUrl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import okhttp3.HttpUrl;
+
 public abstract class PermitE2ETestBase {
     protected final static Logger logger = LoggerFactory.getLogger(PermitE2ETestBase.class);
     protected final PermitConfig config;
+    protected final PermitConfig opaConfig;
     protected boolean skipTests = false;
     private final static int connectionTimeout = 10; // 3 seconds to give up on sidecar / API
 
     public PermitE2ETestBase() {
         final String token = System.getenv().getOrDefault("PDP_API_KEY", "");
         final String pdpAddress = System.getenv().getOrDefault("PDP_URL", "http://localhost:7766");
-        final String pdpControlPlane = System.getenv().getOrDefault("PDP_CONTROL_PLANE", "http://localhost:8000");
+        final String opaAddress = System.getenv().getOrDefault("OPA_URL", "http://localhost:8181");
+        final String pdpControlPlane = System.getenv().getOrDefault("PDP_CONTROL_PLANE", "https://api.permit.io");
 
         this.config = new PermitConfig.Builder(token)
             .withApiUrl(pdpControlPlane)
@@ -25,6 +28,13 @@ public abstract class PermitE2ETestBase {
             .withDebugMode(true)
             .build();
 
+        
+        this.opaConfig = new PermitConfig.Builder(token)
+            .withApiUrl(pdpControlPlane)
+            .withOpaAddress(opaAddress)
+            .withDebugMode(true)
+            .build();
+        
         HttpUrl apiUrl = HttpUrl.parse(config.getApiUrl());
         HttpUrl pdpUrl = HttpUrl.parse(config.getPdpAddress());
 
