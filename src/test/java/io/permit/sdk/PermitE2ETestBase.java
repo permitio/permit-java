@@ -19,7 +19,7 @@ public abstract class PermitE2ETestBase {
     public PermitE2ETestBase() {
         final String token = System.getenv().getOrDefault("PDP_API_KEY", "");
         final String pdpAddress = System.getenv().getOrDefault("PDP_URL", "http://localhost:7766");
-        final String opaAddress = System.getenv().getOrDefault("OPA_URL", "http://localhost:8181/v1/data/permit");
+        final String opaAddress = System.getenv().getOrDefault("OPA_URL", "http://localhost:8181");
         final String pdpControlPlane = System.getenv().getOrDefault("PDP_CONTROL_PLANE", "https://api.permit.io");
 
         this.config = new PermitConfig.Builder(token)

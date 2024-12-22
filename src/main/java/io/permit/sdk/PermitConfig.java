@@ -205,7 +205,7 @@ public class PermitConfig {
         // main config vars
         private String token;
         private String pdp = "http://localhost:7766";
-        private String opa = "http://localhost:8181/v1/data/permit";
+        private String opa = "http://localhost:8181";
         private String apiUrl = "https://api.permit.io";
         private Boolean debugMode = false;
 

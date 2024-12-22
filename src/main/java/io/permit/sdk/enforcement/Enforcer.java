@@ -471,8 +471,8 @@ public class Enforcer implements IEnforcerApi {
         String requestBody = gson.toJson(outerMap);
 
         RequestBody body = RequestBody.create(requestBody, MediaType.parse("application/json"));
-     
-        String url = String.format("%s/user_permissions/permissions", this.config.getOpaAddress());
+        String PERMISSIONS_PATH = "permit/user_permissions/permissions";
+        String url = String.format("%s/v1/data/%s", this.config.getOpaAddress(), PERMISSIONS_PATH);
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
