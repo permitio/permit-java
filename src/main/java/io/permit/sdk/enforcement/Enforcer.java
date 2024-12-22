@@ -451,7 +451,7 @@ public class Enforcer implements IEnforcerApi {
 
 
     @Override
-    public UserPermissions getUserPermissionsWithOPA(GetUserPermissionsQuery input) throws IOException, PermitApiError {
+    public UserPermissions getUserPermissionsFromOPA(GetUserPermissionsQuery input) throws IOException, PermitApiError {
         // request body
         Gson gson = new Gson();
 

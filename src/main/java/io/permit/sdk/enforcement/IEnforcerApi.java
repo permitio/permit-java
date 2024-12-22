@@ -1,10 +1,10 @@
 package io.permit.sdk.enforcement;
 
-import io.permit.sdk.api.PermitApiError;
-import io.permit.sdk.util.Context;
-
 import java.io.IOException;
 import java.util.List;
+
+import io.permit.sdk.api.PermitApiError;
+import io.permit.sdk.util.Context;
 
 public interface IEnforcerApi {
     /**
@@ -120,7 +120,7 @@ public interface IEnforcerApi {
      * @throws PermitApiError if an error occurs while sending the authorization request to the PDP.
      * @throws IOException if could not read the content of the returned http response.
      */
-    UserPermissions getUserPermissionsWithOPA(GetUserPermissionsQuery input) throws IOException, PermitApiError;
+    UserPermissions getUserPermissionsFromOPA(GetUserPermissionsQuery input) throws IOException, PermitApiError;
 
     /**
      * list all the tenants the user is associated with.

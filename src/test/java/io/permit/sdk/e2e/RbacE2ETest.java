@@ -251,7 +251,7 @@ public class RbacE2ETest extends PermitE2ETestBase {
                 )
             );
 
-            UserPermissions permissions_2 = permitOpa.getUserPermissionsWithOPA(
+            UserPermissions permissions_2 = permitOpa.getUserPermissionsFromOPA(
                 new GetUserPermissionsQuery(
                     User.fromString("auth0|elon")
                 )

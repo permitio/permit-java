@@ -1,18 +1,26 @@
 package io.permit.sdk;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import io.permit.sdk.api.ApiClient;
-import io.permit.sdk.api.ElementsApi;
-import io.permit.sdk.api.PermitApiError;
-import io.permit.sdk.enforcement.*;
-import io.permit.sdk.util.Context;
+import java.io.IOException;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import io.permit.sdk.api.ApiClient;
+import io.permit.sdk.api.ElementsApi;
+import io.permit.sdk.api.PermitApiError;
+import io.permit.sdk.enforcement.CheckQuery;
+import io.permit.sdk.enforcement.Enforcer;
+import io.permit.sdk.enforcement.GetUserPermissionsQuery;
+import io.permit.sdk.enforcement.IEnforcerApi;
+import io.permit.sdk.enforcement.Resource;
+import io.permit.sdk.enforcement.TenantDetails;
+import io.permit.sdk.enforcement.User;
+import io.permit.sdk.enforcement.UserPermissions;
+import io.permit.sdk.util.Context;
 
 /**
  * The {@code Permit} class represents the main entry point for interacting with the Permit.io SDK.
@@ -160,8 +168,8 @@ public class Permit implements IEnforcerApi {
     }
 
     @Override
-    public UserPermissions getUserPermissionsWithOPA(GetUserPermissionsQuery input) throws IOException, PermitApiError {
-        return this.enforcer.getUserPermissionsWithOPA(input);
+    public UserPermissions getUserPermissionsFromOPA(GetUserPermissionsQuery input) throws IOException, PermitApiError {
+        return this.enforcer.getUserPermissionsFromOPA(input);
     }
 
     @Override
