@@ -49,7 +49,7 @@ public class PermitConfig {
         this.context = builder.context;
         this.proxyFactsViaPdp = builder.proxyFactsViaPdp;
         this.factsSyncTimeout = builder.factsSyncTimeout;
-      String runtimeVersion = Permit.class.getPackage().getImplementationVersion();
+        String runtimeVersion = Permit.class.getPackage().getImplementationVersion();
         this.version = (runtimeVersion == null) ? defaultVersion : runtimeVersion;
     }
 
