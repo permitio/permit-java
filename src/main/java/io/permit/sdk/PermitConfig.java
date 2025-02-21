@@ -12,6 +12,8 @@ public class PermitConfig {
     private final String opa;
     private final String apiUrl;
     private final Boolean debugMode;
+    private final Boolean proxyFactsViaPdp;
+    private final int factsSyncTimeout;
 
     // logger config
     private final String logLevel;
@@ -45,7 +47,9 @@ public class PermitConfig {
         this.defaultTenant = builder.defaultTenant;
         this.useDefaultTenantIfEmpty = builder.useDefaultTenantIfEmpty;
         this.context = builder.context;
-        String runtimeVersion = Permit.class.getPackage().getImplementationVersion();
+        this.proxyFactsViaPdp = builder.proxyFactsViaPdp;
+        this.factsSyncTimeout = builder.factsSyncTimeout;
+      String runtimeVersion = Permit.class.getPackage().getImplementationVersion();
         this.version = (runtimeVersion == null) ? defaultVersion : runtimeVersion;
     }
 
@@ -93,6 +97,24 @@ public class PermitConfig {
      */
     public Boolean isDebugMode() {
         return debugMode;
+    }
+
+    /**
+     * Returns whether the facts via the PDP API instead of using the default Permit REST API
+     *
+     * @return {@code true} if proxying facts via the PDP is enabled, {@code false} otherwise.
+     */
+    public Boolean isProxyFactsViaPdp() {
+        return proxyFactsViaPdp;
+    }
+
+    /**
+     * Returns the timeout for facts synchronization.
+     *
+     * @return The facts synchronization timeout.
+     */
+    public int getFactsSyncTimeout() {
+        return factsSyncTimeout;
     }
 
     /**
@@ -208,6 +230,8 @@ public class PermitConfig {
         private String opa = "http://localhost:8181";
         private String apiUrl = "https://api.permit.io";
         private Boolean debugMode = false;
+        private Boolean proxyFactsViaPdp = false;
+        private int factsSyncTimeout = 0;
 
         // logger config
         private String logLevel = "info";
@@ -276,6 +300,28 @@ public class PermitConfig {
          */
         public Builder withDebugMode(Boolean debugMode) {
             this.debugMode = debugMode;
+            return this;
+        }
+
+        /**
+         * Configures whether the SDK should proxy facts via the PDP API instead of using the default Permit REST API.
+         *
+         * @param proxyFactsViaPdp The proxy facts via PDP mode to be set.
+         * @return The updated {@code Builder} object.
+         */
+        public Builder withProxyFactsViaPdp(Boolean proxyFactsViaPdp) {
+            this.proxyFactsViaPdp = proxyFactsViaPdp;
+            return this;
+        }
+
+        /**
+         * Configures the timeout for facts synchronization.
+         *
+         * @param factsSyncTimeout The facts synchronization timeout to be set.
+         * @return The updated {@code Builder} object.
+         */
+        public Builder withFactsSyncTimeout(int factsSyncTimeout) {
+            this.factsSyncTimeout = factsSyncTimeout;
             return this;
         }
 
