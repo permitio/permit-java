@@ -49,14 +49,23 @@ public class TenantsApi extends BaseApi implements ITenantsApi {
      * @return The formatted URL for the Tenants API.
      */
     private String getTenantsUrl(String url) {
-        return buildUrl(
-                String.format(
-                        "/v2/facts/%s/%s/tenants%s",
-                        config.getContext().getProject(),
-                        config.getContext().getEnvironment(),
-                        url
-                )
-        );
+        if (Boolean.TRUE.equals(config.isProxyFactsViaPdp())) {
+            return buildPdpUrl(
+                    String.format(
+                            "/facts/tenants%s",
+                            url
+                    )
+            );
+        } else {
+            return buildUrl(
+                    String.format(
+                            "/v2/facts/%s/%s/tenants%s",
+                            config.getContext().getProject(),
+                            config.getContext().getEnvironment(),
+                            url
+                    )
+            );
+        }
     }
 
     /**

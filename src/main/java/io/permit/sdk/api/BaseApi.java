@@ -87,15 +87,11 @@ public abstract class BaseApi {
     }
 
     protected String buildUrl(String relativeUrl) {
-        String baseUrl = getRelativeApiUrl();
-        return String.format("%s%s", baseUrl, relativeUrl);
+        return String.format("%s%s", config.getApiUrl(), relativeUrl);
     }
 
-    private String getRelativeApiUrl() {
-        if(Boolean.TRUE.equals(config.isProxyFactsViaPdp())) {
-            return config.getPdpAddress();
-        }
-        return config.getApiUrl();
+    protected String buildPdpUrl(String relativeUrl) {
+        return String.format("%s%s", config.getPdpAddress(), relativeUrl);
     }
 
     protected Request buildRequest(Request.Builder builder) {

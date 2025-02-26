@@ -46,14 +46,23 @@ public class ResourceInstancesApi extends BaseApi implements IResourceInstancesA
      * @return The formatted URL for the ResourceInstances API.
      */
     private String getResourceInstancesUrl(String url) {
-        return buildUrl(
-                String.format(
-                        "/v2/facts/%s/%s/resource_instances%s",
-                        config.getContext().getProject(),
-                        config.getContext().getEnvironment(),
-                        url
-                )
-        );
+        if (Boolean.TRUE.equals(config.isProxyFactsViaPdp())) {
+            return buildPdpUrl(
+                    String.format(
+                            "/facts/resource_instances%s",
+                            url
+                    )
+            );
+        } else {
+            return buildUrl(
+                    String.format(
+                            "/v2/facts/%s/%s/resource_instances%s",
+                            config.getContext().getProject(),
+                            config.getContext().getEnvironment(),
+                            url
+                    )
+            );
+        }
     }
 
     /**

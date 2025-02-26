@@ -4,11 +4,12 @@ import com.google.gson.Gson;
 import io.permit.sdk.ApiContextLevel;
 import io.permit.sdk.ApiKeyLevel;
 import io.permit.sdk.PermitConfig;
-import io.permit.sdk.openapi.models.*;
+import io.permit.sdk.openapi.models.RelationshipTupleCreate;
+import io.permit.sdk.openapi.models.RelationshipTupleDelete;
+import io.permit.sdk.openapi.models.RelationshipTupleRead;
 import okhttp3.*;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 interface IRelationshipTuplesApi {
@@ -41,14 +42,23 @@ public class RelationshipTuplesApi extends BaseApi implements IRelationshipTuple
      * @return The complete URL for relationship tuples.
      */
     private String getRelationshipTuplesUrl(String url) {
-        return buildUrl(
-                String.format(
-                        "/v2/facts/%s/%s/relationship_tuples%s",
-                        config.getContext().getProject(),
-                        config.getContext().getEnvironment(),
-                        url
-                )
-        );
+        if (Boolean.TRUE.equals(config.isProxyFactsViaPdp())) {
+            return buildPdpUrl(
+                    String.format(
+                            "/facts/relationship_tuples%s",
+                            url
+                    )
+            );
+        } else {
+            return buildUrl(
+                    String.format(
+                            "/v2/facts/%s/%s/relationship_tuples%s",
+                            config.getContext().getProject(),
+                            config.getContext().getEnvironment(),
+                            url
+                    )
+            );
+        }
     }
 
     /**
