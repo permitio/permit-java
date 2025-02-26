@@ -44,14 +44,23 @@ public class RoleAssignmentsApi extends BaseApi implements IRoleAssignmentsApi {
      * @return The complete URL for role assignments.
      */
     private String getRoleAssignmentsUrl(String url) {
-        return buildUrl(
-                String.format(
-                        "/v2/facts/%s/%s/role_assignments%s",
-                        config.getContext().getProject(),
-                        config.getContext().getEnvironment(),
-                        url
-                )
-        );
+        if (Boolean.TRUE.equals(config.isProxyFactsViaPdp())) {
+            return buildPdpUrl(
+                    String.format(
+                            "/facts/role_assignments%s",
+                            url
+                    )
+            );
+        } else {
+            return buildUrl(
+                    String.format(
+                            "/v2/facts/%s/%s/role_assignments%s",
+                            config.getContext().getProject(),
+                            config.getContext().getEnvironment(),
+                            url
+                    )
+            );
+        }
     }
 
     /**

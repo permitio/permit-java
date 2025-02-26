@@ -56,14 +56,23 @@ public class UsersApi extends BaseApi implements IUsersApi {
      * @return The formatted URL for the endpoint.
      */
     private String getUsersUrl(String url) {
-        return buildUrl(
-                String.format(
-                        "/v2/facts/%s/%s/users%s",
-                        config.getContext().getProject(),
-                        config.getContext().getEnvironment(),
-                        url
-                )
-        );
+        if (Boolean.TRUE.equals(config.isProxyFactsViaPdp())) {
+            return buildPdpUrl(
+                    String.format(
+                            "/facts/users%s",
+                            url
+                    )
+            );
+        } else {
+            return buildUrl(
+                    String.format(
+                            "/v2/facts/%s/%s/users%s",
+                            config.getContext().getProject(),
+                            config.getContext().getEnvironment(),
+                            url
+                    )
+            );
+        }
     }
 
     /**

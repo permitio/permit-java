@@ -26,11 +26,15 @@ public abstract class BaseApi {
         this.client = client;
         this.config = config;
         this.logger = logger;
-        this.headers = new Headers.Builder()
+        Headers.Builder headersBuilder = new Headers.Builder()
             .add("Content-Type", "application/json")
             .add("Authorization", String.format("Bearer %s", this.config.getToken()))
-            .add("X-Permit-SDK-Version", String.format("java:%s", this.config.version))
-            .build();
+            .add("X-Permit-SDK-Version", String.format("java:%s", this.config.version));
+
+        if (config.isProxyFactsViaPdp() && config.getFactsSyncTimeout() > 0) {
+            headersBuilder.add("X-Wait-Timeout", String.valueOf(config.getFactsSyncTimeout()));
+        }
+        this.headers = headersBuilder.build();
     }
 
     protected <T> T callApiAndParseJson(Request request, Class<T> modelClass) throws IOException, PermitApiError {
@@ -84,6 +88,10 @@ public abstract class BaseApi {
 
     protected String buildUrl(String relativeUrl) {
         return String.format("%s%s", config.getApiUrl(), relativeUrl);
+    }
+
+    protected String buildPdpUrl(String relativeUrl) {
+        return String.format("%s%s", config.getPdpAddress(), relativeUrl);
     }
 
     protected Request buildRequest(Request.Builder builder) {
