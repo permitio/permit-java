@@ -31,8 +31,13 @@ public abstract class BaseApi {
             .add("Authorization", String.format("Bearer %s", this.config.getToken()))
             .add("X-Permit-SDK-Version", String.format("java:%s", this.config.version));
 
-        if (config.isProxyFactsViaPdp() && config.getFactsSyncTimeout() > 0) {
-            headersBuilder.add("X-Wait-Timeout", String.valueOf(config.getFactsSyncTimeout()));
+        if (config.isProxyFactsViaPdp()) {
+            if (config.getFactsSyncTimeout() != null) {
+                headersBuilder.add("X-Wait-Timeout", String.valueOf(config.getFactsSyncTimeout()));
+            }
+            if (config.getFactsSyncTimeoutPolicy() != null) {
+                headersBuilder.add("X-Timeout-Policy", config.getFactsSyncTimeoutPolicy().getValue());
+            }
         }
         this.headers = headersBuilder.build();
     }

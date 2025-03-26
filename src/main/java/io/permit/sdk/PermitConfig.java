@@ -13,7 +13,8 @@ public class PermitConfig {
     private final String apiUrl;
     private final Boolean debugMode;
     private final Boolean proxyFactsViaPdp;
-    private final int factsSyncTimeout;
+    private final Integer factsSyncTimeout;
+    private final FactsSyncTimeoutPolicy factsSyncTimeoutPolicy;
 
     // logger config
     private final String logLevel;
@@ -49,6 +50,7 @@ public class PermitConfig {
         this.context = builder.context;
         this.proxyFactsViaPdp = builder.proxyFactsViaPdp;
         this.factsSyncTimeout = builder.factsSyncTimeout;
+        this.factsSyncTimeoutPolicy = builder.factsSyncTimeoutPolicy;
         String runtimeVersion = Permit.class.getPackage().getImplementationVersion();
         this.version = (runtimeVersion == null) ? defaultVersion : runtimeVersion;
     }
@@ -113,8 +115,21 @@ public class PermitConfig {
      *
      * @return The facts synchronization timeout.
      */
-    public int getFactsSyncTimeout() {
+    public Integer getFactsSyncTimeout() {
         return factsSyncTimeout;
+    }
+
+    /**
+     * Returns the timeout policy for facts synchronization.
+     * When proxy_facts_via_pdp is enabled, this determines what happens when the facts synchronization timeout is reached.
+     * Values can be:
+     * * IGNORE - Respond immediately when data update did not apply within the timeout period
+     * * FAIL - Respond with 424 status code when data update did not apply within the timeout period
+     *
+     * @return The facts synchronization timeout policy, or null if not set.
+     */
+    public FactsSyncTimeoutPolicy getFactsSyncTimeoutPolicy() {
+        return factsSyncTimeoutPolicy;
     }
 
     /**
@@ -231,7 +246,8 @@ public class PermitConfig {
         private String apiUrl = "https://api.permit.io";
         private Boolean debugMode = false;
         private Boolean proxyFactsViaPdp = false;
-        private int factsSyncTimeout = 0;
+        private Integer factsSyncTimeout = null;
+        private FactsSyncTimeoutPolicy factsSyncTimeoutPolicy = null;
 
         // logger config
         private String logLevel = "info";
@@ -320,8 +336,42 @@ public class PermitConfig {
          * @param factsSyncTimeout The facts synchronization timeout to be set.
          * @return The updated {@code Builder} object.
          */
-        public Builder withFactsSyncTimeout(int factsSyncTimeout) {
+        public Builder withFactsSyncTimeout(Integer factsSyncTimeout) {
             this.factsSyncTimeout = factsSyncTimeout;
+            return this;
+        }
+
+        /**
+         * Sets the timeout policy for facts synchronization.
+         * This determines what happens when the facts synchronization timeout is reached.
+         * 
+         * @param factsSyncTimeoutPolicy The facts synchronization timeout policy to be set.
+         *                               Must be "ignore" or "fail".
+         * @return This Builder instance.
+         * @throws IllegalArgumentException If the policy value is not "ignore" or "fail".
+         */
+        public Builder withFactsSyncTimeoutPolicy(String factsSyncTimeoutPolicy) {
+            if (factsSyncTimeoutPolicy == null) {
+                this.factsSyncTimeoutPolicy = null;
+            } else {
+                try {
+                    this.factsSyncTimeoutPolicy = FactsSyncTimeoutPolicy.fromString(factsSyncTimeoutPolicy);
+                } catch (IllegalArgumentException e) {
+                    throw new IllegalArgumentException("factsSyncTimeoutPolicy must be either 'ignore' or 'fail'", e);
+                }
+            }
+            return this;
+        }
+
+        /**
+         * Sets the timeout policy for facts synchronization.
+         * This determines what happens when the facts synchronization timeout is reached.
+         * 
+         * @param policy The facts synchronization timeout policy to be set.
+         * @return This Builder instance.
+         */
+        public Builder withFactsSyncTimeoutPolicy(FactsSyncTimeoutPolicy policy) {
+            this.factsSyncTimeoutPolicy = policy;
             return this;
         }
 
