@@ -85,7 +85,7 @@ public class ResourcesApiE2ETest extends PermitE2ETestBase {
         Permit permit = new Permit(this.config);
         Gson gson = new Gson();
 
-        // roles lifecycle
+        // users lifecycle
         try {
             logger.info("check original resource length");
             int originalLength = permit.api.resources.list().length;
@@ -111,7 +111,7 @@ public class ResourcesApiE2ETest extends PermitE2ETestBase {
             logger.info("verify can find new resource in the new list");
             assertTrue(Arrays.stream(resources).map(r -> r.key).collect(Collectors.toList()).contains(documentData.key));
 
-            logger.info("get non existing role -> 404");
+            logger.info("get non existing user -> 404");
             PermitApiError notFoundError = assertThrows(PermitApiError.class, () -> {
                 permit.api.resources.get("group");
             });

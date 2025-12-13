@@ -146,6 +146,7 @@ public class ResourceInstancesApi extends BaseApi implements IResourceInstancesA
 
     /**
      * Retrieves a resource instance by its key.
+     * This is an alias for the {@link #get} method.
      *
      * @param instanceKey The key of the resource instance.
      * @return A ResourceInstanceRead object representing the retrieved resource instance.
