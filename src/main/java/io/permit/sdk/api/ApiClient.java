@@ -119,6 +119,10 @@ public class ApiClient implements IDeprecatedApis {
      */
     public final ElementsApi elements;
 
+    /**
+     * The {@code GroupsApi} instance for accessing Permit Groups related API endpoints.
+     */
+    public final GroupsApi groups;
 
     /**
      * Constructs a new instance of the {@code ApiClient} class with the specified configuration.
@@ -148,6 +152,7 @@ public class ApiClient implements IDeprecatedApis {
         this.relationshipTuples = new RelationshipTuplesApi(this.client, this.config);
         this.conditionSetRules = new ConditionSetRulesApi(this.client, this.config);
         this.elements = new ElementsApi(this.client, this.config);
+        this.groups = new GroupsApi(this.client, this.config);
     }
 
     /**
