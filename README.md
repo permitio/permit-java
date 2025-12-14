@@ -384,6 +384,8 @@ This command:
 2. Generates Java model classes using the configuration in `openapi-config.json`
 3. Outputs the generated code to the `generated/` directory
 
+Note: The `--skip-validate-spec` flag is used to bypass minor validation issues in the upstream API specification that do not affect code generation.
+
 #### Clean Generated Files
 
 ```bash

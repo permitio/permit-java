@@ -6,7 +6,7 @@
 
 ## generate openapi models
 generate-openapi:
-	openapi-generator generate -i https://api.permit.io/v2/openapi.json -g java -o generated/ -c openapi-config.json
+	openapi-generator generate -i https://api.permit.io/v2/openapi.json -g java -o generated/ -c openapi-config.json --skip-validate-spec
 
 clean-openapi:
 	rm -rf generated/
