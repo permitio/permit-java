@@ -65,10 +65,12 @@ dependencies {
     implementation "jakarta.annotation:jakarta.annotation-api:1.3.5"
 
     // logger
-    // Note: Logback 1.3.x is the last version supporting Java 8 (1.4.x requires Java 11+)
-    implementation 'ch.qos.logback:logback-classic:1.3.14'
-    implementation 'ch.qos.logback:logback-core:1.3.14'
+    // SLF4J API is the logging facade used by main code - consumers provide their own implementation
     implementation 'org.slf4j:slf4j-api:2.0.9'
+    // Logback is only needed for tests (not used in main code, only SLF4J API is)
+    // Note: 1.3.x is required for Java 8 compatibility (1.4.x requires Java 11+)
+    testImplementation 'ch.qos.logback:logback-classic:1.3.14'
+    testImplementation 'ch.qos.logback:logback-core:1.3.14'
 
 
     // Use JUnit Jupiter for testing.
