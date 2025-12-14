@@ -93,7 +93,8 @@ To check permissions using the `permit.check()` method, you need to create `User
 #### Basic Permission Check
 
 The following example demonstrates a basic permission check using the default tenant.
-See the full example: [BasicPermissionCheckExample.java](src/main/java/io/permit/sdk/examples/BasicPermissionCheckExample.java)
+See the full example:
+[BasicPermissionCheckExample.java](src/main/java/io/permit/sdk/examples/BasicPermissionCheckExample.java)
 
 ```java
 import io.permit.sdk.Permit;
@@ -126,7 +127,8 @@ try {
 #### Advanced Permission Check with Attributes
 
 The following example demonstrates a more advanced scenario with user attributes and an explicit tenant.
-See the full example: [AdvancedPermissionCheckExample.java](src/main/java/io/permit/sdk/examples/AdvancedPermissionCheckExample.java)
+See the full
+example: [AdvancedPermissionCheckExample.java](src/main/java/io/permit/sdk/examples/AdvancedPermissionCheckExample.java)
 
 ```java
 import io.permit.sdk.Permit;
@@ -166,7 +168,9 @@ try {
 
 ### Syncing Users
 
-When a user first logs in, and after you verify that they have authenticated successfully (for example, by validating the JWT access token), you need to declare the user in the permission system before you can run `permit.check()` on that user.
+When a user first logs in, and after you verify that they have authenticated successfully (for example, by validating
+the JWT access token), you need to declare the user in the permission system before you can run `permit.check()` on that
+user.
 
 To declare (or "sync") a user in the Permit.io API, use the `permit.api.users.sync()` method.
 
@@ -230,11 +234,11 @@ try {
 
 Complete, runnable examples are available in the [`src/main/java/io/permit/sdk/examples`](src/main/java/io/permit/sdk/examples) directory:
 
-| Example | Description |
-|---------|-------------|
-| [BasicPermissionCheckExample.java](src/main/java/io/permit/sdk/examples/BasicPermissionCheckExample.java) | Basic SDK initialization and permission checks |
+| Example                                                                                                         | Description                                                                     |
+|-----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| [BasicPermissionCheckExample.java](src/main/java/io/permit/sdk/examples/BasicPermissionCheckExample.java)       | Basic SDK initialization and permission checks                                  |
 | [AdvancedPermissionCheckExample.java](src/main/java/io/permit/sdk/examples/AdvancedPermissionCheckExample.java) | Permission checks with user attributes, resource attributes, and tenant context |
-| [UserSyncExample.java](src/main/java/io/permit/sdk/examples/UserSyncExample.java) | Synchronizing users with the Permit API |
+| [UserSyncExample.java](src/main/java/io/permit/sdk/examples/UserSyncExample.java)                               | Synchronizing users with the Permit API                                         |
 
 ### Running the Examples
 
@@ -269,9 +273,12 @@ Run a specific test class:
 
 ## API Reference
 
-For complete API documentation, refer to the [Javadoc reference](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/index.html).
+For complete API documentation, refer to
+the [Javadoc reference](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/index.html).
 
-The recommended starting point is the [Permit](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/io/permit/sdk/Permit.html) class, which serves as the main entry point for the SDK.
+The recommended starting point is
+the [Permit](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/io/permit/sdk/Permit.html) class, which serves as
+the main entry point for the SDK.
 
 ## License
 
