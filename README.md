@@ -236,7 +236,36 @@ Complete, runnable examples are available in the [`src/main/java/io/permit/sdk/e
 | [AdvancedPermissionCheckExample.java](src/main/java/io/permit/sdk/examples/AdvancedPermissionCheckExample.java) | Permission checks with user attributes, resource attributes, and tenant context |
 | [UserSyncExample.java](src/main/java/io/permit/sdk/examples/UserSyncExample.java) | Synchronizing users with the Permit API |
 
-Unit tests for these examples are located in [`src/test/java/io/permit/sdk/examples`](src/test/java/io/permit/sdk/examples).
+### Running the Examples
+
+To run an example, set your API key and execute:
+
+```bash
+export PERMIT_API_KEY="your-api-key"
+./gradlew run -PmainClass=io.permit.sdk.examples.BasicPermissionCheckExample
+```
+
+### Running Tests
+
+Unit tests for these examples use Mockito and do not require a running PDP.
+
+Run all tests:
+
+```bash
+./gradlew test
+```
+
+Run only the example tests:
+
+```bash
+./gradlew test --tests "io.permit.sdk.examples.*"
+```
+
+Run a specific test class:
+
+```bash
+./gradlew test --tests "io.permit.sdk.examples.BasicPermissionCheckExampleTest"
+```
 
 ## API Reference
 
