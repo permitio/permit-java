@@ -1,31 +1,63 @@
 ![Java.png](imgs/Java.png)
-# Java SDK for Permit.io
 
-Java SDK for interacting with the Permit.io full-stack permissions platform.
+# Permit.io Java SDK
+
+The official Java SDK for interacting with the Permit.io full-stack permissions platform.
 
 ## Overview
 
-This guide will walk you through the steps of installing the Permit.io Java SDK and integrating it into your code.
+This guide walks you through installing the Permit.io Java SDK and integrating it into your application.
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Maven](#maven)
+  - [Gradle](#gradle)
+- [Usage](#usage)
+  - [Initializing the SDK](#initializing-the-sdk)
+  - [Checking Permissions](#checking-permissions)
+  - [Syncing Users](#syncing-users)
+- [API Reference](#api-reference)
+- [License](#license)
+- [Support](#support)
+
+## Requirements
+
+- **Java**: Version 8 or higher
+- **Build Tool**: Maven 3.6+ or Gradle 7.0+
+- **Permit.io Account**: An API key from the [Permit.io Dashboard](https://app.permit.io)
+- **PDP (Policy Decision Point)**: A running Permit.io PDP container for authorization checks
 
 ## Installation
 
-For [Maven](https://maven.apache.org/) projects, use:
+### Maven
+
+Add the following dependency to your `pom.xml` file:
 
 ```xml
 <dependency>
-  <groupId>io.permit</groupId>
-  <artifactId>permit-sdk-java</artifactId>
-  <version>2.0.0</version>
+    <groupId>io.permit</groupId>
+    <artifactId>permit-sdk-java</artifactId>
+    <version>2.0.0</version>
 </dependency>
 ```
 
-For [Gradle](https://gradle.org/) projects, configure `permit-sdk-java` as a dependency in your `build.gradle` file:
+### Gradle
+
+Add the following dependency to your `build.gradle` file:
 
 ```groovy
 dependencies {
-    // ...
-
     implementation 'io.permit:permit-sdk-java:2.0.0'
+}
+```
+
+For Kotlin DSL (`build.gradle.kts`):
+
+```kotlin
+dependencies {
+    implementation("io.permit:permit-sdk-java:2.0.0")
 }
 ```
 
@@ -33,122 +65,175 @@ dependencies {
 
 ### Initializing the SDK
 
-To init the SDK, you need to create a new Permit client with the API key you got from the Permit.io dashboard.
+To initialize the SDK, create a new `Permit` client with the API key obtained from the Permit.io dashboard.
 
-First we will create a new `PermitConfig` object so we can pass it to the Permit client.
-
-Second, we will create a new `Permit` client with the `PermitConfig` object we created.
+First, create a `PermitConfig` object to configure the client. Then, instantiate the `Permit` client with the configuration.
 
 ```java
 import io.permit.sdk.Permit;
 import io.permit.sdk.PermitConfig;
 
-// This line initializes the SDK and connects your Java app
-// to the Permit.io PDP container you've set up in the previous step.
+// Initialize the SDK and connect your Java application
+// to the Permit.io PDP container you have set up.
 Permit permit = new Permit(
     new PermitConfig.Builder("[YOUR_API_KEY]")
-        // in production, you might need to change this url to fit your deployment
+        // In production, you may need to change this URL to match your deployment
         .withPdpAddress("http://localhost:7766")
-        // optionally, if you wish to get more debug messages to your log, set this to true
+        // Optionally, enable debug mode for more detailed log messages
         .withDebugMode(false)
         .build()
-    );
+);
 ```
 
-### Checking permissions
+### Checking Permissions
 
-To check permissions using our `permit.check()` method, you will have to create User and Resource models as input to the permission check.
-The models are located in ``
+To check permissions using the `permit.check()` method, you need to create `User` and `Resource` model objects as input for the permission check. These models are located in the `io.permit.sdk.enforcement` package.
 
-Follow the example below:
+#### Basic Permission Check
+
+The following example demonstrates a basic permission check using the default tenant:
 
 ```java
+import io.permit.sdk.Permit;
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
-import io.permit.sdk.Permit;
+import io.permit.sdk.api.PermitApiError;
+import java.io.IOException;
 
-boolean permitted = permit.check(
-    // building the user object using User.fromString()
-    // the user key (this is the unique identifier of the user in the permission system).
-    User.fromString("[USER KEY]"),
-    // the action key (string)
-    "create",
-    // the resource object, can be initialized from string if the "default" tenant is used.
-    Resource.fromString("document")
-);
+try {
+    boolean permitted = permit.check(
+        // Build the user object using User.fromString()
+        // The user key is the unique identifier of the user in the permission system
+        User.fromString("[USER_KEY]"),
+        // The action key (string)
+        "create",
+        // The resource object, initialized from a string when using the default tenant
+        Resource.fromString("document")
+    );
 
-if (permitted) {
-  System.out.println("User is PERMITTED to create a document in the 'default' tenant");
-} else {
-  System.out.println("User is NOT PERMITTED to create a document in the 'default' tenant");
+    if (permitted) {
+        System.out.println("User is PERMITTED to create a document in the 'default' tenant");
+    } else {
+        System.out.println("User is NOT PERMITTED to create a document in the 'default' tenant");
+    }
+} catch (PermitApiError | IOException e) {
+    System.err.println("Authorization check failed: " + e.getMessage());
 }
 ```
 
-A more complicated example (passing attributes on the user object, using an explicit tenant in the resource):
+#### Advanced Permission Check with Attributes
+
+The following example demonstrates a more advanced scenario with user attributes and an explicit tenant:
 
 ```java
+import io.permit.sdk.Permit;
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
+import io.permit.sdk.api.PermitApiError;
+import java.io.IOException;
 import java.util.HashMap;
-
 
 HashMap<String, Object> userAttributes = new HashMap<>();
 userAttributes.put("age", Integer.valueOf(20));
 userAttributes.put("favorite_color", "yellow");
 
-boolean permitted = permit.check(
-    // building the user object using the User.Builder class
-    new User.Builder("[USER KEY]").withAttributes(userAttributes).build(),
-    // the action key (string)
-    "create",
-    // building the resource object using the Resource.Builder in order to pass an explicit tenant key: "awesome-inc"
-    new Resource.Builder("document").withTenant("awesome-inc").build()
-);
+try {
+    boolean permitted = permit.check(
+        // Build the user object using the User.Builder class
+        new User.Builder("[USER_KEY]")
+            .withAttributes(userAttributes)
+            .build(),
+        // The action key (string)
+        "create",
+        // Build the resource object using Resource.Builder to specify an explicit tenant
+        new Resource.Builder("document")
+            .withTenant("awesome-inc")
+            .build()
+    );
 
-if (permitted) {
-  System.out.println("User is PERMITTED to create a document in the 'awesome-inc' tenant");
-} else {
-  System.out.println("User is NOT PERMITTED to create a document in the 'awesome-inc' tenant");
+    if (permitted) {
+        System.out.println("User is PERMITTED to create a document in the 'awesome-inc' tenant");
+    } else {
+        System.out.println("User is NOT PERMITTED to create a document in the 'awesome-inc' tenant");
+    }
+} catch (PermitApiError | IOException e) {
+    System.err.println("Authorization check failed: " + e.getMessage());
 }
 ```
 
-### Syncing users
+### Syncing Users
 
-When the user first logins, and after you check if he authenticated successfully (i.e: **by checking the JWT access token**) -
-you need to declare the user in the permission system so you can run `permit.check()` on that user.
+When a user first logs in, and after you verify that they have authenticated successfully (for example, by validating the JWT access token), you need to declare the user in the permission system before you can run `permit.check()` on that user.
 
 To declare (or "sync") a user in the Permit.io API, use the `permit.api.users.sync()` method.
 
-Follow the example below:
+#### Syncing a User with Full Details
+
+The following example demonstrates how to sync a user with complete profile information:
 
 ```java
 import io.permit.sdk.api.models.CreateOrUpdateResult;
 import io.permit.sdk.enforcement.User;
+import io.permit.sdk.openapi.models.UserRead;
+import io.permit.sdk.api.PermitApiError;
+import java.io.IOException;
+import java.util.HashMap;
 
 HashMap<String, Object> userAttributes = new HashMap<>();
 userAttributes.put("age", Integer.valueOf(50));
 userAttributes.put("fav_color", "red");
 
-CreateOrUpdateResult<UserRead> result = permit.api.users.sync(
-    (new User.Builder("auth0|elon"))
-        .withEmail("elonmusk@tesla.com")
-        .withFirstName("Elon")
-        .withLastName("Musk")
-        .withAttributes(userAttributes)
-        .build()
-);
-UserRead user = result.getResult();
-assertTrue(result.wasCreated());
+try {
+    CreateOrUpdateResult<UserRead> result = permit.api.users.sync(
+        new User.Builder("auth0|elon")
+            .withEmail("elonmusk@tesla.com")
+            .withFirstName("Elon")
+            .withLastName("Musk")
+            .withAttributes(userAttributes)
+            .build()
+    );
+
+    UserRead user = result.getResult();
+    boolean wasCreated = result.wasCreated();
+
+    System.out.println("User synced successfully. Created: " + wasCreated);
+} catch (PermitApiError | IOException e) {
+    System.err.println("User sync failed: " + e.getMessage());
+}
 ```
 
-Most params to UserCreates are optional, and only the unique user key is needed. This is valid:
+#### Syncing a User with Minimal Information
+
+Most parameters are optional. Only the unique user key is required:
 
 ```java
-CreateOrUpdateResult<UserRead> result = permit.api.users.sync(new UserCreate("[USER KEY]"));
+import io.permit.sdk.api.models.CreateOrUpdateResult;
+import io.permit.sdk.openapi.models.UserCreate;
+import io.permit.sdk.openapi.models.UserRead;
+import io.permit.sdk.api.PermitApiError;
+import java.io.IOException;
+
+try {
+    CreateOrUpdateResult<UserRead> result = permit.api.users.sync(
+        new UserCreate("[USER_KEY]")
+    );
+} catch (PermitApiError | IOException e) {
+    System.err.println("User sync failed: " + e.getMessage());
+}
 ```
 
-## Javadoc reference
+## API Reference
 
-To view the javadoc reference, [click here](https://javadoc.io/doc/io.permit/permit-sdk-java/2.0.0/index.html).
+For complete API documentation, refer to the [Javadoc reference](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/index.html).
 
-It's easiest to start with the root [Permit](https://javadoc.io/static/io.permit/permit-sdk-java/2.0.0/io/permit/sdk/Permit.html) class.
+The recommended starting point is the [Permit](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/io/permit/sdk/Permit.html) class, which serves as the main entry point for the SDK.
+
+## License
+
+This SDK is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
+
+## Support
+
+- **Documentation**: [Permit.io Docs](https://docs.permit.io)
+- **GitHub Issues**: [Report an issue](https://github.com/permitio/permit-java/issues)
+- **Community**: [Permit.io Slack](https://permit.io/slack)
