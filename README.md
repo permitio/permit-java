@@ -88,7 +88,8 @@ Permit permit = new Permit(
 
 ### Checking Permissions
 
-To check permissions using the `permit.check()` method, you need to create `User` and `Resource` model objects as input for the permission check. These models are located in the `io.permit.sdk.enforcement` package.
+To check permissions using the `permit.check()` method, you need to create `User` and `Resource` model objects as input
+for the permission check. These models are located in the `io.permit.sdk.enforcement` package.
 
 #### Basic Permission Check
 
