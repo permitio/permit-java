@@ -20,6 +20,10 @@ This guide walks you through installing the Permit.io Java SDK and integrating i
   - [Syncing Users](#syncing-users)
 - [Examples](#examples)
 - [API Reference](#api-reference)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+  - [Prerequisites](#prerequisites)
+  - [Regenerating OpenAPI Models](#regenerating-openapi-models)
 - [License](#license)
 - [Support](#support)
 
@@ -280,6 +284,131 @@ the [Javadoc reference](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/
 The recommended starting point is
 the [Permit](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/io/permit/sdk/Permit.html) class, which serves as
 the main entry point for the SDK.
+
+## Project Structure
+
+The SDK source code is organized under `src/main/java/io/permit/sdk/`:
+
+```
+src/main/java/io/permit/sdk/
+|-- api/                    # API client classes for Permit.io REST API
+|   |-- models/             # SDK-specific models for API operations
+|   |   |-- CreateOrUpdateResult.java  # Result wrapper for sync operations
+|   |   |-- UserModel.java             # User data model
+|   |   |-- RoleModel.java             # Role data model
+|   |   +-- ...                        # Other API models
+|   |-- UsersApi.java       # User management operations
+|   |-- RolesApi.java       # Role management operations
+|   |-- TenantsApi.java     # Tenant management operations
+|   |-- ResourcesApi.java   # Resource management operations
+|   +-- ...                 # Other API clients
+|
+|-- enforcement/            # Enforcement models for permission checks
+|   |-- User.java           # User model for check() calls
+|   |-- Resource.java       # Resource model for check() calls
+|   |-- Enforcer.java       # Core enforcement logic
+|   |-- CheckQuery.java     # Permission check query builder
+|   +-- ...                 # Other enforcement models
+|
+|-- examples/               # Example code demonstrating SDK usage
+|   |-- BasicPermissionCheckExample.java
+|   |-- AdvancedPermissionCheckExample.java
+|   +-- UserSyncExample.java
+|
+|-- openapi/                # Auto-generated OpenAPI models
+|   +-- models/             # Generated model classes from Permit.io API spec
+|
+|-- util/                   # Utility classes and helpers
+|
+|-- Permit.java             # Main SDK entry point
+|-- PermitConfig.java       # SDK configuration builder
+|-- PermitContext.java      # Context management for API calls
+|-- ApiKeyLevel.java        # API key permission levels
+|-- ApiContextLevel.java    # API context level definitions
++-- FactsSyncTimeoutPolicy.java  # Timeout policy for facts synchronization
+```
+
+## Contributing
+
+We welcome contributions to the Permit.io Java SDK! This section explains how to set up your development environment and contribute to the project.
+
+### Prerequisites
+
+Before contributing, ensure you have the following installed:
+
+- **Java JDK**: Version 8 or higher (JDK 11+ recommended for development)
+- **Gradle**: Version 7.0+ (or use the included Gradle wrapper `./gradlew`)
+- **OpenAPI Generator**: Required for regenerating API models from the Permit.io OpenAPI specification
+
+#### Installing OpenAPI Generator
+
+The OpenAPI Generator is used to generate Java model classes from the Permit.io API specification. Install it using one of the following methods:
+
+**Using Homebrew (macOS):**
+
+```bash
+brew install openapi-generator
+```
+
+**Using npm:**
+
+```bash
+npm install @openapitools/openapi-generator-cli -g
+```
+
+**Using Docker:**
+
+```bash
+docker pull openapitools/openapi-generator-cli
+```
+
+For more installation options, see the [OpenAPI Generator Installation Guide](https://openapi-generator.tech/docs/installation).
+
+### Regenerating OpenAPI Models
+
+The SDK includes auto-generated model classes from the Permit.io OpenAPI specification. If you need to regenerate these models (e.g., when the API is updated), use the provided Makefile targets:
+
+#### Generate OpenAPI Models
+
+```bash
+make generate-openapi
+```
+
+This command:
+1. Fetches the latest OpenAPI specification from `https://api.permit.io/v2/openapi.json`
+2. Generates Java model classes using the configuration in `openapi-config.json`
+3. Outputs the generated code to the `generated/` directory
+
+#### Clean Generated Files
+
+```bash
+make clean-openapi
+```
+
+This removes the `generated/` directory and all auto-generated files.
+
+#### Generate JSON Schema (Optional)
+
+```bash
+make generate-jsonschema
+```
+
+This generates JSON schema files from the OpenAPI specification and outputs them to the `schemas/` directory. This requires the `openapi2jsonschema` tool.
+
+### Development Workflow
+
+1. **Fork and clone** the repository
+2. **Create a feature branch** from `master`
+3. **Make your changes** and ensure all tests pass
+4. **Run tests** using `./gradlew test`
+5. **Submit a pull request** with a clear description of your changes
+
+### Code Style
+
+- Follow standard Java naming conventions
+- Use meaningful variable and method names
+- Include Javadoc comments for public APIs
+- Write unit tests for new functionality
 
 ## License
 
