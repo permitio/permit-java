@@ -337,9 +337,10 @@ contribute to the project.
 
 Before contributing, ensure you have the following installed:
 
-- **Java JDK**: Version 8 or higher (JDK 11+ recommended for development)
+- **Java JDK 8+**: For building and running the SDK
+- **Java JDK 11+**: Required for running the OpenAPI Generator (the SDK itself targets Java 8)
 - **Gradle**: Version 7.0+ (or use the included Gradle wrapper `./gradlew`)
-- **OpenAPI Generator**: Required for regenerating API models from the Permit.io OpenAPI specification.
+- **OpenAPI Generator**: Required for regenerating API models from the Permit.io OpenAPI specification
 
 #### Installing OpenAPI Generator
 
@@ -378,13 +379,21 @@ models (e.g., when the API is updated), use the provided Makefile targets:
 make generate-openapi
 ```
 
+If your default Java is version 8, you need to use Java 11+ for the generator:
+
+```bash
+# macOS - use Java 17 for the generator
+JAVA_HOME=$(/usr/libexec/java_home -v 17) make generate-openapi
+```
+
 This command:
 
 1. Fetches the latest OpenAPI specification from `https://api.permit.io/v2/openapi.json`
 2. Generates Java model classes using the configuration in `openapi-config.json`
 3. Outputs the generated code to the `generated/` directory
 
-Note: The `--skip-validate-spec` flag is used to bypass minor validation issues in the upstream API specification that do not affect code generation.
+Note: The `--skip-validate-spec` flag is used to bypass minor validation issues in the upstream API specification that
+do not affect code generation.
 
 #### Clean Generated Files
 
