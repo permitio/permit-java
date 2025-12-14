@@ -330,7 +330,8 @@ src/main/java/io/permit/sdk/
 
 ## Contributing
 
-We welcome contributions to the Permit.io Java SDK! This section explains how to set up your development environment and contribute to the project.
+We welcome contributions to the Permit.io Java SDK! This section explains how to set up your development environment and
+contribute to the project.
 
 ### Prerequisites
 
@@ -338,11 +339,12 @@ Before contributing, ensure you have the following installed:
 
 - **Java JDK**: Version 8 or higher (JDK 11+ recommended for development)
 - **Gradle**: Version 7.0+ (or use the included Gradle wrapper `./gradlew`)
-- **OpenAPI Generator**: Required for regenerating API models from the Permit.io OpenAPI specification
+- **OpenAPI Generator**: Required for regenerating API models from the Permit.io OpenAPI specification.
 
 #### Installing OpenAPI Generator
 
-The OpenAPI Generator is used to generate Java model classes from the Permit.io API specification. Install it using one of the following methods:
+The OpenAPI Generator is used to generate Java model classes from the Permit.io API specification. Install it using one
+of the following methods:
 
 **Using Homebrew (macOS):**
 
@@ -362,11 +364,13 @@ npm install @openapitools/openapi-generator-cli -g
 docker pull openapitools/openapi-generator-cli
 ```
 
-For more installation options, see the [OpenAPI Generator Installation Guide](https://openapi-generator.tech/docs/installation).
+For more installation options, see
+the [OpenAPI Generator Installation Guide](https://openapi-generator.tech/docs/installation).
 
 ### Regenerating OpenAPI Models
 
-The SDK includes auto-generated model classes from the Permit.io OpenAPI specification. If you need to regenerate these models (e.g., when the API is updated), use the provided Makefile targets:
+The SDK includes auto-generated model classes from the Permit.io OpenAPI specification. If you need to regenerate these
+models (e.g., when the API is updated), use the provided Makefile targets:
 
 #### Generate OpenAPI Models
 
@@ -375,6 +379,7 @@ make generate-openapi
 ```
 
 This command:
+
 1. Fetches the latest OpenAPI specification from `https://api.permit.io/v2/openapi.json`
 2. Generates Java model classes using the configuration in `openapi-config.json`
 3. Outputs the generated code to the `generated/` directory
@@ -393,7 +398,8 @@ This removes the `generated/` directory and all auto-generated files.
 make generate-jsonschema
 ```
 
-This generates JSON schema files from the OpenAPI specification and outputs them to the `schemas/` directory. This requires the `openapi2jsonschema` tool.
+This generates JSON schema files from the OpenAPI specification and outputs them to the `schemas/` directory. This
+requires the `openapi2jsonschema` tool.
 
 ### Development Workflow
 
