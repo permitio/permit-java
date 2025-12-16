@@ -3,7 +3,6 @@ package io.permit.sdk.examples;
 import io.permit.sdk.Permit;
 import io.permit.sdk.PermitConfig;
 import io.permit.sdk.api.PermitApiError;
-import io.permit.sdk.enforcement.IEnforcerApi;
 import io.permit.sdk.enforcement.Resource;
 import io.permit.sdk.enforcement.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,89 +23,20 @@ import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for AdvancedPermissionCheckExample.
- * These tests use Mockito to mock the IEnforcerApi interface and verify that user attributes,
- * resource attributes, and tenant context are handled correctly.
+ * These tests use Mockito to mock the Permit class and verify that user attributes,
+ * resource attributes, and tenant context are handled correctly by the actual example class.
  */
 @ExtendWith(MockitoExtension.class)
 class AdvancedPermissionCheckExampleTest {
 
     @Mock
-    private IEnforcerApi mockEnforcer;
+    private Permit mockPermit;
 
-    private TestableAdvancedPermissionCheckExample example;
-
-    /**
-     * Testable class that allows injecting a mock IEnforcerApi
-     */
-    static class TestableAdvancedPermissionCheckExample {
-        private final IEnforcerApi enforcer;
-
-        TestableAdvancedPermissionCheckExample(IEnforcerApi enforcer) {
-            this.enforcer = enforcer;
-        }
-
-        boolean checkPermissionWithContext(
-                String userKey,
-                String userEmail,
-                HashMap<String, Object> userAttributes,
-                String action,
-                String resourceType,
-                String resourceKey,
-                String tenant) throws IOException, PermitApiError {
-
-            User.Builder userBuilder = new User.Builder(userKey);
-            if (userEmail != null) {
-                userBuilder.withEmail(userEmail);
-            }
-            if (userAttributes != null) {
-                userBuilder.withAttributes(userAttributes);
-            }
-            User user = userBuilder.build();
-
-            Resource.Builder resourceBuilder = new Resource.Builder(resourceType);
-            if (resourceKey != null) {
-                resourceBuilder.withKey(resourceKey);
-            }
-            if (tenant != null) {
-                resourceBuilder.withTenant(tenant);
-            }
-            Resource resource = resourceBuilder.build();
-
-            return enforcer.check(user, action, resource);
-        }
-
-        boolean checkPermissionWithAttributes(
-                String userKey,
-                HashMap<String, Object> userAttributes,
-                String action,
-                String resourceType,
-                String resourceKey,
-                HashMap<String, Object> resourceAttributes,
-                String tenant) throws IOException, PermitApiError {
-
-            User user = new User.Builder(userKey)
-                    .withAttributes(userAttributes)
-                    .build();
-
-            Resource.Builder resourceBuilder = new Resource.Builder(resourceType);
-            if (resourceKey != null) {
-                resourceBuilder.withKey(resourceKey);
-            }
-            if (resourceAttributes != null) {
-                resourceBuilder.withAttributes(resourceAttributes);
-            }
-            if (tenant != null) {
-                resourceBuilder.withTenant(tenant);
-            }
-            Resource resource = resourceBuilder.build();
-
-            return enforcer.check(user, action, resource);
-        }
-    }
+    private AdvancedPermissionCheckExample example;
 
     @BeforeEach
     void setUp() {
-        example = new TestableAdvancedPermissionCheckExample(mockEnforcer);
+        example = new AdvancedPermissionCheckExample(mockPermit);
     }
 
     @Test
@@ -122,7 +52,7 @@ class AdvancedPermissionCheckExampleTest {
         String resourceKey = "doc-456";
         String tenant = "acme-corp";
 
-        when(mockEnforcer.check(any(User.class), eq(action), any(Resource.class)))
+        when(mockPermit.check(any(User.class), eq(action), any(Resource.class)))
                 .thenReturn(true);
 
         // When
@@ -137,7 +67,7 @@ class AdvancedPermissionCheckExampleTest {
         // Verify that check was called with correct parameters
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         ArgumentCaptor<Resource> resourceCaptor = ArgumentCaptor.forClass(Resource.class);
-        verify(mockEnforcer).check(userCaptor.capture(), eq(action), resourceCaptor.capture());
+        verify(mockPermit).check(userCaptor.capture(), eq(action), resourceCaptor.capture());
 
         User capturedUser = userCaptor.getValue();
         assertEquals(userKey, capturedUser.getKey());
@@ -158,7 +88,7 @@ class AdvancedPermissionCheckExampleTest {
         String action = "read";
         String resourceType = "document";
 
-        when(mockEnforcer.check(any(User.class), eq(action), any(Resource.class)))
+        when(mockPermit.check(any(User.class), eq(action), any(Resource.class)))
                 .thenReturn(true);
 
         // When - email, attributes, resourceKey, and tenant are all null
@@ -172,7 +102,7 @@ class AdvancedPermissionCheckExampleTest {
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         ArgumentCaptor<Resource> resourceCaptor = ArgumentCaptor.forClass(Resource.class);
-        verify(mockEnforcer).check(userCaptor.capture(), eq(action), resourceCaptor.capture());
+        verify(mockPermit).check(userCaptor.capture(), eq(action), resourceCaptor.capture());
 
         User capturedUser = userCaptor.getValue();
         assertEquals(userKey, capturedUser.getKey());
@@ -204,7 +134,7 @@ class AdvancedPermissionCheckExampleTest {
 
         String tenant = "gov-agency";
 
-        when(mockEnforcer.check(any(User.class), eq(action), any(Resource.class)))
+        when(mockPermit.check(any(User.class), eq(action), any(Resource.class)))
                 .thenReturn(true);
 
         // When
@@ -219,7 +149,7 @@ class AdvancedPermissionCheckExampleTest {
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         ArgumentCaptor<Resource> resourceCaptor = ArgumentCaptor.forClass(Resource.class);
-        verify(mockEnforcer).check(userCaptor.capture(), eq(action), resourceCaptor.capture());
+        verify(mockPermit).check(userCaptor.capture(), eq(action), resourceCaptor.capture());
 
         User capturedUser = userCaptor.getValue();
         assertEquals(5, capturedUser.getAttributes().get("clearance_level"));
@@ -241,7 +171,7 @@ class AdvancedPermissionCheckExampleTest {
         HashMap<String, Object> resourceAttributes = new HashMap<String, Object>();
         resourceAttributes.put("required_clearance", 5); // Requires higher clearance
 
-        when(mockEnforcer.check(any(User.class), eq("access"), any(Resource.class)))
+        when(mockPermit.check(any(User.class), eq("access"), any(Resource.class)))
                 .thenReturn(false); // Permission denied
 
         // When
@@ -259,16 +189,19 @@ class AdvancedPermissionCheckExampleTest {
     @DisplayName("Should propagate IOException from Permit SDK")
     void testCheckPermissionWithContext_IOException() throws IOException, PermitApiError {
         // Given
-        when(mockEnforcer.check(any(User.class), any(String.class), any(Resource.class)))
+        when(mockPermit.check(any(User.class), any(String.class), any(Resource.class)))
                 .thenThrow(new IOException("Connection timeout"));
 
         // When/Then
-        IOException exception = assertThrows(IOException.class, () ->
+        IOException exception = assertThrows(IOException.class, new org.junit.jupiter.api.function.Executable() {
+            @Override
+            public void execute() throws Throwable {
                 example.checkPermissionWithContext(
                         "user", "user@example.com", null,
                         "read", "document", null, null
-                )
-        );
+                );
+            }
+        });
         assertEquals("Connection timeout", exception.getMessage());
     }
 
@@ -276,17 +209,20 @@ class AdvancedPermissionCheckExampleTest {
     @DisplayName("Should propagate PermitApiError from Permit SDK")
     void testCheckPermissionWithAttributes_PermitApiError() throws IOException, PermitApiError {
         // Given
-        when(mockEnforcer.check(any(User.class), any(String.class), any(Resource.class)))
+        when(mockPermit.check(any(User.class), any(String.class), any(Resource.class)))
                 .thenThrow(new PermitApiError("Unauthorized", 401, "{\"error\":\"Invalid token\"}"));
 
         // When/Then
-        PermitApiError exception = assertThrows(PermitApiError.class, () ->
+        PermitApiError exception = assertThrows(PermitApiError.class, new org.junit.jupiter.api.function.Executable() {
+            @Override
+            public void execute() throws Throwable {
                 example.checkPermissionWithAttributes(
                         "user", new HashMap<String, Object>(),
                         "read", "document", null,
                         null, null
-                )
-        );
+                );
+            }
+        });
         assertEquals(401, exception.getResponseCode());
     }
 
@@ -294,7 +230,7 @@ class AdvancedPermissionCheckExampleTest {
     @DisplayName("Should handle multiple permission checks with different tenants")
     void testCheckPermissionWithContext_MultipleTenants() throws IOException, PermitApiError {
         // Given - user is permitted in tenant1 but not in tenant2
-        when(mockEnforcer.check(any(User.class), eq("edit"), any(Resource.class)))
+        when(mockPermit.check(any(User.class), eq("edit"), any(Resource.class)))
                 .thenAnswer(invocation -> {
                     Resource resource = invocation.getArgument(2);
                     return "tenant1".equals(resource.getTenant());
@@ -326,7 +262,7 @@ class AdvancedPermissionCheckExampleTest {
         metadata.put("provider", "google");
         userAttributes.put("metadata", metadata);
 
-        when(mockEnforcer.check(any(User.class), eq("manage"), any(Resource.class)))
+        when(mockPermit.check(any(User.class), eq("manage"), any(Resource.class)))
                 .thenReturn(true);
 
         // When
@@ -339,7 +275,7 @@ class AdvancedPermissionCheckExampleTest {
         assertTrue(result);
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(mockEnforcer).check(userCaptor.capture(), eq("manage"), any(Resource.class));
+        verify(mockPermit).check(userCaptor.capture(), eq("manage"), any(Resource.class));
 
         User capturedUser = userCaptor.getValue();
         assertNotNull(capturedUser.getAttributes());
@@ -362,7 +298,10 @@ class AdvancedPermissionCheckExampleTest {
 
             // Then
             assertNotNull(realExample, "Should be able to create example with real Permit instance");
-        } catch (UnsupportedClassVersionError | NoClassDefFoundError e) {
+        } catch (UnsupportedClassVersionError e) {
+            // Skip test if there's a class version mismatch (e.g., running with incompatible JVM)
+            System.out.println("Skipping test due to class version incompatibility: " + e.getMessage());
+        } catch (NoClassDefFoundError e) {
             // Skip test if there's a class version mismatch (e.g., running with incompatible JVM)
             System.out.println("Skipping test due to class version incompatibility: " + e.getMessage());
         }

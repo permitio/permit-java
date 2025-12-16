@@ -2,8 +2,10 @@ package io.permit.sdk.examples;
 
 import io.permit.sdk.Permit;
 import io.permit.sdk.PermitConfig;
+import io.permit.sdk.api.ApiClient;
 import io.permit.sdk.api.PermitApiError;
 import io.permit.sdk.api.PermitContextError;
+import io.permit.sdk.api.UsersApi;
 import io.permit.sdk.api.models.CreateOrUpdateResult;
 import io.permit.sdk.enforcement.User;
 import io.permit.sdk.openapi.models.UserRead;
@@ -16,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,76 +27,36 @@ import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for UserSyncExample.
- * These tests use Mockito to mock the user sync functionality, so they don't require
- * a running PDP or actual API connection.
+ * These tests use Mockito to mock the Permit class and its nested API objects,
+ * testing the actual UserSyncExample class rather than a test double.
  */
 @ExtendWith(MockitoExtension.class)
 class UserSyncExampleTest {
 
-    /**
-     * Interface for user sync operations that can be easily mocked
-     */
-    interface UserSyncService {
-        CreateOrUpdateResult<UserRead> sync(User user) throws IOException, PermitApiError, PermitContextError;
-    }
+    @Mock
+    private Permit mockPermit;
 
     @Mock
-    private UserSyncService mockUserSyncService;
+    private ApiClient mockApiClient;
 
-    private TestableUserSyncExample example;
+    @Mock
+    private UsersApi mockUsersApi;
 
-    /**
-     * Testable class that allows injecting a mock UserSyncService
-     */
-    static class TestableUserSyncExample {
-        private final UserSyncService userSyncService;
-
-        TestableUserSyncExample(UserSyncService userSyncService) {
-            this.userSyncService = userSyncService;
-        }
-
-        CreateOrUpdateResult<UserRead> syncSimpleUser(String userKey)
-                throws IOException, PermitApiError, PermitContextError {
-            User user = User.fromString(userKey);
-            return userSyncService.sync(user);
-        }
-
-        CreateOrUpdateResult<UserRead> syncUserWithProfile(
-                String userKey,
-                String email,
-                String firstName,
-                String lastName) throws IOException, PermitApiError, PermitContextError {
-
-            User user = new User.Builder(userKey)
-                    .withEmail(email)
-                    .withFirstName(firstName)
-                    .withLastName(lastName)
-                    .build();
-
-            return userSyncService.sync(user);
-        }
-
-        CreateOrUpdateResult<UserRead> syncUserWithAttributes(
-                String userKey,
-                String email,
-                String firstName,
-                String lastName,
-                HashMap<String, Object> attributes) throws IOException, PermitApiError, PermitContextError {
-
-            User user = new User.Builder(userKey)
-                    .withEmail(email)
-                    .withFirstName(firstName)
-                    .withLastName(lastName)
-                    .withAttributes(attributes)
-                    .build();
-
-            return userSyncService.sync(user);
-        }
-    }
+    private UserSyncExample example;
 
     @BeforeEach
-    void setUp() {
-        example = new TestableUserSyncExample(mockUserSyncService);
+    void setUp() throws Exception {
+        // Set up the mock chain: mockPermit.api -> mockApiClient, mockApiClient.users -> mockUsersApi
+        // Since 'api' is a public final field, we need to use reflection to set it
+        Field apiField = Permit.class.getDeclaredField("api");
+        apiField.setAccessible(true);
+        apiField.set(mockPermit, mockApiClient);
+
+        Field usersField = ApiClient.class.getDeclaredField("users");
+        usersField.setAccessible(true);
+        usersField.set(mockApiClient, mockUsersApi);
+
+        example = new UserSyncExample(mockPermit);
     }
 
     @Test
@@ -104,7 +67,7 @@ class UserSyncExampleTest {
         UserRead expectedUser = new UserRead(userKey, "uuid-123", "org-1", "proj-1", "env-1");
         CreateOrUpdateResult<UserRead> expectedResult = new CreateOrUpdateResult<UserRead>(expectedUser, true);
 
-        when(mockUserSyncService.sync(any(User.class))).thenReturn(expectedResult);
+        when(mockUsersApi.sync(any(User.class))).thenReturn(expectedResult);
 
         // When
         CreateOrUpdateResult<UserRead> result = example.syncSimpleUser(userKey);
@@ -116,7 +79,7 @@ class UserSyncExampleTest {
         assertEquals("uuid-123", result.getResult().id);
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(mockUserSyncService).sync(userCaptor.capture());
+        verify(mockUsersApi).sync(userCaptor.capture());
         assertEquals(userKey, userCaptor.getValue().getKey());
     }
 
@@ -128,7 +91,7 @@ class UserSyncExampleTest {
         UserRead expectedUser = new UserRead(userKey, "uuid-456", "org-1", "proj-1", "env-1");
         CreateOrUpdateResult<UserRead> expectedResult = new CreateOrUpdateResult<UserRead>(expectedUser, false);
 
-        when(mockUserSyncService.sync(any(User.class))).thenReturn(expectedResult);
+        when(mockUsersApi.sync(any(User.class))).thenReturn(expectedResult);
 
         // When
         CreateOrUpdateResult<UserRead> result = example.syncSimpleUser(userKey);
@@ -154,7 +117,7 @@ class UserSyncExampleTest {
                 .withLastName(lastName);
         CreateOrUpdateResult<UserRead> expectedResult = new CreateOrUpdateResult<UserRead>(expectedUser, true);
 
-        when(mockUserSyncService.sync(any(User.class))).thenReturn(expectedResult);
+        when(mockUsersApi.sync(any(User.class))).thenReturn(expectedResult);
 
         // When
         CreateOrUpdateResult<UserRead> result = example.syncUserWithProfile(userKey, email, firstName, lastName);
@@ -168,7 +131,7 @@ class UserSyncExampleTest {
 
         // Verify the User object passed to sync had the correct values
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(mockUserSyncService).sync(userCaptor.capture());
+        verify(mockUsersApi).sync(userCaptor.capture());
 
         User capturedUser = userCaptor.getValue();
         assertEquals(userKey, capturedUser.getKey());
@@ -198,7 +161,7 @@ class UserSyncExampleTest {
                 .withAttributes(attributes);
         CreateOrUpdateResult<UserRead> expectedResult = new CreateOrUpdateResult<UserRead>(expectedUser, true);
 
-        when(mockUserSyncService.sync(any(User.class))).thenReturn(expectedResult);
+        when(mockUsersApi.sync(any(User.class))).thenReturn(expectedResult);
 
         // When
         CreateOrUpdateResult<UserRead> result = example.syncUserWithAttributes(
@@ -216,7 +179,7 @@ class UserSyncExampleTest {
 
         // Verify the User object passed to sync had the correct attributes
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(mockUserSyncService).sync(userCaptor.capture());
+        verify(mockUsersApi).sync(userCaptor.capture());
 
         User capturedUser = userCaptor.getValue();
         assertEquals("engineering", capturedUser.getAttributes().get("department"));
@@ -228,13 +191,16 @@ class UserSyncExampleTest {
     @DisplayName("Should propagate IOException from sync service")
     void testSyncSimpleUser_IOException() throws IOException, PermitApiError, PermitContextError {
         // Given
-        when(mockUserSyncService.sync(any(User.class)))
+        when(mockUsersApi.sync(any(User.class)))
                 .thenThrow(new IOException("Network unreachable"));
 
         // When/Then
-        IOException exception = assertThrows(IOException.class, () ->
-                example.syncSimpleUser("test-user")
-        );
+        IOException exception = assertThrows(IOException.class, new org.junit.jupiter.api.function.Executable() {
+            @Override
+            public void execute() throws Throwable {
+                example.syncSimpleUser("test-user");
+            }
+        });
         assertEquals("Network unreachable", exception.getMessage());
     }
 
@@ -242,13 +208,16 @@ class UserSyncExampleTest {
     @DisplayName("Should propagate PermitApiError from sync service")
     void testSyncSimpleUser_PermitApiError() throws IOException, PermitApiError, PermitContextError {
         // Given
-        when(mockUserSyncService.sync(any(User.class)))
+        when(mockUsersApi.sync(any(User.class)))
                 .thenThrow(new PermitApiError("Bad Request", 400, "{\"error\":\"Invalid user data\"}"));
 
         // When/Then
-        PermitApiError exception = assertThrows(PermitApiError.class, () ->
-                example.syncSimpleUser("test-user")
-        );
+        PermitApiError exception = assertThrows(PermitApiError.class, new org.junit.jupiter.api.function.Executable() {
+            @Override
+            public void execute() throws Throwable {
+                example.syncSimpleUser("test-user");
+            }
+        });
         assertEquals(400, exception.getResponseCode());
         assertTrue(exception.getRawResponse().contains("Invalid user data"));
     }
@@ -257,13 +226,16 @@ class UserSyncExampleTest {
     @DisplayName("Should propagate PermitContextError from sync service")
     void testSyncSimpleUser_PermitContextError() throws IOException, PermitApiError, PermitContextError {
         // Given
-        when(mockUserSyncService.sync(any(User.class)))
+        when(mockUsersApi.sync(any(User.class)))
                 .thenThrow(new PermitContextError("Environment context required"));
 
         // When/Then
-        PermitContextError exception = assertThrows(PermitContextError.class, () ->
-                example.syncSimpleUser("test-user")
-        );
+        PermitContextError exception = assertThrows(PermitContextError.class, new org.junit.jupiter.api.function.Executable() {
+            @Override
+            public void execute() throws Throwable {
+                example.syncSimpleUser("test-user");
+            }
+        });
         assertTrue(exception.getMessage().contains("Environment context required"));
     }
 
@@ -274,7 +246,7 @@ class UserSyncExampleTest {
         UserRead user1 = new UserRead("user1", "id1", "org", "proj", "env");
         UserRead user2 = new UserRead("user2", "id2", "org", "proj", "env");
 
-        when(mockUserSyncService.sync(any(User.class)))
+        when(mockUsersApi.sync(any(User.class)))
                 .thenReturn(new CreateOrUpdateResult<UserRead>(user1, true))
                 .thenReturn(new CreateOrUpdateResult<UserRead>(user2, false));
 
@@ -286,7 +258,7 @@ class UserSyncExampleTest {
         assertTrue(result1.wasCreated(), "First user should be created");
         assertFalse(result2.wasCreated(), "Second user should be updated");
 
-        verify(mockUserSyncService, times(2)).sync(any(User.class));
+        verify(mockUsersApi, times(2)).sync(any(User.class));
     }
 
     @Test
@@ -294,7 +266,7 @@ class UserSyncExampleTest {
     void testSyncUserWithAttributes_NullAttributes() throws IOException, PermitApiError, PermitContextError {
         // Given
         UserRead expectedUser = new UserRead("user1", "id1", "org", "proj", "env");
-        when(mockUserSyncService.sync(any(User.class)))
+        when(mockUsersApi.sync(any(User.class)))
                 .thenReturn(new CreateOrUpdateResult<UserRead>(expectedUser, true));
 
         // When - passing null attributes
@@ -307,7 +279,7 @@ class UserSyncExampleTest {
         assertTrue(result.wasCreated());
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(mockUserSyncService).sync(userCaptor.capture());
+        verify(mockUsersApi).sync(userCaptor.capture());
         assertNull(userCaptor.getValue().getAttributes());
     }
 
@@ -318,7 +290,7 @@ class UserSyncExampleTest {
         HashMap<String, Object> emptyAttributes = new HashMap<String, Object>();
         UserRead expectedUser = new UserRead("user1", "id1", "org", "proj", "env")
                 .withAttributes(emptyAttributes);
-        when(mockUserSyncService.sync(any(User.class)))
+        when(mockUsersApi.sync(any(User.class)))
                 .thenReturn(new CreateOrUpdateResult<UserRead>(expectedUser, true));
 
         // When
@@ -331,7 +303,7 @@ class UserSyncExampleTest {
         assertTrue(result.wasCreated());
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(mockUserSyncService).sync(userCaptor.capture());
+        verify(mockUsersApi).sync(userCaptor.capture());
         assertNotNull(userCaptor.getValue().getAttributes());
         assertTrue(userCaptor.getValue().getAttributes().isEmpty());
     }
@@ -351,7 +323,10 @@ class UserSyncExampleTest {
 
             // Then
             assertNotNull(realExample, "Should be able to create example with real Permit instance");
-        } catch (UnsupportedClassVersionError | NoClassDefFoundError e) {
+        } catch (UnsupportedClassVersionError e) {
+            // Skip test if there's a class version mismatch (e.g., running with incompatible JVM)
+            System.out.println("Skipping test due to class version incompatibility: " + e.getMessage());
+        } catch (NoClassDefFoundError e) {
             // Skip test if there's a class version mismatch (e.g., running with incompatible JVM)
             System.out.println("Skipping test due to class version incompatibility: " + e.getMessage());
         }
