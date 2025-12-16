@@ -85,7 +85,7 @@ public class ResourcesApiE2ETest extends PermitE2ETestBase {
         Permit permit = new Permit(this.config);
         Gson gson = new Gson();
 
-        // users lifecycle
+        // Resource lifecycle.
         try {
             logger.info("check original resource length");
             int originalLength = permit.api.resources.list().length;

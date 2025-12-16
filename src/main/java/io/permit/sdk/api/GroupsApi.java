@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
+// This is a partial support for the Groups API, some methods are currently missing.
 interface IGroupsApi {
-//    GroupRead[] list(String resource, Boolean includeTotalCount, int page, int perPage, String search) throws IOException, PermitApiError, PermitContextError;
     GroupRead[] list(int page, int perPage) throws IOException, PermitApiError, PermitContextError;
     GroupRead[] list(int page) throws IOException, PermitApiError, PermitContextError;
     GroupRead[] list() throws IOException, PermitApiError, PermitContextError;
@@ -26,16 +26,6 @@ interface IGroupsApi {
     GroupRead assignUserToGroup(String userId, String groupInstanceKey, String tenant) throws IOException, PermitApiError, PermitContextError;
     void removeRoleFromGroup(String groupInstanceKey, GroupAddRole groupAddRole) throws IOException, PermitApiError, PermitContextError;
     void removeUserFromGroup(String userId, String groupInstanceKey, String tenant) throws IOException, PermitApiError, PermitContextError;
-
-
-//    GroupReadSchema getDirectGroup(String projId, String envId, String groupInstanceKey) throws IOException, PermitApiError, PermitContextError;
-//    PaginatedResultGroupReadSchema listDirectGroup(String projId, String envId, String tenant, String resource, Integer page, Integer perPage, String search) throws IOException, PermitApiError, PermitContextError;
-//    PaginatedResultGroupReadSchema listGroupChildren(String projId, String envId, String groupInstanceKey, Integer page, Integer perPage) throws IOException, PermitApiError, PermitContextError;
-//    PaginatedResultGroupReadSchema listGroupParents(String projId, String envId, String groupInstanceKey, Integer page, Integer perPage) throws IOException, PermitApiError, PermitContextError;
-//    PaginatedResultGroupRoleReadSchema listGroupRoles(String projId, String envId, String groupInstanceKey, Integer page, Integer perPage) throws IOException, PermitApiError, PermitContextError;
-//    PaginatedResultGroupUserReadSchema listGroupUsers(String projId, String envId, String groupInstanceKey, Integer page, Integer perPage) throws IOException, PermitApiError, PermitContextError;
-//    GroupRead assignGroupToGroup(String projId, String envId, String groupInstanceKey, GroupAssignment groupAssignment) throws IOException, PermitApiError, PermitContextError;
-//    void removeGroupFromGroup(String projId, String envId, String groupInstanceKey, GroupAssignment groupAssignment) throws IOException, PermitApiError, PermitContextError;
 }
 
 public class GroupsApi extends BaseApi implements IGroupsApi {
@@ -71,7 +61,7 @@ public class GroupsApi extends BaseApi implements IGroupsApi {
      *
      * @param page    The page number of the result set to retrieve.
      * @param perPage The number of items per page.
-     * @return A PaginatedResultUserRead object representing the retrieved paginated result of groups.
+     * @return An array of GroupRead objects representing the retrieved groups.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
@@ -86,8 +76,8 @@ public class GroupsApi extends BaseApi implements IGroupsApi {
                 new Request.Builder()
                         .url(
                                 urlBuilder
-//                                        .addQueryParameter("page", Integer.toString(page))
-//                                        .addQueryParameter("per_page", Integer.toString(perPage))
+                                        .addQueryParameter("page", Integer.toString(page))
+                                        .addQueryParameter("per_page", Integer.toString(perPage))
                                         .build()
                         )
                         .get()
@@ -230,7 +220,7 @@ public class GroupsApi extends BaseApi implements IGroupsApi {
      * Assign a role to the group, all users in this group will now have this role.
      * It will create relation between the group and the resource, relationship between the resource instances and derivation from the member role to this role.
      *
-     * @param groupInstanceKey The key of the group to assign the user.
+     * @param groupInstanceKey The key of the group to assign the role to.
      * @param groupAddRole The {@link GroupAddRole} object containing the assignment data.
      * @return The {@link GroupRead} object representing the group after assigning the role.
      * @throws IOException          If an I/O error occurs during the HTTP request.
@@ -281,7 +271,7 @@ public class GroupsApi extends BaseApi implements IGroupsApi {
     }
 
     /**
-     * Remove a role to the group, all users in this group will lose this role.
+     * Remove a role from the group, all users in this group will lose this role.
      *
      * @param groupInstanceKey The key of the group to assign the user.
      * @param groupAddRole The {@link GroupAddRole} object containing the assignment data.

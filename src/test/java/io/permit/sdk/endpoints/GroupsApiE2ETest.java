@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -131,8 +132,7 @@ public class GroupsApiE2ETest extends PermitE2ETestBase {
             assertEquals(groups.length, originalLength + 1);
 
             logger.info("verify can find new group in the new list");
-//            logger.info(Arrays.stream(groups).map(r -> r.groupInstanceKey).toList().toString());
-            assertTrue(Arrays.stream(groups).map(r -> r.groupInstanceKey).toList().toString().contains(marketingData.groupInstanceKey));
+            assertTrue(Arrays.stream(groups).map(r -> r.groupInstanceKey).collect(Collectors.toList()).toString().contains(marketingData.groupInstanceKey));
 
             logger.info("get non existing group -> 404");
             PermitApiError notFoundError = assertThrows(PermitApiError.class, () -> {
@@ -203,7 +203,6 @@ public class GroupsApiE2ETest extends PermitE2ETestBase {
             assertEquals(2, afterAddingRole.assignedRoles.size());
 
             logger.info("Removing role from group");
-//            String trainingVideoFullKey = groupRoleData.resource + ":" + groupRoleData.resourceInstance;
             permit.api.groups.removeRoleFromGroup(GROUP_KEY, groupRoleData);
             GroupRead afterRemovingRole = permit.api.groups.get(GROUP_KEY);
             for (String role : afterRemovingRole.assignedRoles) {
