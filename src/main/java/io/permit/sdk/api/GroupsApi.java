@@ -273,7 +273,7 @@ public class GroupsApi extends BaseApi implements IGroupsApi {
     /**
      * Remove a role from the group, all users in this group will lose this role.
      *
-     * @param groupInstanceKey The key of the group to assign the user.
+     * @param groupInstanceKey The key of the group to remove the role from.
      * @param groupAddRole The {@link GroupAddRole} object containing the assignment data.
      * @throws IOException          If an I/O error occurs during the HTTP request.
      * @throws PermitApiError       If the Permit API returns a response with an error status code.

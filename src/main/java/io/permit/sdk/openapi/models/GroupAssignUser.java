@@ -36,7 +36,7 @@ public class GroupAssignUser {
 
     /**
      *
-     * @param groupInstanceKey
+
      * @param tenant
      */
     public GroupAssignUser(java.lang.String tenant) {

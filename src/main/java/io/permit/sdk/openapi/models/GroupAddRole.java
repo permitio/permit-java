@@ -47,7 +47,7 @@ public class GroupAddRole {
     @Expose
     public String resource;
     /**
-     * ResoruceInstance
+     * ResourceInstance
      * <p>
      * The resource instance key or id that the role belongs to.
      * (Required)

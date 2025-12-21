@@ -216,7 +216,7 @@ public class GroupsApiE2ETest extends PermitE2ETestBase {
             assertFalse(foundRole);
             assertFalse(foundResource);
             assertFalse(foundResourceInstance);
-            assertEquals(1, marketingGroup.assignedRoles.size());
+            assertEquals(1, afterRemovingRole.assignedRoles.size());
 
             // delete group
             logger.info("Delete group...");
