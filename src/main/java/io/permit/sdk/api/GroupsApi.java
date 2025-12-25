@@ -61,7 +61,7 @@ public class GroupsApi extends BaseApi implements IGroupsApi {
      *
      * @param page    The page number of the result set to retrieve.
      * @param perPage The number of items per page.
-     * @return An array of GroupRead objects representing the retrieved groups.
+     * @return An array of {@link GroupRead} objects representing the retrieved groups.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
@@ -90,10 +90,10 @@ public class GroupsApi extends BaseApi implements IGroupsApi {
     }
 
     /**
-     * Retrieves a paginated result of groups with the default number of items per page.
+     * Retrieves a paginated result of groups with default pagination.
      *
      * @param page The page number of the result set to retrieve.
-     * @return A PaginatedResultUserRead object representing the retrieved paginated result of groups.
+     * @return A list of {@link GroupRead} objects representing the retrieved paginated result of groups.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
@@ -106,7 +106,7 @@ public class GroupsApi extends BaseApi implements IGroupsApi {
     /**
      * Retrieves a paginated result of groups with default pagination.
      *
-     * @return A PaginatedResultUserRead object representing the retrieved paginated result of groups.
+     * @return A list of {@link GroupRead} objects representing the retrieved paginated result of groups.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
