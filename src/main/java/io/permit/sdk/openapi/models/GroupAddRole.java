@@ -47,7 +47,7 @@ public class GroupAddRole {
     @Expose
     public String resource;
     /**
-     * ResoruceInstance
+     * ResourceInstance
      * <p>
      * The resource instance key or id that the role belongs to.
      * (Required)
@@ -75,9 +75,12 @@ public class GroupAddRole {
     }
 
     /**
+     * Constructs a new GroupAddRole with all required identifiers.
      *
-     * @param resourceInstance
-     * @param tenant
+     * @param role              the role key or id to assign to the group
+     * @param resourceInstance  the resource instance key or id that the role belongs to
+     * @param resource          the resource key or id that the role belongs to
+     * @param tenant            the tenant key or id that the role belongs to
      */
     public GroupAddRole(java.lang.String role, java.lang.String resourceInstance, java.lang.String resource, java.lang.String tenant) {
         super();
