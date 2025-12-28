@@ -115,9 +115,9 @@ public class GroupsApiE2ETest extends PermitE2ETestBase {
             GroupRead marketingGroup = permit.api.groups.create(marketingData);
             assertNotNull(marketingGroup);
             assertNotNull(marketingGroup.groupResourceTypeKey);
-            assertEquals(marketingGroup.groupResourceTypeKey, marketingData.groupResourceTypeKey);
-            assertEquals(marketingGroup.groupTenant, marketingData.groupTenant);
-            assertEquals(marketingGroup.groupInstanceKey, marketingData.groupInstanceKey);
+            assertEquals(marketingData.groupResourceTypeKey, marketingGroup.groupResourceTypeKey);
+            assertEquals(marketingData.groupTenant, marketingGroup.groupTenant);
+            assertEquals(marketingData.groupInstanceKey, marketingGroup.groupInstanceKey);
             boolean foundMember = false;
             for (String role : marketingGroup.assignedRoles) {
                 if (role.contains("member")) {
@@ -129,7 +129,7 @@ public class GroupsApiE2ETest extends PermitE2ETestBase {
 
             logger.info("verify number of items increased by 1");
             GroupRead[] groups = permit.api.groups.list();
-            assertEquals(groups.length, originalLength + 1);
+            assertEquals(originalLength + 1, groups.length);
 
             logger.info("verify can find new group in the new list");
             assertTrue(Arrays.stream(groups).map(r -> r.groupInstanceKey).collect(Collectors.toList()).toString().contains(marketingData.groupInstanceKey));
@@ -160,7 +160,7 @@ public class GroupsApiE2ETest extends PermitE2ETestBase {
 
             logger.info("Adding user already in group");
             GroupRead afterAddingUserAgain = permit.api.groups.assignUserToGroup(bobData.key, GROUP_KEY, DEFAULT_TENANT);
-            assertEquals(afterAddingUserAgain.users.size(), afterAddingUser.users.size());
+            assertEquals(afterAddingUser.users.size(), afterAddingUserAgain.users.size());
             logger.info("Removing user from group");
             permit.api.groups.removeUserFromGroup(bobData.key, GROUP_KEY, DEFAULT_TENANT);
             GroupRead afterRemovingUser = permit.api.groups.get(GROUP_KEY);
@@ -228,7 +228,7 @@ public class GroupsApiE2ETest extends PermitE2ETestBase {
 
             logger.info("Verify that again we have the initial number of groups");
             GroupRead[] groupsAfterDelete = permit.api.groups.list();
-            assertEquals(groupsAfterDelete.length, originalLength);
+            assertEquals(originalLength, groupsAfterDelete.length);
 
             logger.info("Verify deleted groups cannot be deleted again");
             PermitApiError exception = assertThrows(PermitApiError.class, () -> {
