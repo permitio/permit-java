@@ -194,7 +194,7 @@ public class PermitContext {
 
     private void verifyCanAccessProject(String org, String project) throws PermitContextChangeError {
         verifyCanAccessOrg(org);
-        if (!project.equals(permittedProject)) {
+        if (permittedProject != null && !project.equals(permittedProject)) {
             throw new PermitContextChangeError(
                     "You cannot set an SDK context with project '" + project +
                             "' due to insufficient API Key permissions"
