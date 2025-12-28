@@ -204,7 +204,7 @@ public class PermitContext {
 
     private void verifyCanAccessEnvironment(String org, String project, String environment) throws PermitContextChangeError {
         verifyCanAccessProject(org, project);
-        if (!environment.equals(permittedEnvironment)) {
+        if (permittedEnvironment != null && !environment.equals(permittedEnvironment)) {
             throw new PermitContextChangeError(
                     "You cannot set an SDK context with environment '" + environment +
                             "' due to insufficient API Key permissions"
