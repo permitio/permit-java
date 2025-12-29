@@ -135,7 +135,7 @@ public class UsersApi extends BaseApi implements IUsersApi {
     /**
      * Retrieves a user by its key.
      *
-     * @param userKey The key of theuser.
+     * @param userKey The key of the user.
      * @return A UserRead object representing the retrieved user.
      * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.

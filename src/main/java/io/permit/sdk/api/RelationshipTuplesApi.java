@@ -114,7 +114,7 @@ public class RelationshipTuplesApi extends BaseApi implements IRelationshipTuple
      * @param object    The object of the relationship (a resource instance key).
      * @param page      The page number of the results.
      * @return An array of RelationshipTupleRead objects representing the relationship tuples.
-     * @throws IOException           If an I/Oerror occurs during the HTTP request.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
@@ -129,7 +129,7 @@ public class RelationshipTuplesApi extends BaseApi implements IRelationshipTuple
      * @param relation  The relation between the two resource instances.
      * @param object    The object of the relationship (a resource instance key).
      * @return An array of RelationshipTupleRead objects representing the relationship tuples.
-     * @throws IOException           If an I/Oerror occurs during the HTTP request.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */
@@ -141,7 +141,7 @@ public class RelationshipTuplesApi extends BaseApi implements IRelationshipTuple
      * Lists all relationship tuples with the default pagination parameters.
      *
      * @return An array of RelationshipTupleRead objects representing the relationship tuples.
-     * @throws IOException           If an I/Oerror occurs during the HTTP request.
+     * @throws IOException           If an I/O error occurs during the HTTP request.
      * @throws PermitApiError        If the Permit API returns a response with an error status code.
      * @throws PermitContextError    If the configured {@link io.permit.sdk.PermitContext} does not match the required endpoint context.
      */

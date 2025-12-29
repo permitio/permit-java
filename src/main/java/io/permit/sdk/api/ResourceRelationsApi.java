@@ -172,7 +172,7 @@ public class ResourceRelationsApi extends BaseApi implements IResourceRelationsA
 
     /**
      * Creates a new relation under the specified resource.
-     * Since resource respresents a type, the relation itself represents a type and not a value.
+     * Since resource represents a type, the relation itself represents a type and not a value.
      *
      * @param resourceKey The key of the resource.
      * @param relationData The {@link RelationCreate} object containing the data for the new resource relation.
