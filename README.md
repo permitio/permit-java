@@ -15,7 +15,7 @@ For [Maven](https://maven.apache.org/) projects, use:
 <dependency>
   <groupId>io.permit</groupId>
   <artifactId>permit-sdk-java</artifactId>
-  <version>2.2.+</version>
+  <version>2.2.2</version>
 </dependency>
 ```
 
@@ -25,11 +25,9 @@ For [Gradle](https://gradle.org/) projects, configure `permit-sdk-java` as a dep
 dependencies {
     // ...
 
-    implementation 'io.permit:permit-sdk-java:2.2.+'
+    implementation 'io.permit:permit-sdk-java:2.2.2'
 }
 ```
-
-> **Note**: The `2.2.+` version range automatically selects the latest patch version. For explicit versions, check [Maven Central](https://central.sonatype.com/artifact/io.permit/permit-sdk-java).
 
 ## Usage
 
