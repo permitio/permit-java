@@ -15,7 +15,7 @@ For [Maven](https://maven.apache.org/) projects, use:
 <dependency>
   <groupId>io.permit</groupId>
   <artifactId>permit-sdk-java</artifactId>
-  <version>2.0.0</version>
+  <version>2.2.+</version>
 </dependency>
 ```
 
@@ -25,9 +25,11 @@ For [Gradle](https://gradle.org/) projects, configure `permit-sdk-java` as a dep
 dependencies {
     // ...
 
-    implementation 'io.permit:permit-sdk-java:2.0.0'
+    implementation 'io.permit:permit-sdk-java:2.2.+'
 }
 ```
+
+> **Note**: The `2.2.+` version range automatically selects the latest patch version. For explicit versions, check [Maven Central](https://central.sonatype.com/artifact/io.permit/permit-sdk-java).
 
 ## Usage
 
@@ -149,6 +151,6 @@ CreateOrUpdateResult<UserRead> result = permit.api.users.sync(new UserCreate("[U
 
 ## Javadoc reference
 
-To view the javadoc reference, [click here](https://javadoc.io/doc/io.permit/permit-sdk-java/2.0.0/index.html).
+To view the javadoc reference, [click here](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/index.html).
 
-It's easiest to start with the root [Permit](https://javadoc.io/static/io.permit/permit-sdk-java/2.0.0/io/permit/sdk/Permit.html) class.
+It's easiest to start with the root [Permit](https://javadoc.io/doc/io.permit/permit-sdk-java/latest/io/permit/sdk/Permit.html) class.
