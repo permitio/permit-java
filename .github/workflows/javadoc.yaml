@@ -1,0 +1,33 @@
+name: Javadoc Verification
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+jobs:
+  javadoc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3.11.0
+        with:
+          java-version: '8'
+          distribution: 'corretto'
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Generate Javadoc
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: javadoc
+      - name: Check Javadoc generation
+        run: |
+          if [ -d "build/docs/javadoc" ]; then
+            echo "Javadoc generated successfully"
+            echo "Javadoc files:"
+            find build/docs/javadoc -name "*.html" | head -20
+          else
+            echo "ERROR: Javadoc directory not found"
+            exit 1
+          fi
