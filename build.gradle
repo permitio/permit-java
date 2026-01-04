@@ -9,14 +9,13 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
-    // Maven publish plugins helps us to publish our library to maven repos
-    id 'maven-publish'
     // the signing plugin helps us to crypto-sign on our package (PGP key)
     id 'signing'
     // the git-version plugin helps us to publish an auto version (taken from git tags)
     id 'com.palantir.git-version' version '0.13.0'
-    // New Maven Central Portal publishing (replaces legacy OSSRH/Nexus)
-    id 'tech.yanand.maven-central-publish' version '1.2.0'
+    // Maven Central Portal publishing (community plugin, recommended by Sonatype)
+    // See: https://vanniktech.github.io/gradle-maven-publish-plugin/central/
+    id 'com.vanniktech.maven.publish' version '0.28.0'
     // translate json schemas to java classes
 //    id "org.jsonschema2pojo" version "1.1.3"
 }
@@ -147,6 +146,50 @@ dependencies {
 //    initializeCollections = false
 //}
 
+// Maven Central Portal publishing configuration
+// See: https://vanniktech.github.io/gradle-maven-publish-plugin/central/
+mavenPublishing {
+    // Publish to Maven Central Portal (new system replacing OSSRH)
+    publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
+
+    // Sign all publications with GPG
+    signAllPublications()
+
+    // Artifact coordinates
+    coordinates("io.permit", "permit-sdk-java", version.toString())
+
+    // POM configuration required by Maven Central
+    pom {
+        name = "Permit.io Java SDK"
+        description = "Java SDK for Permit.io: fullstack permissions for cloud native applications"
+        url = "https://permit.io"
+        inceptionYear = "2021"
+
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "repo"
+            }
+        }
+
+        developers {
+            developer {
+                id = "asafc"
+                name = "Asaf Cohen"
+                email = "asaf@permit.io"
+            }
+        }
+
+        scm {
+            connection = "scm:git:git://github.com/permitio/permit-java.git"
+            developerConnection = "scm:git:ssh://github.com/permitio/permit-java.git"
+            url = "https://github.com/permitio/permit-java"
+        }
+    }
+}
+
+// GitHub Packages publishing (separate from Maven Central)
 publishing {
     repositories {
         maven {
@@ -158,65 +201,6 @@ publishing {
             }
         }
     }
-
-    publications {
-        maven(MavenPublication) {
-            groupId = 'io.permit'
-            artifactId = 'permit-sdk-java'
-
-            from components.java
-
-            pom {
-                name = "Permit.io Java SDK"
-                description = 'Java SDK for Permit.io: fullstack permissions for cloud native applications'
-                url = 'https://permit.io'
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'asafc'
-                        name = 'Asaf Cohen'
-                        email = 'asaf@permit.io'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/permitio/permit-java.git'
-                    developerConnection = 'scm:git:ssh://github.com/permitio/permit-java.git'
-                    url = 'https://github.com/permitio/permit-java'
-                }
-            }
-        }
-    }
-}
-
-// Maven Central Portal publishing configuration
-// See: https://github.com/yananhub/flying-gradle-plugin
-mavenCentral {
-    // Local staging directory where artifacts are collected before upload.
-    // The plugin publishes JARs, POM, and signatures here first, then zips
-    // and uploads the bundle to Maven Central Portal.
-    repoDir = layout.buildDirectory.dir("staging-deploy")
-
-    // Authentication token from Maven Central Portal.
-    // Generate at: https://central.sonatype.com/account -> Generate User Token
-    // The token is a base64-encoded "username:password" string.
-    authToken = System.getenv("MAVEN_CENTRAL_TOKEN")
-
-    // Publishing mode:
-    // - "AUTOMATIC": Artifacts are automatically published after validation
-    // - "USER_MANAGED": Artifacts stay in pending state for manual release
-    publishingType = "AUTOMATIC"
-}
-
-signing {
-    def GPG_SIGNING_KEY = findProperty("signingKey") ?: System.getenv("GPG_SIGNING_KEY")
-    def GPG_SIGNING_PASSPHRASE = findProperty("signingPassword") ?: System.getenv("GPG_SIGNING_PASSPHRASE")
-    useInMemoryPgpKeys(GPG_SIGNING_KEY, GPG_SIGNING_PASSPHRASE)
-    sign publishing.publications.maven
 }
 
 tasks.named('test') {
