@@ -17,8 +17,7 @@ public class ElementsLoginResult extends EmbeddedLoginRequestOutput {
     }
 
     /**
-     *
-     * @param redirectUrl
+     * @param redirectUrl The URL to redirect the user to after login
      */
     public ElementsLoginResult(String redirectUrl) {
         super(redirectUrl);

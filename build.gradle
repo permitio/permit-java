@@ -225,6 +225,11 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+tasks.named('javadoc') {
+    // Exclude generated OpenAPI models from javadoc generation
+    exclude 'io/permit/sdk/openapi/models/**'
+}
+
 tasks.named('jar') {
     manifest {
         attributes('Implementation-Title': project.name,

@@ -4,3 +4,6 @@
 # These are explicitly windows files and should use crlf
 *.bat           text eol=crlf
 
+# Mark generated OpenAPI models as generated code
+# This collapses diffs in PRs and excludes from language statistics
+src/main/java/io/permit/sdk/openapi/models/** linguist-generated=true
