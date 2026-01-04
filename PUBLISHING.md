@@ -101,8 +101,7 @@ Test artifact generation without uploading:
 
 Artifacts are published to `~/.m2/repository/io/permit/permit-sdk-java/`
 
-Note: Use `-PskipSigning` for local testing without GPG keys. This flag is not available for Maven Central publishing (
-signing is required).
+Note: Use `-PskipSigning` for local testing without GPG keys. This flag is not available for Maven Central publishing (signing is required).
 
 #### Publish to Maven Central (Staging Only)
 
