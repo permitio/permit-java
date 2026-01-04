@@ -175,9 +175,9 @@ mavenPublishing {
 
         developers {
             developer {
-                id = "asafc"
-                name = "Asaf Cohen"
-                email = "asaf@permit.io"
+                id = "permit-io"
+                name = "Permit Team"
+                email = "support@permit.io"
             }
         }
 
