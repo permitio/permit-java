@@ -60,7 +60,7 @@ gpg --armor --export-secret-keys YOUR_KEY_ID | base64
 
 ```bash
 gpg --keyserver keyserver.ubuntu.com --send-keys YOUR_KEY_ID
-# Note: in case you are getting "no route to host" error, ping this server and use the IP.
+# Note: if you get a "no route to host" error, try an alternative keyserver such as keys.openpgp.org or pgp.mit.edu.
 ```
 
 ## GitHub Secrets
