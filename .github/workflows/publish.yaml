@@ -1,4 +1,4 @@
-name: Publish package to GitHub Packages
+name: Publish package to GitHub Packages and Maven Central
 on:
   release:
     types: [ created ]
@@ -11,17 +11,19 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v3.11.0
+      - uses: actions/checkout@v4
         with:
-          java-version: '8'
+          fetch-depth: 0  # Required for git-version plugin
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '11'
           distribution: 'corretto'
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1
+        uses: gradle/wrapper-validation-action@v2
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
       - name: Verify Javadoc generation
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: javadoc
+        run: ./gradlew javadoc
       - name: Check Javadoc generation
         run: |
           if [ -d "build/docs/javadoc" ]; then
@@ -30,15 +32,20 @@ jobs:
             echo "ERROR: Javadoc directory not found"
             exit 1
           fi
-      - name: Publish package
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: publish publishToSonatype closeAndReleaseSonatypeStagingRepository
+      - name: Publish to GitHub Packages
+        # Use specific task to publish only to GitHub Packages (not Maven Central).
+        # GitHub Packages doesn't require GPG signing, so we skip it.
+        # Gradle generates tasks following the pattern:
+        # publish<PublicationName>PublicationTo<RepositoryName>Repository
+        # see" ./gradlew tasks --group=publishing
+        run: ./gradlew publishMavenPublicationToGitHubPackagesRepository -PskipSigning
         env:
+          GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-          GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
-          NEXUS_TOKEN_USERNAME: ${{ secrets.NEXUS_TOKEN_USERNAME }}
-          NEXUS_TOKEN_PASSWORD: ${{ secrets.NEXUS_TOKEN_PASSWORD }}
+      - name: Publish to Maven Central
+        run: ./gradlew publishAndReleaseToMavenCentral
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
