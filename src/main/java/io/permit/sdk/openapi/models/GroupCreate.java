@@ -39,7 +39,7 @@ public class GroupCreate {
     /**
      * Group Instance Key
      * <p>
-     * Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the {@code <resource_key:resource_instance_key>} (i.e: file:my_file)
+     * Either the unique id of the resource instance that the group belongs to, or the URL-friendly key of the {@code <resource_key:resource_instance_key>} (i.e: file:my_file)
      * (Required)
      *
      */
