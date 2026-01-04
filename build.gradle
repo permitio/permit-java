@@ -36,7 +36,7 @@ repositories {
 
 java {
     toolchain {
-       languageVersion = JavaLanguageVersion.of(8)
+        languageVersion = JavaLanguageVersion.of(8)
     }
     // sources are required by maven central in order to accept the package
     withSourcesJar()
@@ -68,8 +68,6 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.4.14'
     implementation 'ch.qos.logback:logback-core:1.4.14'
     implementation 'org.slf4j:slf4j-api:1.7.33'
-
-
 
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
@@ -233,7 +231,6 @@ tasks.named('javadoc') {
 
 tasks.named('jar') {
     manifest {
-        attributes('Implementation-Title': project.name,
-                   'Implementation-Version': project.version)
+        attributes('Implementation-Title': project.name, 'Implementation-Version': project.version)
     }
 }
