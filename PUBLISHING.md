@@ -136,35 +136,6 @@ Full publish with automatic release:
 GITHUB_ACTOR=username GITHUB_TOKEN=token ./gradlew publish
 ```
 
-## Publishing Types
-
-The `mavenPublishing` block in `build.gradle` supports different publishing modes:
-
-### CENTRAL_PORTAL (Current)
-
-```groovy
-publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-```
-
-Uses the new Maven Central Portal API at `central.sonatype.com`. This is the current recommended method as Sonatype has
-deprecated the legacy OSSRH system.
-
-### S01 (Legacy OSSRH)
-
-```groovy
-publishToMavenCentral(SonatypeHost.S01)
-```
-
-Uses the legacy Sonatype OSSRH at `s01.oss.sonatype.org`. This method is deprecated and may stop working.
-
-### DEFAULT (Legacy OSSRH)
-
-```groovy
-publishToMavenCentral(SonatypeHost.DEFAULT)
-```
-
-Uses the original Sonatype OSSRH at `oss.sonatype.org`. This is for older projects and is deprecated.
-
 ## Gradle Tasks
 
 | Task                              | Description                                              |

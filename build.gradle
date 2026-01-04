@@ -21,7 +21,7 @@ plugins {
 }
 
 // It is important to set the group and the version to the root project
-// so the nexus-publish plugin can detect if it is a snapshot version
+// so the maven-publish plugin can detect if it is a snapshot version
 // or not in order to select the correct repository where artifacts will
 // be published
 group = 'io.permit'
@@ -146,7 +146,7 @@ dependencies {
 // Maven Central Portal publishing configuration
 // See: https://vanniktech.github.io/gradle-maven-publish-plugin/central/
 mavenPublishing {
-    // Publish to Maven Central Portal (new system replacing OSSRH)
+    // Publish to Maven Central Portal
     publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
 
     // Sign all publications with GPG (required for Maven Central)
