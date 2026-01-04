@@ -19,14 +19,43 @@ The SDK is published to two repositories:
 
 ### GPG Signing Key
 
-Maven Central requires all artifacts to be signed with GPG:
+Maven Central requires all artifacts to be signed with GPG.
+
+#### Generate a new key (if you don't have one)
 
 ```bash
-# Generate a key (if you don't have one)
 gpg --full-generate-key
+```
 
-# Export the private key (base64 encoded for CI)
+When prompted:
+1. **Key type**: Select `1` (RSA and RSA)
+2. **Key size**: Enter `4096`
+3. **Expiration**: Enter `0` (doesn't expire) or set a reasonable expiration
+4. **Name and email**: Use the same email as your Maven Central account
+5. **Passphrase**: Set a strong passphrase (this is your `signingInMemoryKeyPassword`)
+
+#### List your keys
+
+```bash
+gpg --list-secret-keys --keyid-format LONG
+```
+
+#### Export the private key
+
+For local use:
+```bash
+gpg --armor --export-secret-keys YOUR_KEY_ID > key.asc
+```
+
+For CI/CD (base64 encoded):
+```bash
 gpg --armor --export-secret-keys YOUR_KEY_ID | base64
+```
+
+#### Publish your public key (required for Maven Central verification)
+
+```bash
+gpg --keyserver keyserver.ubuntu.com --send-keys YOUR_KEY_ID
 ```
 
 ## GitHub Secrets
