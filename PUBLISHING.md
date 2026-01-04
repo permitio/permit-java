@@ -62,10 +62,12 @@ The workflow (`.github/workflows/publish.yaml`) handles:
 Test artifact generation without uploading:
 
 ```bash
-./gradlew publishToMavenLocal
+./gradlew publishToMavenLocal -PskipSigning
 ```
 
 Artifacts are published to `~/.m2/repository/io/permit/permit-sdk-java/`
+
+Note: Use `-PskipSigning` for local testing without GPG keys. This flag is not available for Maven Central publishing (signing is required).
 
 #### Publish to Maven Central (Staging Only)
 

@@ -37,10 +37,7 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
     }
-    // sources are required by maven central in order to accept the package
-    withSourcesJar()
-    // javadoc jar is required by maven central in order to accept the package
-    withJavadocJar()
+    // Note: sources and javadoc JARs are created by the vanniktech maven-publish plugin
 }
 
 // package dependencies
@@ -152,8 +149,11 @@ mavenPublishing {
     // Publish to Maven Central Portal (new system replacing OSSRH)
     publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.CENTRAL_PORTAL)
 
-    // Sign all publications with GPG
-    signAllPublications()
+    // Sign all publications with GPG (required for Maven Central)
+    // For local testing without GPG, use: ./gradlew publishToMavenLocal -PskipSigning
+    if (!project.hasProperty('skipSigning')) {
+        signAllPublications()
+    }
 
     // Artifact coordinates
     coordinates("io.permit", "permit-sdk-java", version.toString())
@@ -217,4 +217,10 @@ tasks.named('jar') {
     manifest {
         attributes('Implementation-Title': project.name, 'Implementation-Version': project.version)
     }
+}
+
+// Fix Gradle 8.x task dependency validation issue with vanniktech plugin
+// The plainJavadocJar task must run before generateMetadataFileForMavenPublication
+tasks.withType(GenerateModuleMetadata).configureEach {
+    dependsOn tasks.matching { it.name == 'plainJavadocJar' }
 }
