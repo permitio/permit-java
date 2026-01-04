@@ -196,11 +196,21 @@ publishing {
 }
 
 // Maven Central Portal publishing configuration
+// See: https://github.com/yananhub/flying-gradle-plugin
 mavenCentral {
+    // Local staging directory where artifacts are collected before upload.
+    // The plugin publishes JARs, POM, and signatures here first, then zips
+    // and uploads the bundle to Maven Central Portal.
     repoDir = layout.buildDirectory.dir("staging-deploy")
-    // Token from Maven Central Portal (https://central.sonatype.com/account)
+
+    // Authentication token from Maven Central Portal.
+    // Generate at: https://central.sonatype.com/account -> Generate User Token
+    // The token is a base64-encoded "username:password" string.
     authToken = System.getenv("MAVEN_CENTRAL_TOKEN")
-    // Automatically publish after uploading (set to false to manually release)
+
+    // Publishing mode:
+    // - "AUTOMATIC": Artifacts are automatically published after validation
+    // - "USER_MANAGED": Artifacts stay in pending state for manual release
     publishingType = "AUTOMATIC"
 }
 
