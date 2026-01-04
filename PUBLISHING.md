@@ -20,6 +20,7 @@ The SDK is published to two repositories:
 ### GPG Signing Key
 
 Maven Central requires all artifacts to be signed with GPG.
+[For more info see here.](https://central.sonatype.org/publish/requirements/gpg/)
 
 #### Generate a new key (if you don't have one)
 
@@ -28,6 +29,7 @@ gpg --full-generate-key
 ```
 
 When prompted:
+
 1. **Key type**: Select `1` (RSA and RSA)
 2. **Key size**: Enter `4096`
 3. **Expiration**: Enter `0` (doesn't expire) or set a reasonable expiration
@@ -43,11 +45,13 @@ gpg --list-secret-keys --keyid-format LONG
 #### Export the private key
 
 For local use:
+
 ```bash
 gpg --armor --export-secret-keys YOUR_KEY_ID > key.asc
 ```
 
 For CI/CD (base64 encoded):
+
 ```bash
 gpg --armor --export-secret-keys YOUR_KEY_ID | base64
 ```
@@ -56,18 +60,19 @@ gpg --armor --export-secret-keys YOUR_KEY_ID | base64
 
 ```bash
 gpg --keyserver keyserver.ubuntu.com --send-keys YOUR_KEY_ID
+# Note: in case you are getting "no route to host" error, ping this server and use the IP.
 ```
 
 ## GitHub Secrets
 
 Configure these secrets in your GitHub repository:
 
-| Secret                   | Description                        |
-|--------------------------|------------------------------------|
-| `MAVEN_CENTRAL_USERNAME` | Username from Central Portal token |
-| `MAVEN_CENTRAL_PASSWORD` | Password from Central Portal token |
-| `GPG_SIGNING_KEY`        | Base64-encoded GPG private key     |
-| `GPG_SIGNING_PASSPHRASE` | Passphrase for the GPG key         |
+| Secret                   | Description                                            |
+|--------------------------|--------------------------------------------------------|
+| `MAVEN_CENTRAL_USERNAME` | Username from Central Portal TOKEN (not the user)      |
+| `MAVEN_CENTRAL_PASSWORD` | Password from Central Portal TOKEN (not user password) |
+| `GPG_SIGNING_KEY`        | Base64-encoded GPG private key                         |
+| `GPG_SIGNING_PASSPHRASE` | Passphrase for the GPG key                             |
 
 ## Publishing Methods
 
@@ -105,10 +110,10 @@ Upload to Central Portal without releasing:
 
 ```bash
 ./gradlew publishToMavenCentral \
-  -PmavenCentralUsername=USERNAME \
-  -PmavenCentralPassword=PASSWORD \
+  -PmavenCentralUsername=TOKEN_USERNAME \
+  -PmavenCentralPassword=TOKEN_PASSWORD \
   -PsigningInMemoryKey="$(cat key.asc)" \
-  -PsigningInMemoryKeyPassword=PASSPHRASE
+  -PsigningInMemoryKeyPassword=KEY_PASSPHRASE
 ```
 
 Review at [Central Portal Deployments](https://central.sonatype.com/publishing/deployments)
@@ -119,10 +124,10 @@ Full publish with automatic release:
 
 ```bash
 ./gradlew publishAndReleaseToMavenCentral \
-  -PmavenCentralUsername=USERNAME \
-  -PmavenCentralPassword=PASSWORD \
+  -PmavenCentralUsername=TOKEN_USERNAME \
+  -PmavenCentralPassword=TOKEN_PASSWORD \
   -PsigningInMemoryKey="$(cat key.asc)" \
-  -PsigningInMemoryKeyPassword=PASSPHRASE
+  -PsigningInMemoryKeyPassword=KEY_PASSPHRASE
 ```
 
 #### Publish to GitHub Packages
